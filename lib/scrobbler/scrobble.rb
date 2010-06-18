@@ -7,7 +7,7 @@ module Scrobbler
     # you need to read last.fm/api/submissions#subs first!
 
     attr_accessor :session_id, :submission_url, :artist, :track, :time,
-                  :source, :length, :album, :track_number, :mb_track_id
+                  :source, :length, :album, :track_number, :mb_track_id, :rating
     attr_reader :status
 
     def initialize(args = {})
@@ -21,7 +21,8 @@ module Scrobbler
       @album = args[:album] || '' # track album name (optional)
       @track_number = args[:track_number] || '' # track number (optional)
       @mb_track_id = args[:mb_track_id] || '' # MusicBrainz track ID (optional)
-
+      @rating = args[:rating] || '' # Rating for clip (optional L=Love, B=Ban (if source=L), S=Skip (if source=L))
+      
       if [@session_id, @submission_url, @artist, @track].any?(&:blank?)
         raise ArgumentError, 'Missing required argument'
       elsif @time.class.to_s != 'Time'
@@ -43,7 +44,7 @@ module Scrobbler
                 't[0]' => @track,
                 'i[0]' => @time.utc.to_i,
                 'o[0]' => @source,
-                'r[0]' => '',
+                'r[0]' => @rating,
                 'l[0]' => @length,
                 'b[0]' => @album,
                 'n[0]' => @track_number,

@@ -27,11 +27,22 @@ module Scrobbler
   	    
     	    File.read(File.dirname(__FILE__) + "/../fixtures/xml/#{folder}/#{file}.xml")
   	    elsif @base_url == Scrobbler::AUTH_URL
+
+  	      # Test Simple Auth
           if args[:hs] == "true" && args[:p] == Scrobbler::AUTH_VER.to_s && args[:c] == 'rbs' &&
              args[:v] == Scrobbler::Version.to_s && args[:u] == 'chunky' && !args[:t].blank? &&
              args[:a] == Digest::MD5.hexdigest('7813258ef8c6b632dde8cc80f6bda62f' + args[:t])
             
             "OK\n#{@session_id}\n#{@now_playing_url}\n#{@submission_url}"
+          
+          # Test Token Auth
+          elsif args[:u]=="chunky" && args[:a]==Digest::MD5.hexdigest("secret#{Time.now.to_i}") && args[:v]=="0.2.3" &&
+                args[:api_key]=="api" && args[:c]=="rbs" && args[:sk]=="bacon" && args[:hs]=="true" &&
+                args[:p]=="1.2.1" && args[:t]==Time.now.to_i.to_s
+               
+            "OK\n#{@session_id}\n#{@now_playing_url}\n#{@submission_url}"
+          else
+            puts "WRONG!!"
           end
         elsif @base_url == @now_playing_url
           if args[:s] == @session_id && ![args[:a], args[:t], args[:b], args[:n]].any?(&:blank?)
