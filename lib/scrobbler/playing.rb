@@ -34,7 +34,7 @@ module Scrobbler
                 :n => @track_number,
                 :m => @mb_track_id }
 
-      @status = @connection.post('', query)
+      @status = @connection.post('', false, query)
 
       case @status
       when /OK/

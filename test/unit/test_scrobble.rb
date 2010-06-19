@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class TestScrobble < Test::Unit::TestCase
-=begin  
+  
   def setup
     @session_id = '17E61E13454CDD8B68E8D7DEEEDF6170'
     @submission_url = 'http://62.216.251.205:80/protocol_1.2'
@@ -65,5 +65,5 @@ class TestScrobble < Test::Unit::TestCase
     @scrobble.submit!
     assert_equal('OK', @scrobble.status)
   end
-=end  
+  
 end
