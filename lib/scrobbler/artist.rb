@@ -58,7 +58,7 @@
 #   (62.160%) Christina Aguilera
 module Scrobbler
   class Artist < Base
-    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail, :image, :images, :count, :streamable
+    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail, :images, :count, :streamable
     attr_accessor :chartposition
     
     # used for similar artists
@@ -81,7 +81,6 @@ module Scrobbler
         }
         
         a.thumbnail = a.images['small']
-        a.image     = a.images['medium']
         
         a.match          = (xml).at(:match).inner_html          if (xml).at(:match)
         a.chartposition  = (xml).at(:chartposition).inner_html  if (xml).at(:chartposition)
@@ -123,6 +122,15 @@ module Scrobbler
     
     def top_tags(force=false)
       get_instance("artist.getTopTags", :top_tags, :tag, {:artist => @name}, force)
+    end
+    
+    def image(which=:medium)
+      which = which.to_s
+      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge'].include?(which)  
+      if (self.images.nil?)
+        load_info
+      end    
+      self.images[which]
     end
   end
 end

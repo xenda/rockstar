@@ -96,7 +96,7 @@ module Scrobbler
     
     def image(which=:small)
       which = which.to_s
-      raise ArgumentError unless ['small', 'medium', 'large'].include?(which)  
+      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge'].include?(which)  
       if (self.images.nil?)
         load_info
       end    
