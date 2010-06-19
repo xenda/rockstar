@@ -84,15 +84,21 @@ If you want to use the api in an rails app, you could add an initializer in conf
 	puts "=" * 4
 	track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
 	
-== Simple Authentication (for Scrobbling)
+== Token Authentication (for Scrobbling)
 
-    auth = Scrobbler::SimpleAuth.new(:user => 'chunky', :password => 'bacon')
+1. Step: open http://www.last.fm/api/auth/?api_key={YOUR_API_KEY}&amp;cb={YOUR_RETURN_URL}
+2. Step: if the user excepts, lastfm will redirect to YOUR_RETURN_URL?token=TOKEN
+3. Get the token and call 
+    
+    new Scrobbler::Auth(token).session 
+
+4. Store the session.key and session.username returned. The session.key will not expire. It is save to store it into your database.
+
+5. Use this token to authentificate with this class :
+
+    auth = TokenAuth.initialize({:username => 'chunky', :token => 'bacon'})
     auth.handshake!
 
-    puts "Auth Status: #{auth.status}"
-    puts "Session ID: #{auth.session_id}"
-    puts "Now Playing URL: #{auth.now_playing_url}"
-    puts "Submission URL: #{auth.submission_url}"
 
 == Scrobbling
 
