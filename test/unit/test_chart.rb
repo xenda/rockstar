@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class TestChart < Test::Unit::TestCase
-=begin
+
   def setup
     @chart = Scrobbler::Chart.new('1108296002', '1108900802')
   end
@@ -31,5 +31,5 @@ class TestChart < Test::Unit::TestCase
     assert_equal(1108296002, chart.from)
     assert_equal(1108900802, chart.to)
   end
-=end
+
 end
