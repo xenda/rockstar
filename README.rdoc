@@ -1,8 +1,22 @@
 =Scrobbler
 
-Scrobbler is a wrapper for the audioscrobbler web services (http://www.audioscrobbler.net/data/webservices/). 
+Scrobbler is a wrapper for the last.fm audioscrobbler web services (http://www.lastfm.de/api/). 
 
 Below is just a sampling of how easy this lib is to use.
+
+Please initialize your api key and secret before using the api:
+
+    Scrobbler.lastfm = YAML.load_file('lastfm.yml')
+
+Here is an example lastfm.yml:
+
+    api_key: "API"
+    secret_key: "SECRET"    
+
+If you want to use the api in an rails app, you could add an initializer in config/initializers/lastm.rb and load a config/lastfm.yml file.
+
+    rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
+    Scrobbler.lastfm =  YAML.load_file(rails_root + '/config/lastfm.yml')
 
 == Users
 

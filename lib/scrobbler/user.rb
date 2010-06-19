@@ -51,7 +51,7 @@ module Scrobbler
     
     # profile attributes
     attr_accessor :id, :cluster, :url, :realname, :mbox_sha1sum, :registered
-    attr_accessor :registered_unixtime, :age, :gender, :country, :playcount, :avatar
+    attr_accessor :registered_unixtime, :age, :gender, :country, :playcount, :avatar, :realname
     
     # neighbor attributes
     attr_accessor :match
@@ -61,11 +61,12 @@ module Scrobbler
     
     class << self
       def new_from_xml(xml, doc=nil)
-        u        = User.new((xml)['username'])
+        u        = User.new((xml).at(:name).inner_html)
         u.url    = (xml).at(:url).inner_html    if (xml).at(:url)
         u.avatar = (xml).at(:image).inner_html  if (xml).at(:image)
         u.weight = (xml).at(:weight).inner_html if (xml).at(:weight)
         u.match  = (xml).at(:match).inner_html  if (xml).at(:match)
+        u.realname= (xml).at(:realname).inner_html    if (xml).at(:realname)
         u
       end
       
@@ -84,26 +85,16 @@ module Scrobbler
       load_profile() if options[:include_profile]
     end
     
-    def api_path
-      "/#{API_VERSION}/user/#{CGI::escape(username)}"
-    end
-    
     def current_events(format=:ics)
-      format = :ics if format.to_s == 'ical'
-      raise ArgumentError unless ['ics', 'rss'].include?(format.to_s)
-      "#{API_URL.chop}#{api_path}/events.#{format}"
+      warn "[DEPRECATION] `current_events` is deprecated. The current api doesn't offer ics/ical formatted data."
     end
     
     def friends_events(format=:ics)
-      format = :ics if format.to_s == 'ical'
-      raise ArgumentError unless ['ics', 'rss'].include?(format.to_s)
-      "#{API_URL.chop}#{api_path}/friendevents.#{format}"
+      warn "[DEPRECATION] `friends_events` is deprecated. The current api doesn't offer ics/ical formatted data."
     end
     
     def recommended_events(format=:ics)
-      format = :ics if format.to_s == 'ical'
-      raise ArgumentError unless ['ics', 'rss'].include?(format.to_s)
-      "#{API_URL.chop}#{api_path}/eventsysrecs.#{format}"
+      warn "[DEPRECATION] `recommended_events` is deprecated. The current api doesn't offer ics/ical formatted data."
     end
     
     def load_profile
@@ -123,70 +114,70 @@ module Scrobbler
     end
     
     def top_artists(force=false)
-      get_instance(:topartists, :top_artists, :artist, force)
+      get_instance("user.getTopArtists", :top_artists, :artist, {:user => @username}, force)
     end
     
     def top_albums(force=false)
-      get_instance(:topalbums, :top_albums, :album, force)
+      get_instance("user.getTopAlbums", :top_albums, :album, {:user => @username}, force)
     end
     
     def top_tracks(force=false)
-      get_instance(:toptracks, :top_tracks, :track, force)
+      get_instance("user.getTopTracks", :top_tracks, :track, {:user => @username}, force)
     end
     
     def top_tags(force=false)
-      get_instance(:toptags, :top_tags, :tag, force)
+      get_instance("user.getTopTags", :top_tags, :tag, {:user => @username}, force)
     end
     
     def friends(force=false)
-      get_instance(:friends, :friends, :user, force)
+      get_instance("user.getFriends", :friends, :user, {:user => @username}, force)
     end
     
     def neighbours(force=false)
-      get_instance(:neighbours, :neighbours, :user, force)
+      get_instance("user.getNeighbours", :neighbours, :user, {:user => @username}, force)
     end
     
     def recent_tracks(force=false)
-      get_instance(:recenttracks, :recent_tracks, :track, force)
+      get_instance("user.getRecentTracks", :recent_tracks, :track, {:user => @username}, force)
     end
     
     def recent_banned_tracks(force=false)
-      get_instance(:recentbannedtracks, :recent_banned_tracks, :track, force)
+      warn "[DEPRECATION] `tracks` is deprecated. The current api doesn't offer this function"
+      []
     end
     
     def recent_loved_tracks(force=false)
-      get_instance(:recentlovedtracks, :recent_loved_tracks, :track, force)
+      get_instance("user.getLovedTracks", :recent_loved_tracks, :track, {:user => @username}, force)
     end
     
     def recommendations(force=false)
-      get_instance(:systemrecs, :recommendations, :artist, force)
+      warn "[DEPRECATION] `recommendations` is deprecated. Please use recommended_artists"
+      []
+    end
+
+    # The session_key is returned by auth.session.key
+    def recommended_artists(session_key, force=false)
+      get_instance("user.getRecommendedArtists", :recommendations, :artist, {:user => @username, :sk => session_key}, force)
     end
     
     def charts(force=false)
-      get_instance(:weeklychartlist, :charts, :chart, force)
+      get_instance("user.getWeeklyChartList", :charts, :chart, {:user => @username}, force)
     end
     
     def weekly_artist_chart(from=nil, to=nil)
-      qs  = create_query_string_from_timestamps(from, to)
-      doc = self.class.fetch_and_parse("#{api_path}/weeklyartistchart.xml#{qs}")
+      doc = self.class.fetch_and_parse("user.getWeeklyArtistChart", {:user => @username, :from => from, :to => to})
       (doc/:artist).inject([]) { |elements, el| elements << Artist.new_from_xml(el); elements }
     end
     
     def weekly_album_chart(from=nil, to=nil)
-      qs  = create_query_string_from_timestamps(from, to)
-      doc = self.class.fetch_and_parse("#{api_path}/weeklyalbumchart.xml#{qs}")
+      doc = self.class.fetch_and_parse("user.getWeeklyAlbumChart", {:user => @username, :from => from, :to => to})
       (doc/:album).inject([]) { |elements, el| elements << Album.new_from_xml(el); elements }
     end
     
     def weekly_track_chart(from=nil, to=nil)
-      qs  = create_query_string_from_timestamps(from, to)
-      doc = self.class.fetch_and_parse("#{api_path}/weeklytrackchart.xml#{qs}")
+      doc = self.class.fetch_and_parse("user.getWeeklyTrackChart", {:user => @username, :from => from, :to => to})
       (doc/:track).inject([]) { |elements, el| elements << Track.new_from_xml(el); elements }
     end
     
-    private
-      def create_query_string_from_timestamps(from, to)
-        (from && to) ? "?from=#{from.to_i}&to=#{to.to_i}" : ''
-      end
   end
 end

@@ -29,6 +29,19 @@
 		
 		<p>Below is just a sampling of how easy this lib is to use.</p>
 
+        <p>Please initialize your api key and secret before using the api:</p>
+        <pre><code class="ruby">Scrobbler.lastfm = YAML.load_file('lastfm.yml')</code></pre>
+        
+        <p>Here is an example lastfm.yml:</p>
+
+        <pre><code class="yml">api_key: "API"
+secret_key: "SECRET"</pre></code>    
+
+        <p>If you want to use the api in an rails app, you could add an initializer in config/initializers/lastm.rb and load a config/lastfm.yml file.</p> 
+
+        <pre><code class="ruby">rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
+Scrobbler.lastfm =  YAML.load_file(rails_root + '/config/lastfm.yml')</code></pre>
+
 		<h3>Users</h3>
 
 			<pre><code class="ruby">user = Scrobbler::User.new('jnunemaker')
@@ -53,14 +66,7 @@ puts "Artist: #{album.artist}"
 puts "Reach: #{album.reach}"
 puts "URL: #{album.url}"
 puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
-
-puts
-puts
-
-puts "Tracks"
-longest_track_name = album.tracks.collect(&:name).sort { |x, y| y.length <=> x.length }.first.length
-puts "=" * longest_track_name
-album.tracks.each { |t| puts t.name }</code></pre>
+</code></pre>
 
 		<h3>Artists</h3>
 
@@ -97,7 +103,7 @@ track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }</code></pre>
 	</div>
 
 	<div id="footer">
-		<p>Created by <a href="http://addictedtonew.com/about/">John Nunemaker</a></p>
+		<p>Created by <a href="http://addictedtonew.com/about/">John Nunemaker</a> and <a href="http://bitboxer.de">Bodo Tasche</a></p>
 	</div>
 
 </div>

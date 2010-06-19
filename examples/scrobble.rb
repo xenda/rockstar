@@ -1,5 +1,12 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'scrobbler'))
 
+# Please enter your API-Keys into lastfm.yml first. 
+# You can find them here : http://www.lastfm.de/api/account
+Scrobbler.lastfm = YAML.load_file(File.join(File.dirname(__FILE__), 'lastfm.yml'))
+
+# SimpleAuth is deprecated. Please use TokenAuth from now on!
+# TokenAuth is a little bit more complex, but the user doesn't have to
+# give you his password. That makes it more secure.
 auth = Scrobbler::SimpleAuth.new(:user => 'chunky', :password => 'bacon')
 auth.handshake!
 

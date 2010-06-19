@@ -69,13 +69,12 @@ module Scrobbler
       end
       
       def top_tags
-        doc = fetch_and_parse("/#{API_VERSION}/tag/toptags.xml")
-        @top_tags = (doc/:tag).inject([]) do |tags, tag|
-          t       = Tag.new(tag['name'])
-          t.count = tag['count']
-          t.url   = tag['url']
-          tags << t
-          tags
+        doc = fetch_and_parse("tag.getTopTags")
+        @top_tags = (doc/"toptags/tag").collect do |tag|
+          t       = Tag.new((tag/'name').inner_html)
+          t.count = (tag/'count').inner_html
+          t.url   = (tag/'url').inner_html
+          t
         end
       end
     end
@@ -85,20 +84,17 @@ module Scrobbler
       @name = name
     end
     
-    def api_path
-      "/#{API_VERSION}/tag/#{CGI::escape(name)}"
-    end
     
     def top_artists(force=false)
-      get_instance(:topartists, :top_artists, :artist, force)
+      get_instance("tag.getTopArtists", :top_artists, :artist, {:tag => @name}, force)
     end
     
     def top_albums(force=false)
-      get_instance(:topalbums, :top_albums, :album, force)
+      get_instance("tag.getTopAlbums", :top_albums, :album, {:tag => @name}, force)
     end
 
     def top_tracks(force=false)
-      get_instance(:toptracks, :top_tracks, :track, force)
+      get_instance("tag.getTopTracks", :top_tracks, :track, {:tag => @name}, force)
     end
   end
 end

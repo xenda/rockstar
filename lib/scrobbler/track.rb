@@ -80,17 +80,13 @@ module Scrobbler
       @artist = artist
       @name = name
     end
-    
-    def api_path
-      "/#{API_VERSION}/track/#{CGI::escape(artist)}/#{CGI::escape(name)}"
-    end
-    
+        
     def fans(force=false)
-      get_instance(:fans, :fans, :user, force)
+      get_instance("track.getTopFans", :fans, :user, {:track => @name, :artist => @artist}, force)
     end
     
     def tags(force=false)
-      get_instance(:toptags, :tags, :tag, force)
+      get_instance("track.getTopTags", :tags, :tag, {:track => @name, :artist => @artist}, force)
     end
   end
 end

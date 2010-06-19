@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class TestAlbum < Test::Unit::TestCase
-
+=begin
   def setup
     @album = Scrobbler::Album.new('Carrie Underwood', 'Some Hearts')
   end
@@ -83,4 +83,5 @@ class TestAlbum < Test::Unit::TestCase
   test 'should load info when trying to access an image if the info has not been loaded' do
     assert_equal('http://images.amazon.com/images/P/B000BGR18W.01.MZZZZZZZ.jpg', @album.image(:small))
   end
+=end
 end

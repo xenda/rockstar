@@ -1,4 +1,4 @@
-# Getting information about an album such as release date and the tracks on it is very easy.
+# Getting information about an album such as release date and the summary or description on it is very easy.
 # 
 #   album = Scrobbler::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
 # 
@@ -8,14 +8,6 @@
 #   puts "URL: #{album.url}"
 #   puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
 # 
-#   puts
-#   puts
-# 
-#   puts "Tracks"
-#   longest_track_name = album.tracks.collect(&:name).sort { |x, y| y.length <=> x.length }.first.length
-#   puts "=" * longest_track_name
-#   album.tracks.each { |t| puts t.name }
-#
 # Would output:
 #
 #   Album: Some Hearts
@@ -24,28 +16,10 @@
 #   URL: http://www.last.fm/music/Carrie+Underwood/Some+Hearts
 #   Release Date: 11/15/2005
 # 
-# 
-#   Tracks
-#   ===============================
-#   Wasted
-#   Don't Forget to Remember Me
-#   Some Hearts
-#   Jesus, Take the Wheel
-#   The Night Before (Life Goes On)
-#   Lessons Learned
-#   Before He Cheats
-#   Starts With Goodbye
-#   I Just Can't Live a Lie
-#   We're Young and Beautiful
-#   That's Where It Is
-#   Whenever You Remember
-#   I Ain't in Checotah Anymore
-#   Inside Your Heaven
 module Scrobbler
   class Album < Base
     attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :reach, :release_date
-    attr_accessor :image_large, :image_medium, :image_small
-    attr_writer :tracks
+    attr_accessor :image_large, :image_medium, :image_small, :summary, :content
     
     # needed on top albums for tag
     attr_accessor :count, :streamable
@@ -99,34 +73,21 @@ module Scrobbler
       load_info() if options[:include_info]
     end
     
-    def api_path
-      "/#{API_VERSION}/album/#{CGI::escape(artist)}/#{CGI::escape(name)}"
-    end
-    
     def load_info
-      doc           = self.class.fetch_and_parse("#{api_path}/info.xml")
-      @reach        = (doc).at(:reach).inner_html
+      doc           = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
       @url          = (doc).at(:url).inner_html
       @release_date = Time.parse((doc).at(:releasedate).inner_html.strip)
-      @image_large  = (doc).at(:coverart).at(:large).inner_html
-      @image_medium = (doc).at(:coverart).at(:medium).inner_html
-      @image_small  = (doc).at(:coverart).at(:small).inner_html
+      @image_large  = (doc/"image[@size='large']").inner_html
+      @image_medium = (doc/"image[@size='medium']").inner_html
+      @image_small  = (doc/"image[@size='small']").inner_html
       @mbid         = (doc).at(:mbid).inner_html
-      @tracks       = (doc/:track).inject([]) do |tracks, track|
-        t             = Track.new(artist, track['title'])
-        t.artist_mbid = artist_mbid
-        t.album       = name
-        t.album_mbid  = mbid
-        t.url         = (track).at(:url).inner_html
-        t.reach       = (track).at(:reach).inner_html
-        tracks << t
-        tracks
-      end
+      @summary      = (doc).at(:summary).to_plain_text
+      @content      = (doc).at(:content).to_plain_text
     end
     
     def tracks
-      load_info if @tracks.nil?
-      @tracks
+      warn "[DEPRECATION] `tracks` is deprecated. The current api doesn't offer this function"
+      []
     end
     
     def image(which=:small)

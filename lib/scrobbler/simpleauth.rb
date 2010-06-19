@@ -8,6 +8,7 @@ module Scrobbler
   AUTH_URL = 'http://post.audioscrobbler.com'
   AUTH_VER = '1.2.1'
   
+  # This class is deprecated. Please use TokenAuth instead.
   class SimpleAuth
     # you should read last.fm/api/submissions#handshake
 
@@ -15,6 +16,8 @@ module Scrobbler
     attr_reader :status, :session_id, :now_playing_url, :submission_url
 
     def initialize(args = {})
+      warn "[DEPRECATION] This class is deprecated. Please use TokenAuth instead!"
+      
       @user = args[:user] # last.fm username
       @password = args[:password] # last.fm password
       @client_id = 'rbs' # Client ID assigned by last.fm; Don't change this!
