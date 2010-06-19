@@ -16,7 +16,7 @@ module Scrobbler
   # 4. Store the session.key and session.username returned. The session.key will not
   #    expire. It is save to store it into your database.
   # 5. Use this token to authentificate with this class :
-  #     auth = Scrobbler::TokenAuth.initialize({:username => 'chunky', :token => 'bacon'})
+  #     auth = Scrobbler::TokenAuth.new({:username => 'chunky', :token => 'bacon'})
   #     auth.handshake!
   # 
   class TokenAuth
