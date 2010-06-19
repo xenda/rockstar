@@ -4,7 +4,6 @@
 # 
 #   puts "Album: #{album.name}"
 #   puts "Artist: #{album.artist}"
-#   puts "Reach: #{album.reach}"
 #   puts "URL: #{album.url}"
 #   puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
 # 
@@ -12,13 +11,12 @@
 #
 #   Album: Some Hearts
 #   Artist: Carrie Underwood
-#   Reach: 18729
 #   URL: http://www.last.fm/music/Carrie+Underwood/Some+Hearts
 #   Release Date: 11/15/2005
 # 
 module Scrobbler
   class Album < Base
-    attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :reach, :release_date
+    attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :release_date
     attr_accessor :image_large, :image_medium, :image_small, :summary, :content
     
     # needed on top albums for tag
@@ -47,7 +45,6 @@ module Scrobbler
         a.rank           = (xml).at(:rank).inner_html                   if (xml).at(:rank)
         a.url            = (xml/:url).last.inner_html                   if (xml/:url).size > 1
         a.url            = (xml).at(:url).inner_html                    if a.url.nil? && (xml).at(:url)
-        a.reach          = (xml).at(:reach).inner_html                  if (xml).at(:reach)
         a.image_large    = (xml).at(:image).at(:large).inner_html       if (xml).at(:image) && (xml).at(:image).at(:large)
         a.image_medium   = (xml).at(:image).at(:medium).inner_html      if (xml).at(:image) && (xml).at(:image).at(:medium)
         a.image_small    = (xml).at(:image).at(:small).inner_html       if (xml).at(:image) && (xml).at(:image).at(:small)

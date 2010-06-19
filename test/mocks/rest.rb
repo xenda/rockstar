@@ -5,26 +5,16 @@ module Scrobbler
   module REST
   	class Connection
   	  # reads xml fixture file instead of hitting up the internets
-  	  def request(resource, method = "get", args = nil)
+  	  def request(resource, method = "get", args = {}, sign_request=false)
   	    @now_playing_url = 'http://62.216.251.203:80/nowplaying'
   	    @submission_url = 'http://62.216.251.205:80/protocol_1.2'
   	    @session_id = '17E61E13454CDD8B68E8D7DEEEDF6170'
   	    
-  	    if @base_url == Scrobbler::API_URL
-    	    pieces = resource.split('/')
-    	    pieces.shift
-    	    pieces.shift
-    	    folder = pieces.shift
-    	    file   = pieces.last[0, pieces.last.index('.xml')]
-    	    base_pieces = pieces.last.split('?')
-  	    
-    	    file = if base_pieces.size > 1
-    	      # if query string params are in resource they are underscore separated for filenames
-    	      base_pieces.last.split('&').inject("#{file}_") { |str, pair| str << pair.split('=').join('_') + '_'; str }.chop!
-  	      else
-  	        file
-          end
-  	    
+  	    if @base_url == Scrobbler::API_URL + Scrobbler::API_VERSION + "/"
+  	      folder, file = resource.split(".")
+  	      
+  	      puts "/#{folder}/#{file}.xml"
+  	      
     	    File.read(File.dirname(__FILE__) + "/../fixtures/xml/#{folder}/#{file}.xml")
   	    elsif @base_url == Scrobbler::AUTH_URL
 
