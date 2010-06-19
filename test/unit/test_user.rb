@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class TestUser < Test::Unit::TestCase
-=begin
+
   def setup
     @user = Scrobbler::User.new('jnunemaker')
   end
@@ -31,91 +31,62 @@ class TestUser < Test::Unit::TestCase
     assert_equal(3, users.size)
   end
   
-  test 'should require a username' do
-    assert_raise(ArgumentError) { Scrobbler::User.new('') }
-  end
-  
-  test 'should have api path' do
-    assert_equal('/1.0/user/jnunemaker', @user.api_path)
-  end
-  
-  test 'should know the correct current events addresses' do
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/events.ics', @user.current_events(:ical))
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/events.ics', @user.current_events(:ics))
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/events.rss', @user.current_events(:rss))
-  end
-  
-  test 'should know the correct friends events addresses' do
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/friendevents.ics', @user.friends_events(:ical))
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/friendevents.ics', @user.friends_events(:ics))
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/friendevents.rss', @user.friends_events(:rss))
-  end
-  
-  test 'should know the correct recommended events addresses' do
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/eventsysrecs.ics', @user.recommended_events(:ical))
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/eventsysrecs.ics', @user.recommended_events(:ics))
-    assert_equal('http://ws.audioscrobbler.com/1.0/user/jnunemaker/eventsysrecs.rss', @user.recommended_events(:rss))
-  end
-  
   test 'should be able to include profile during initialization' do
     user = Scrobbler::User.new('jnunemaker', :include_profile => true)
     assert_equal('3017870', user.id)
-    assert_equal('4', user.cluster)
-    assert_equal('http://www.last.fm/user/jnunemaker/', user.url)
+    assert_equal('http://www.last.fm/user/jnunemaker', user.url)
     assert_equal('John Nunemaker', user.realname)
-    assert_equal('d5bbe280b7a41d4a87253361692ef105b983cf1a', user.mbox_sha1sum)
-    assert_equal('Dec 8, 2005', user.registered)
+    assert_equal('2005-12-08 13:58', user.registered)
     assert_equal('1134050307', user.registered_unixtime)
-    assert_equal('25', user.age)
+    assert_equal('28', user.age)
     assert_equal('m', user.gender)
-    assert_equal('United States', user.country)
-    assert_equal('13267', user.playcount)
-    assert_equal('http://panther1.last.fm/avatar/5cb420de0855dadf6bcb1090d8ff02bb.jpg', user.avatar)
+    assert_equal('US', user.country)
+    assert_equal('35853', user.playcount)
+    assert_equal('http://userserve-ak.last.fm/serve/34/4994806.jpg', user.avatar)
   end
-  
+
   test 'should be able to load users profile' do
     @user.load_profile
     assert_equal('3017870', @user.id)
-    assert_equal('4', @user.cluster)
-    assert_equal('http://www.last.fm/user/jnunemaker/', @user.url)
+    assert_equal('http://www.last.fm/user/jnunemaker', @user.url)
     assert_equal('John Nunemaker', @user.realname)
-    assert_equal('d5bbe280b7a41d4a87253361692ef105b983cf1a', @user.mbox_sha1sum)
-    assert_equal('Dec 8, 2005', @user.registered)
+    assert_equal('2005-12-08 13:58', @user.registered)
     assert_equal('1134050307', @user.registered_unixtime)
-    assert_equal('25', @user.age)
+    assert_equal('28', @user.age)
     assert_equal('m', @user.gender)
-    assert_equal('United States', @user.country)
-    assert_equal('13267', @user.playcount)
-    assert_equal('http://panther1.last.fm/avatar/5cb420de0855dadf6bcb1090d8ff02bb.jpg', @user.avatar)
+    assert_equal('US', @user.country)
+    assert_equal('35853', @user.playcount)
+    assert_equal('http://userserve-ak.last.fm/serve/34/4994806.jpg', @user.avatar)
   end
-  
+
   test "should be able to get a user's top artists" do
-    assert_equal(3, @user.top_artists.size)
+    assert_equal(50, @user.top_artists.size)
     first = @user.top_artists.first
-    assert_equal('Dixie Chicks', first.name)
-    assert_equal('3248ed2d-bada-41b5-a7b6-ac88faa1f1ac', first.mbid)
-    assert_equal('592', first.playcount)
+    assert_equal('Taylor Swift', first.name)
+    assert_equal('20244d07-534f-4eff-b4d4-930878889970', first.mbid)
+    assert_equal('1392', first.playcount)
     assert_equal('1', first.rank)
-    assert_equal('http://www.last.fm/music/Dixie+Chicks', first.url)
-    assert_equal('http://static3.last.fm/storable/image/182497/small.jpg', first.thumbnail)
-    assert_equal('http://panther1.last.fm/proposedimages/sidebar/6/4037/512759.jpg', first.image)
+    assert_equal('http://www.last.fm/music/Taylor+Swift', first.url)
+    assert_equal('http://userserve-ak.last.fm/serve/34/30883349.png', first.thumbnail)
+    assert_equal('http://userserve-ak.last.fm/serve/64/30883349.png', first.image)
   end
   
   test 'should be able to get top albums' do
-    assert_equal(3, @user.top_albums.size)
+    assert_equal(50, @user.top_albums.size)
     first = @user.top_albums.first
-    assert_equal('LeAnn Rimes', first.artist)
-    assert_equal('9092d8e1-9b38-4372-a96d-000b8561a8bc', first.artist_mbid)
-    assert_equal('This Woman', first.name)
-    assert_equal('080a4038-5156-460a-8dd5-daaa7d16b6a6', first.mbid)
-    assert_equal('297', first.playcount)
+    assert_equal('Dwight Yoakam', first.artist)
+    assert_equal('0fb711af-c7ba-4bdc-b0b6-b8495fc0a590', first.artist_mbid)
+    assert_equal('The Very Best of Dwight Yoakam', first.name)
+    assert_equal('b6a051b4-1a1e-4c33-a1e5-0ea6e920a13f', first.mbid)
+    assert_equal('560', first.playcount)
     assert_equal('1', first.rank)    
-    assert_equal('http://www.last.fm/music/LeAnn+Rimes/This+Woman', first.url)
-    assert_equal('http://images.amazon.com/images/P/B00067BD8K.01._SCMZZZZZZZ_.jpg', first.image(:small))
-    assert_equal('http://images.amazon.com/images/P/B00067BD8K.01._SCMZZZZZZZ_.jpg', first.image(:medium))
-    assert_equal('http://images.amazon.com/images/P/B00067BD8K.01._SCMZZZZZZZ_.jpg', first.image(:large))
+    assert_equal('http://www.last.fm/music/Dwight+Yoakam/The+Very+Best+of+Dwight+Yoakam', first.url)
+    assert_equal('http://userserve-ak.last.fm/serve/34s/8725405.jpg', first.image(:small))
+    assert_equal('http://userserve-ak.last.fm/serve/64s/8725405.jpg', first.image(:medium))
+    assert_equal('http://userserve-ak.last.fm/serve/126/8725405.jpg', first.image(:large))
   end
-  
+
+=begin
   test 'should be able to get top tracks' do
     assert_equal(3, @user.top_tracks.size)
     first = @user.top_tracks.first

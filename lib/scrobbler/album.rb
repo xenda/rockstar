@@ -42,7 +42,8 @@ module Scrobbler
         a.mbid           = (xml).at(:mbid).inner_html                  if (xml).at(:mbid)
         a.playcount      = (xml).at(:playcount).inner_html             if (xml).at(:playcount)
         a.chartposition = (xml).at(:chartposition).inner_html          if (xml).at(:chartposition)
-        a.rank           = (xml).at(:rank).inner_html                  if (xml).at(:rank)
+        a.rank           = xml['rank']                                 if xml['rank']
+        a.rank           = (xml).at(:rank).inner_html                  if (xml).at(:rank) if a.rank.nil?
         a.url            = (xml).at(:url).inner_html                   if (xml).at(:url)
         
         a.images = {}
