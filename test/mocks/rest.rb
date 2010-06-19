@@ -11,7 +11,7 @@ module Scrobbler
   	    @session_id = '17E61E13454CDD8B68E8D7DEEEDF6170'
   	    
   	    if @base_url == Scrobbler::API_URL + Scrobbler::API_VERSION + "/"
-  	      folder, file = resource.split(".")
+  	      folder, file = resource.downcase.split(".")
   	      
   	      puts "/#{folder}/#{file}.xml"
   	      

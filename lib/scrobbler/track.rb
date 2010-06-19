@@ -35,11 +35,11 @@
 #   (2169) ajsbabiegirl
 module Scrobbler
   class Track < Base
-    attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :reach
+    attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url
     attr_accessor :streamable, :album, :album_mbid, :date, :date_uts
     
     # only seems to be used on top tracks for tag
-    attr_accessor :count, :thumbnail, :image
+    attr_accessor :count, :thumbnail, :image, :images
     
     # for weekly top tracks
     attr_accessor :chartposition
@@ -57,19 +57,22 @@ module Scrobbler
         t.mbid          = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
         t.playcount     = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
         t.chartposition = (xml).at(:chartposition).inner_html     if (xml).at(:chartposition)
-        t.rank          = (xml).at(:rank).inner_html              if (xml).at(:rank)
-        t.url           = (xml/:url).last.inner_html              if (xml/:url).size > 1
-        t.url           = (xml).at(:url).inner_html               if t.url.nil? && (xml).at(:url)
+        t.rank          = xml['rank']                             if xml['rank']
+        t.url           = (xml).at(:url).inner_html               if (xml).at(:url)
         t.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
-        t.streamable    = xml['streamable']                       if t.streamable.nil? && xml['streamable']
         t.count         = xml['count']                            if xml['count']
         t.album         = (xml).at(:album).inner_html             if (xml).at(:album)
         t.album_mbid    = (xml).at(:album)['mbid']                if (xml).at(:album) && (xml).at(:album)['mbid']
         t.date          = Time.parse((xml).at(:date).inner_html)  if (xml).at(:date)
         t.date_uts      = (xml).at(:date)['uts']                  if (xml).at(:date) && (xml).at(:date)['uts']
-        t.thumbnail     = (xml).at(:thumbnail).inner_html         if (xml).at(:thumbnail)
-        t.image         = (xml).at(:image).inner_html             if (xml).at(:image)
-        t.reach         = (xml).at(:reach).inner_html             if (xml).at(:reach)
+        
+        t.images = {}
+        (xml/'image').each {|image|
+          t.images[image['size']] = image.inner_html
+        }
+        
+        t.thumbnail = t.images['small']
+        t.image     = t.images['medium']
         t
       end
     end

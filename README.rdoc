@@ -1,6 +1,6 @@
 =Scrobbler
 
-Scrobbler is a wrapper for the last.fm audioscrobbler web services (http://www.lastfm.de/api/). 
+Scrobbler is a wrapper for the last.fm audioscrobbler web services (http://www.last.fm/api/). 
 
 Below is just a sampling of how easy this lib is to use.
 

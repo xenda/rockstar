@@ -51,8 +51,8 @@ module Scrobbler
     
     # profile attributes
     attr_accessor :id, :cluster, :url, :realname, :mbox_sha1sum, :registered
-    attr_accessor :registered_unixtime, :age, :gender, :country, :playcount, :avatar, :realname
-    
+    attr_accessor :registered_unixtime, :age, :gender, :country, :playcount, :avatar, :realname, :images
+
     # neighbor attributes
     attr_accessor :match
     
@@ -63,7 +63,14 @@ module Scrobbler
       def new_from_xml(xml, doc=nil)
         u        = User.new((xml).at(:name).inner_html)
         u.url    = (xml).at(:url).inner_html    if (xml).at(:url)
-        u.avatar = (xml).at(:image).inner_html  if (xml).at(:image)
+        
+        u.images = {}
+        (xml/'image').each {|image|
+          u.images[image['size']] = image.inner_html
+        }
+        
+        u.avatar = u.images['small']
+        
         u.weight = (xml).at(:weight).inner_html if (xml).at(:weight)
         u.match  = (xml).at(:match).inner_html  if (xml).at(:match)
         u.realname= (xml).at(:realname).inner_html    if (xml).at(:realname)

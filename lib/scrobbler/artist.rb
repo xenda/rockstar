@@ -58,7 +58,7 @@
 #   (62.160%) Christina Aguilera
 module Scrobbler
   class Artist < Base
-    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail, :image, :reach, :count, :streamable
+    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail, :image, :images, :count, :streamable
     attr_accessor :chartposition
     
     # used for similar artists
@@ -74,12 +74,17 @@ module Scrobbler
         a.playcount      = (xml).at(:playcount).inner_html      if (xml).at(:playcount)
         a.rank           = (xml).at(:rank).inner_html           if (xml).at(:rank)
         a.url            = (xml).at(:url).inner_html            if (xml).at(:url)
-        a.thumbnail      = (xml).at(:thumbnail).inner_html      if (xml).at(:thumbnail)
-        a.thumbnail      = (xml).at(:image_small).inner_html    if a.thumbnail.nil? && (xml).at(:image_small)
-        a.image          = (xml).at(:image).inner_html          if (xml).at(:image)
-        a.reach          = (xml).at(:reach).inner_html          if (xml).at(:reach)
+        
+        a.images = {}
+        (xml/'image').each {|image|
+          a.images[image['size']] = image.inner_html
+        }
+        
+        a.thumbnail = a.images['small']
+        a.image     = a.images['medium']
+        
         a.match          = (xml).at(:match).inner_html          if (xml).at(:match)
-        a.chartposition = (xml).at(:chartposition).inner_html  if (xml).at(:chartposition)
+        a.chartposition  = (xml).at(:chartposition).inner_html  if (xml).at(:chartposition)
 
         # in top artists for tag
         a.count          = xml['count']                         if xml['count']
