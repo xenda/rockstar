@@ -6,21 +6,22 @@ class BannedError < StandardError; end
 class BadTimeError < StandardError; end
 module Scrobbler
   
-  # Token Authentification
+  # = Token Authentification
   #
   # There are 2 ways to get an auth token : 
   # 
-  # = Desktop-App =
+  # = Desktop-App
   # 1. Get a new token to request authorisation:
   #     token = Scrobbler::Auth.new.token
   # 2. Open a webbrowser with http://www.last.fm/api/auth/?api_key=xxxxxxxxxxx&token=xxxxxxxx
   # 3. Wait for the User to confirm that he accepted your request. Continue with step 4 below
   #
-  # = Web-App = 
+  # = Web-App
   # 1. Step: redirect the user to http://www.last.fm/api/auth/?api_key={YOUR_API_KEY}&amp;cb={YOUR_RETURN_URL}
   # 2. Step: if the user excepts, lastfm will redirect to YOUR_RETURN_URL?token=TOKEN
   # 3. Continue with step 4 below
   #
+  # = Get the session token
   # 4. Get the token and call 
   #     new Scrobbler::Auth.new.session(token) 
   #    with that token. 
