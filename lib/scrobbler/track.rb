@@ -47,7 +47,7 @@ module Scrobbler
     class << self
       def new_from_xml(xml, doc=nil)
         artist          = (xml).at(:artist)['name']               if (xml).at(:artist) && (xml).at(:artist)['name']
-        artist          = (xml).at(:artist).inner_html            if artist.nil? && (xml).at(:artist)
+        artist          = (xml/:artist/:name).inner_html          if artist.nil? && (xml/:artist/:name)
         artist          = doc.root['artist']                      if artist.nil? && doc.root['artist']
         name            = (xml).at(:name).inner_html              if (xml).at(:name)
         name            = xml['name']                             if name.nil? && xml['name']
@@ -60,6 +60,8 @@ module Scrobbler
         t.rank          = xml['rank']                             if xml['rank']
         t.url           = (xml).at(:url).inner_html               if (xml).at(:url)
         t.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
+        t.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if t.streamable.nil? && (xml).at(:streamable)
+        
         t.count         = xml['count']                            if xml['count']
         t.album         = (xml).at(:album).inner_html             if (xml).at(:album)
         t.album_mbid    = (xml).at(:album)['mbid']                if (xml).at(:album) && (xml).at(:album)['mbid']
