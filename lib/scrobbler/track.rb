@@ -46,8 +46,9 @@ module Scrobbler
     
     class << self
       def new_from_xml(xml, doc=nil)
-        artist          = (xml).at(:artist)['name']               if (xml).at(:artist) && (xml).at(:artist)['name']
-        artist          = (xml/:artist/:name).inner_html          if artist.nil? && (xml/:artist/:name)
+        artist          = (xml).at(:artist)['name']               if (xml).at(:artist) && !(xml).at(:artist)['name'].nil?
+        artist          = (xml).at(:artist).at(:name).inner_html  if artist.nil? && (xml).at(:artist) && (xml).at(:artist).at(:name)
+        artist          = (xml).at(:artist).inner_html            if artist.nil? && (xml).at(:artist)
         artist          = doc.root['artist']                      if artist.nil? && doc.root['artist']
         name            = (xml).at(:name).inner_html              if (xml).at(:name)
         name            = xml['name']                             if name.nil? && xml['name']

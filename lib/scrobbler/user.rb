@@ -153,7 +153,7 @@ module Scrobbler
     end
     
     def recent_banned_tracks(force=false)
-      warn "[DEPRECATION] `tracks` is deprecated. The current api doesn't offer this function"
+      warn "[DEPRECATION] `recent_banned_tracks` is deprecated. The current api doesn't offer this function"
       []
     end
     

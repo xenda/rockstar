@@ -86,25 +86,24 @@ class TestUser < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/126/8725405.jpg', first.image(:large))
   end
 
-=begin
   test 'should be able to get top tracks' do
-    assert_equal(3, @user.top_tracks.size)
+    assert_equal(50, @user.top_tracks.size)
     first = @user.top_tracks.first
     assert_equal("Probably Wouldn't Be This Way", first.name)
     assert_equal('LeAnn Rimes', first.artist)
     assert_equal('9092d8e1-9b38-4372-a96d-000b8561a8bc', first.artist_mbid)
     assert_equal("", first.mbid)
-    assert_equal('61', first.playcount)
+    assert_equal('83', first.playcount)
     assert_equal('1', first.rank)
     assert_equal('http://www.last.fm/music/LeAnn+Rimes/_/Probably+Wouldn%27t+Be+This+Way', first.url)
   end
-  
+
   test 'should be able to get top tags' do
-    assert_equal(3, @user.top_tags.size)
+    assert_equal(12, @user.top_tags.size)
     first = @user.top_tags.first
     assert_equal("country", first.name)
-    assert_equal("6", first.count)
-    assert_equal("http://www.last.fm/tag/country", first.url)
+    assert_equal("7", first.count)
+    assert_equal("www.last.fm/tag/country", first.url)
   end
   
   # not implemented
@@ -118,59 +117,48 @@ class TestUser < Test::Unit::TestCase
   end
   
   test 'should have friends' do
-    assert_equal(3, @user.friends.size)
+    assert_equal(17, @user.friends.size)
     first = @user.friends.first
-    assert_equal('oaknd1', first.username)
-    assert_equal('http://www.last.fm/user/oaknd1/', first.url)
-    assert_equal('http://panther1.last.fm/avatar/1894043b3e8995c51f7bb5e3210ef97a.jpg', first.avatar)
+    assert_equal('mayorcj', first.username)
+    assert_equal('http://www.last.fm/user/mayorcj', first.url)
+    assert_equal('http://userserve-ak.last.fm/serve/34/37841973.jpg', first.avatar)
   end
   
   test 'should have neighbours' do
-    assert_equal(3, @user.neighbours.size)
+    assert_equal(50, @user.neighbours.size)
     first = @user.neighbours.first
-    assert_equal('xBluejeanbabyx', first.username)
-    assert_equal('http://www.last.fm/user/xBluejeanbabyx/', first.url)
-    assert_equal('http://panther1.last.fm/avatar/d4de2144dc9b651b02d5d633124f0205.jpg', first.avatar)
+    assert_equal('AustinFarrellR', first.username)
+    assert_equal('http://www.last.fm/user/AustinFarrellR', first.url)
+    assert_equal('http://userserve-ak.last.fm/serve/34/24713961.jpg', first.avatar)
   end
-  
+
   test 'should have recent tracks' do
-    assert_equal(3, @user.recent_tracks.size)
+    assert_equal(10, @user.recent_tracks.size)
     first = @user.recent_tracks.first
-    assert_equal('Recovering the Satellites', first.name)
-    assert_equal('Counting Crows', first.artist)
-    assert_equal('a0327dc2-dc76-44d5-aec6-47cd2dff1469', first.artist_mbid)
+    assert_equal('Airstream Song', first.name)
+    assert_equal('Miranda Lambert', first.artist)
+    assert_equal('4eca1aa0-c79f-481b-af8a-4a2d6c41aa5c', first.artist_mbid)
     assert_equal('', first.mbid)
-    assert_equal('328bc43b-a81a-4dc0-844f-1a27880e5fb2', first.album_mbid)
-    assert_equal('Recovering the Satellites', first.album)
-    assert_equal('http://www.last.fm/music/Counting+Crows/_/Recovering+the+Satellites', first.url)
-    assert_equal(Time.mktime(2007, 5, 4, 21, 1, 00), first.date)
-    assert_equal('1178312462', first.date_uts)
+    assert_equal('4eca1aa0-c79f-481b-af8a-4a2d6c41aa5c', first.album_mbid)
+    assert_equal('Revolution', first.album)
+    assert_equal('http://www.last.fm/music/Miranda+Lambert/_/Airstream+Song', first.url)
+    assert_equal(Time.mktime(2010, 6, 19, 17, 6, 00), first.date)
+    assert_equal('1276967182', first.date_uts)
   end
-  
-  test 'should have recent banned tracks' do
-    assert_equal(3, @user.recent_banned_tracks.size)
-    first = @user.recent_banned_tracks.first
-    assert_equal('Dress Rehearsal Rag', first.name)
-    assert_equal('Leonard Cohen', first.artist)
-    assert_equal('65314b12-0e08-43fa-ba33-baaa7b874c15', first.artist_mbid)
-    assert_equal('', first.mbid)
-    assert_equal('http://www.last.fm/music/Leonard+Cohen/_/Dress+Rehearsal+Rag', first.url)
-    assert_equal(Time.mktime(2006, 9, 27, 14, 19, 00), first.date)
-    assert_equal('1159366744', first.date_uts)
-  end
-  
+
   test 'should have recent loved tracks' do
-    assert_equal(3, @user.recent_loved_tracks.size)
+    assert_equal(50, @user.recent_loved_tracks.size)
     first = @user.recent_loved_tracks.first
-    assert_equal('Am I Missing', first.name)
-    assert_equal('Dashboard Confessional', first.artist)
+    assert_equal('Don\'t Stop Believin\' (Glee Cast Version)', first.name)
+    assert_equal('Glee Cast', first.artist)
     assert_equal('50549203-9602-451c-b49f-ff031ba8635c', first.artist_mbid)
     assert_equal('', first.mbid)
-    assert_equal('http://www.last.fm/music/Dashboard+Confessional/_/Am+I+Missing', first.url)
-    assert_equal(Time.mktime(2006, 9, 26, 17, 43, 00), first.date)
-    assert_equal('1159292606', first.date_uts)
+    assert_equal('www.last.fm/music/Glee+Cast/_/Don%27t+Stop+Believin%27+%28Glee+Cast+Version%29', first.url)
+    assert_equal(Time.mktime(2009, 5, 27, 14, 36, 00), first.date)
+    assert_equal('1243434966', first.date_uts)
   end
-  
+
+=begin
   test 'should have recommendations' do
     assert_equal(3, @user.recommendations.size)
     first = @user.recommendations.first
