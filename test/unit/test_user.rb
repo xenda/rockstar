@@ -158,15 +158,18 @@ class TestUser < Test::Unit::TestCase
     assert_equal('1243434966', first.date_uts)
   end
 
-=begin
-  test 'should have recommendations' do
-    assert_equal(3, @user.recommendations.size)
-    first = @user.recommendations.first
-    assert_equal('Kaiser Chiefs', first.name)
-    assert_equal('90218af4-4d58-4821-8d41-2ee295ebbe21', first.mbid)
-    assert_equal('http://www.last.fm/music/Kaiser+Chiefs', first.url)
+  test 'should have recommendations is deprecated' do
+    assert_equal(0, @user.recommendations.size)
   end
   
+  test 'should have artist recommendations' do
+    first = @user.recommended_artists("token").first
+    assert_equal('Virginia Jetzt!', first.name)
+    assert_equal('433d544f-d6c6-4c79-aefd-6f4c7918e5fe', first.mbid)
+    assert_equal('http://www.last.fm/music/Virginia+Jetzt%21', first.url)
+  end
+  
+=begin
   test 'should have charts' do
     assert_equal(71, @user.charts.size)
     first = @user.charts.first

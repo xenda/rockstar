@@ -32,7 +32,7 @@ module Scrobbler
 
           if !args[:sk].nil? ||sign_request # Session Key available => sign the request or sign_request = true?
             signed = sorted_keys.collect {|k| "%s%s" % [escape(k.to_s), escape(args[k].to_s)]}.join()
-            auth = Digest::MD5.hexdigest("#{signed}#{Scrobbler.lastfm_api_key}")
+            auth = Digest::MD5.hexdigest("#{signed}#{Scrobbler.lastfm_api_secret}")
             query += "&api_sig=#{auth}"
           end
   				url.query = query
