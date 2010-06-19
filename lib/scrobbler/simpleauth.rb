@@ -40,7 +40,7 @@ module Scrobbler
                 :u => @user,
                 :t => timestamp,
                 :a => token }
-      result = @connection.get('/', query)
+      result = @connection.get('/', false, query)
 
       @status = result.split(/\n/)[0]
       case @status

@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestTokenAuth < Test::Unit::TestCase
 
   def setup
-    # :secret => 'secret', :api_key => 'api'
-    @auth = Scrobbler::TokenAuth.new(:user => 'chunky', :token => 'bacon')
+    Scrobbler.lastfm = {"api_secret" => 'secret', "api_key" => 'api'}
+    @auth = Scrobbler::TokenAuth.new(:username => 'chunky', :token => 'bacon')
   end
   
   test 'should require a user' do
@@ -42,5 +42,4 @@ class TestTokenAuth < Test::Unit::TestCase
     @auth.handshake!
     assert_equal('http://62.216.251.205:80/protocol_1.2', @auth.submission_url)
   end
-
 end

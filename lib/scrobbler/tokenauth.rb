@@ -28,13 +28,11 @@ module Scrobbler
     def initialize(args = {})
       @user = args[:username] # last.fm user
       @token = args[:token] # last.fm token
-      @api_key = args[:api_key] # last.fm api key
-      @secret = args[:secret] # last.fm secret
       @client_id = 'rbs' # Client ID assigned by last.fm; Don't change this!
       @client_ver = Scrobbler::Version
 
-      raise ArgumentError, 'Missing required argument' if @user.blank? || @token.blank? || @api_key.blank? || @secret.blank?
-
+      raise ArgumentError, 'Missing required argument' if @user.blank? || @token.blank?
+      
       @connection = REST::Connection.new(Scrobbler::AUTH_URL)
     end
 
@@ -51,7 +49,7 @@ module Scrobbler
                 :a => auth,
                 :api_key=>Scrobbler.lastfm_api_key,
                 :sk => @token }
-      result = @connection.get('/', query)
+      result = @connection.get('/', true, query)
 
       @status = result.split(/\n/)[0]
       case @status
