@@ -101,7 +101,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
     auth = Scrobbler::TokenAuth.new({:username => session.username, :token => session.key})
     auth.handshake!
 
-More details and informations can be found in in Scrobbler::TokenAuth
+More details can be found in in Scrobbler::TokenAuth
 
 == Scrobbling
 
