@@ -11,8 +11,8 @@ module Scrobbler
     attr_reader :status
 
     def initialize(args = {})
-      @session_id = args[:session_id] # from Scrobbler::SimpleAuth
-      @submission_url = args[:submission_url] # from Scrobbler::SimpleAuth (can change)
+      @session_id = args[:session_id] # from Scrobbler::TokenAuth
+      @submission_url = args[:submission_url] # from Scrobbler::TokenAuth (can change)
       @artist = args[:artist] # track artist
       @track = args[:track] # track name
       @time = args[:time] # a Time object set to the time the track started playing

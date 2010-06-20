@@ -20,15 +20,15 @@ module Scrobbler
   # = Web-App
   # 1. Redirect the user to http://www.last.fm/api/auth/?api_key={YOUR_API_KEY}&amp;cb={YOUR_RETURN_URL}
   # 2. If the user accepts, lastfm will redirect to YOUR_RETURN_URL?token=TOKEN
+  #     token = params[:token]
   # 3. Continue with "Get the session token"
   #
   # = Get the session token
-  # 1. Get the token and call 
+  # 1. Use the previous token and call 
   #     new Scrobbler::Auth.new.session(token) 
-  #    with that token. 
   # 2. Store the session.key and session.username returned. The session.key will not
   #    expire. It is save to store it into your database.
-  # 3. Use this token to authentificate with this class :
+  # 3. Use this session.key as token to authentificate with this class :
   #     auth = Scrobbler::TokenAuth.new({:username => 'chunky', :token => 'bacon'})
   #     auth.handshake!
   # 

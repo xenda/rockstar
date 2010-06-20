@@ -11,7 +11,7 @@ Please initialize your api key and secret before using the api:
 Here is an example lastfm.yml:
 
     api_key: "API"
-    secret_key: "SECRET"    
+    api_secret: "SECRET"    
 
 If you want to use the api in an rails app, you could add an initializer in config/initializers/lastm.rb and load a config/lastfm.yml file.
 
@@ -84,21 +84,24 @@ If you want to use the api in an rails app, you could add an initializer in conf
 	puts "=" * 4
 	track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
 	
-== Token Authentication (for Scrobbling)
+== Token Authentication (for scrobbling and recommendations)
 
-1. Step: open http://www.last.fm/api/auth/?api_key={YOUR_API_KEY}&amp;cb={YOUR_RETURN_URL}
-2. Step: if the user excepts, lastfm will redirect to YOUR_RETURN_URL?token=TOKEN
-3. Get the token and call 
+    a = Scrobbler::Auth.new
+    token = a.token
     
-    new Scrobbler::Auth(token).session 
-
-4. Store the session.key and session.username returned. The session.key will not expire. It is save to store it into your database.
-
-5. Use this token to authentificate with this class :
-
-    auth = Scrobbler::TokenAuth.new({:username => 'chunky', :token => 'bacon'})
+    puts
+    puts "Please open http://www.last.fm/api/auth/?api_key=#{Scrobbler.lastfm_api_key}&token=#{token}"
+    puts
+    puts "Press enter when done."
+    
+    gets
+    
+    session = a.session(token)
+    
+    auth = Scrobbler::TokenAuth.new({:username => session.username, :token => session.key})
     auth.handshake!
 
+More details and informations can be found in in Scrobbler::TokenAuth
 
 == Scrobbling
 

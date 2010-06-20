@@ -23,8 +23,10 @@ module Scrobbler
   		  puts resource
   			url = URI.parse(@base_url)
         
-        args[:method] = resource
-        args[:api_key]= Scrobbler.lastfm_api_key
+        if (!resource.blank?)
+          args[:method] = resource
+          args[:api_key]= Scrobbler.lastfm_api_key
+        end
         
   			if args
   			  sorted_keys = args.keys.sort_by{|k|k.to_s}
@@ -39,6 +41,10 @@ module Scrobbler
   			end
 
         puts url.request_uri
+
+        puts "\n\n"
+        puts url.to_s
+        puts "\n\n"
 
   			case method
   			when "get"
