@@ -35,11 +35,11 @@ module Scrobbler
             puts "WRONG!!"
           end
         elsif @base_url == @now_playing_url
-          if args[:s] == @session_id && ![args[:a], args[:t], args[:b], args[:n]].any?(&:blank?)
+          if args[:s] == @session_id && args.length == 7 && ![args[:a], args[:t], args[:b], args[:n]].any?(&:blank?)
              'OK'
           end           
         elsif @base_url == @submission_url
-          if args[:s] == @session_id && 
+          if args[:s] == @session_id && args.length == 10 &&
              ![args['a[0]'], args['t[0]'], args['i[0]'], args['o[0]'], args['l[0]'], args['b[0]']].any?(&:blank?)
             'OK'
           end
