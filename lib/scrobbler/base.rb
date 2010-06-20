@@ -26,5 +26,12 @@ module Scrobbler
         end
         instance_variable_get("@#{instance_name}")
       end
+      
+      def self.fix_url(url)
+        if (!url.blank? && !url.match("^http://"))
+          url = "http://#{url}"
+        end
+        url
+      end
   end
 end

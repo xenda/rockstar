@@ -103,7 +103,7 @@ class TestUser < Test::Unit::TestCase
     first = @user.top_tags.first
     assert_equal("country", first.name)
     assert_equal("7", first.count)
-    assert_equal("www.last.fm/tag/country", first.url)
+    assert_equal("http://www.last.fm/tag/country", first.url)
   end
   
   # not implemented
@@ -153,7 +153,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('Glee Cast', first.artist)
     assert_equal('50549203-9602-451c-b49f-ff031ba8635c', first.artist_mbid)
     assert_equal('', first.mbid)
-    assert_equal('www.last.fm/music/Glee+Cast/_/Don%27t+Stop+Believin%27+%28Glee+Cast+Version%29', first.url)
+    assert_equal('http://www.last.fm/music/Glee+Cast/_/Don%27t+Stop+Believin%27+%28Glee+Cast+Version%29', first.url)
     assert_equal(Time.mktime(2009, 5, 27, 14, 36, 00), first.date)
     assert_equal('1243434966', first.date_uts)
   end
@@ -234,7 +234,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('', first.mbid)
     assert_equal('1', first.chartposition)
     assert_equal('5', first.playcount)
-    assert_equal('www.last.fm/music/+noredirect/Glee+Cast/_/Gives+You+Hell+%28Glee+Cast+Version%29', first.url)
+    assert_equal('http://www.last.fm/music/+noredirect/Glee+Cast/_/Gives+You+Hell+%28Glee+Cast+Version%29', first.url)
   end
 
   test 'should have weekly track chart for past weeks' do
@@ -247,6 +247,6 @@ class TestUser < Test::Unit::TestCase
     assert_equal('', first.mbid)
     assert_equal('1', first.chartposition)
     assert_equal('8', first.playcount)
-    assert_equal('www.last.fm/music/Natasha+Bedingfield/_/Unwritten', first.url)
+    assert_equal('http://www.last.fm/music/Natasha+Bedingfield/_/Unwritten', first.url)
   end
 end

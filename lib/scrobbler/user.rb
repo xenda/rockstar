@@ -62,7 +62,7 @@ module Scrobbler
     class << self
       def new_from_xml(xml, doc=nil)
         u        = User.new((xml).at(:name).inner_html)
-        u.url    = (xml).at(:url).inner_html    if (xml).at(:url)
+        u.url    = Base.fix_url((xml).at(:url).inner_html)    if (xml).at(:url)
         
         u.images = {}
         (xml/'image').each {|image|
@@ -107,7 +107,7 @@ module Scrobbler
     def load_profile
       doc                  = self.class.fetch_and_parse("user.getInfo", {:user => @username})
       @id                  = (doc).at(:id).inner_html
-      @url                 = (doc).at(:url).inner_html
+      @url                 = Base.fix_url((doc).at(:url).inner_html)
       @realname            = (doc).at(:realname).inner_html
       @registered          = (doc).at(:registered).inner_html
       @registered_unixtime = (doc).at(:registered)['unixtime']

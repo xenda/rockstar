@@ -20,7 +20,7 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('Megadeth', first.name)
     assert_equal('a9044915-8be3-4c7e-b11f-9e2d2ea0a91e', first.mbid)
     assert_equal('1', first.match)
-    assert_equal('www.last.fm/music/Megadeth', first.url)
+    assert_equal('http://www.last.fm/music/Megadeth', first.url)
     assert_equal('http://userserve-ak.last.fm/serve/34/598154.jpg', first.thumbnail)
     assert_equal('http://userserve-ak.last.fm/serve/64/598154.jpg', first.image)
     assert_equal('http://userserve-ak.last.fm/serve/126/598154.jpg', first.images['large'])

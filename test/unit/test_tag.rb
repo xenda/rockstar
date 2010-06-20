@@ -10,7 +10,7 @@ class TestTag < Test::Unit::TestCase
     assert_equal(250, Scrobbler::Tag.top_tags.size)
     assert_equal('rock', Scrobbler::Tag.top_tags.first.name)
     assert_equal('2920270', Scrobbler::Tag.top_tags.first.count)
-    assert_equal('www.last.fm/tag/rock', Scrobbler::Tag.top_tags.first.url)
+    assert_equal('http://www.last.fm/tag/rock', Scrobbler::Tag.top_tags.first.url)
   end
   
   test 'should require name' do

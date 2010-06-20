@@ -43,7 +43,7 @@ module Scrobbler
         a.playcount      = (xml).at(:playcount).inner_html             if (xml).at(:playcount)
         a.rank           = xml['rank']                                 if xml['rank']
         a.rank           = (xml).at(:rank).inner_html                  if (xml).at(:rank) if a.rank.nil?
-        a.url            = (xml).at(:url).inner_html                   if (xml).at(:url)
+        a.url            = Base.fix_url((xml).at(:url).inner_html)     if (xml).at(:url)
         
         a.chartposition  = a.rank
         
@@ -74,7 +74,7 @@ module Scrobbler
     
     def load_info
       doc           = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
-      @url          = (doc).at(:url).inner_html
+      @url          = Base.fix_url((doc).at(:url).inner_html)
       @release_date = Time.parse((doc).at(:releasedate).inner_html.strip)
 
       @images = {}

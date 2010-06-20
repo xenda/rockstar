@@ -58,7 +58,7 @@ module Scrobbler
         t.mbid          = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
         t.playcount     = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
         t.chartposition = t.rank = xml['rank']                    if xml['rank']
-        t.url           = (xml).at(:url).inner_html               if (xml).at(:url)
+        t.url           = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
         t.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
         t.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if t.streamable.nil? && (xml).at(:streamable)
         

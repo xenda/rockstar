@@ -64,7 +64,7 @@ module Scrobbler
         name    = (xml).at(:name).inner_html
         t       = Tag.new(name)
         t.count = (xml).at(:count).inner_html
-        t.url   = (xml).at(:url).inner_html
+        t.url   = Base.fix_url((xml).at(:url).inner_html)
         t
       end
       
@@ -73,7 +73,7 @@ module Scrobbler
         @top_tags = (doc/"toptags/tag").collect do |tag|
           t       = Tag.new((tag/'name').inner_html)
           t.count = (tag/'count').inner_html
-          t.url   = (tag/'url').inner_html
+          t.url   = Base.fix_url((tag/'url').inner_html)
           t
         end
       end

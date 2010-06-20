@@ -70,11 +70,11 @@ module Scrobbler
         # occasionally name can be found in root of artist element (<artist name="">) rather than as an element (<name>)
         name             = xml['name']                          if name.nil? && xml['name']
         a                = Artist.new(name)
-        a.mbid           = (xml).at(:mbid).inner_html           if (xml).at(:mbid)
-        a.playcount      = (xml).at(:playcount).inner_html      if (xml).at(:playcount)
-        a.chartposition = a.rank = xml['rank']                  if xml['rank']
-        a.chartposition = a.rank = (xml).at(:rank).inner_html   if (xml).at(:rank) if a.rank.nil?
-        a.url            = (xml).at(:url).inner_html            if (xml).at(:url)
+        a.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
+        a.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
+        a.chartposition  = a.rank = xml['rank']                     if xml['rank']
+        a.chartposition  = a.rank = (xml).at(:rank).inner_html      if (xml).at(:rank) if a.rank.nil?
+        a.url            = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
         
         a.images = {}
         (xml/'image').each {|image|
@@ -99,9 +99,8 @@ module Scrobbler
     end
     
     def current_events(format=:ics)
-      format = :ics if format.to_s == 'ical'
-      raise ArgumentError unless ['ics', 'rss'].include?(format.to_s)
-      "#{API_URL.chop}#{api_path}/events.#{format}"
+      warn "[DEPRECATION] `current_events` is deprecated. The current api doesn't offer this function"
+      []
     end
     
     def similar(force=false)
