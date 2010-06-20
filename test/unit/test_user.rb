@@ -169,9 +169,8 @@ class TestUser < Test::Unit::TestCase
     assert_equal('http://www.last.fm/music/Virginia+Jetzt%21', first.url)
   end
   
-=begin
   test 'should have charts' do
-    assert_equal(71, @user.charts.size)
+    assert_equal(229, @user.charts.size)
     first = @user.charts.first
     assert_equal(1134302403, first.from)
     assert_equal(1134907203, first.to)
@@ -179,18 +178,18 @@ class TestUser < Test::Unit::TestCase
   
   test 'should have weekly artist chart' do
     chart = @user.weekly_artist_chart
-    assert_equal(5, chart.size)
+    assert_equal(3, chart.size)
     first = chart.first
-    assert_equal('Rascal Flatts', first.name)
+    assert_equal('Glee Cast', first.name)
     assert_equal('6e0ae159-8449-4262-bba5-18ec87fa529f', first.mbid)
     assert_equal('1', first.chartposition)
-    assert_equal('25', first.playcount)
-    assert_equal('http://www.last.fm/music/Rascal+Flatts', first.url)
+    assert_equal('45', first.playcount)
+    assert_equal('http://www.last.fm/music/Glee+Cast', first.url)
   end
   
   test 'should have weekly artist chart for past weeks' do
     chart = @user.weekly_artist_chart(1138536002, 1139140802)
-    assert_equal(8, chart.size)
+    assert_equal(33, chart.size)
     first = chart.first
     assert_equal('Jenny Lewis with The Watson Twins', first.name)
     assert_equal('4b179fe2-dfa5-40b1-b6db-b56dbc3b5f09', first.mbid)
@@ -203,18 +202,18 @@ class TestUser < Test::Unit::TestCase
     chart = @user.weekly_album_chart
     assert_equal(4, chart.size)
     first = chart.first
-    assert_equal('Reba McEntire', first.artist)
-    assert_equal('3ec17e85-9284-4f4c-8831-4e56c2354cdb', first.artist_mbid)
-    assert_equal("Reba #1's", first.name)
+    assert_equal('Brad Mehldau', first.artist)
+    assert_equal('b7723b3f-9a35-438d-bc42-8ad8b5e027ae', first.artist_mbid)
+    assert_equal("Highway Rider", first.name)
     assert_equal('', first.mbid)
     assert_equal('1', first.chartposition)
-    assert_equal('13', first.playcount)
-    assert_equal('http://www.last.fm/music/Reba+McEntire/Reba%2B%25231%2527s', first.url)
+    assert_equal('15', first.playcount)
+    assert_equal('http://www.last.fm/music/Brad+Mehldau/Highway+Rider', first.url)
   end
   
   test 'should have weekly album chart for past weeks' do
     chart = @user.weekly_album_chart(1138536002, 1139140802)
-    assert_equal(4, chart.size)
+    assert_equal(20, chart.size)
     first = chart.first
     assert_equal('Jewel', first.artist)
     assert_equal('abae8575-ec8a-4736-abc3-1ad5093a68aa', first.artist_mbid)
@@ -223,24 +222,24 @@ class TestUser < Test::Unit::TestCase
     assert_equal('1', first.chartposition)
     assert_equal('13', first.playcount)
     assert_equal('http://www.last.fm/music/Jewel/0304', first.url)
-  end
+  end 
   
   test 'should have track album chart' do
     chart = @user.weekly_track_chart
-    assert_equal(4, chart.size)
+    assert_equal(42, chart.size)
     first = chart.first
-    assert_equal('Rebecca St. James', first.artist)
-    assert_equal('302716e4-a702-4bbc-baac-591f8a8e20bc', first.artist_mbid)
-    assert_equal('Omega', first.name)
+    assert_equal('Glee Cast', first.artist)
+    assert_equal('3ac2a4a2-52b3-498b-bbc8-31443c68dfe0', first.artist_mbid)
+    assert_equal('Gives You Hell (Glee Cast Version)', first.name)
     assert_equal('', first.mbid)
     assert_equal('1', first.chartposition)
-    assert_equal('2', first.playcount)
-    assert_equal('http://www.last.fm/music/Rebecca+St.+James/_/Omega', first.url)
+    assert_equal('5', first.playcount)
+    assert_equal('www.last.fm/music/+noredirect/Glee+Cast/_/Gives+You+Hell+%28Glee+Cast+Version%29', first.url)
   end
-  
+
   test 'should have weekly track chart for past weeks' do
     chart = @user.weekly_track_chart(1138536002, 1139140802)
-    assert_equal(4, chart.size)
+    assert_equal(88, chart.size)
     first = chart.first
     assert_equal('Natasha Bedingfield', first.artist)
     assert_equal('8b477559-946e-4ef2-9fe1-446cff8fdd79', first.artist_mbid)
@@ -248,7 +247,6 @@ class TestUser < Test::Unit::TestCase
     assert_equal('', first.mbid)
     assert_equal('1', first.chartposition)
     assert_equal('8', first.playcount)
-    assert_equal('http://www.last.fm/music/Natasha+Bedingfield/_/Unwritten', first.url)
+    assert_equal('www.last.fm/music/Natasha+Bedingfield/_/Unwritten', first.url)
   end
-=end
 end

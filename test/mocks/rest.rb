@@ -18,9 +18,14 @@ module Scrobbler
   	        query = "_" + args.keys.sort_by{|a|a.to_s}.collect { |k| "%s_%s" % [k.to_s, args[k].to_s] }.join("_").gsub(" ", "_")
   	      end
   	      
-  	      puts "/#{folder}/#{file}#{query}.xml"
+  	      file = File.dirname(__FILE__) + "/../fixtures/xml/#{folder}/#{file}#{query}.xml"
   	      
-    	    File.read(File.dirname(__FILE__) + "/../fixtures/xml/#{folder}/#{file}#{query}.xml")
+  	      if (!File.exists? file)
+            puts "Mock file not found : #{file}"
+  	      else
+      	    File.read(file)
+  	      end
+  	        	      
   	    elsif @base_url == Scrobbler::AUTH_URL
     	    
   	      # Test Simple Auth
