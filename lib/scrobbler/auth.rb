@@ -9,7 +9,6 @@ module Scrobbler
     # See Scrobbler::TokenAuth for a detailed example
     def session(token)
       doc = self.class.fetch_and_parse("auth.getSession", {:token => token}, true)
-      puts doc
       Scrobbler::Session.new_from_xml(doc)
     end
     

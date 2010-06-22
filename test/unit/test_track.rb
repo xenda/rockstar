@@ -36,5 +36,9 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('100', @track.tags.first.count)
     assert_equal('http://www.last.fm/tag/country', @track.tags.first.url)
   end
+  
+  test 'can love tracks' do
+    assert_equal('ok', @track.love("tag"))  
+  end
 
 end

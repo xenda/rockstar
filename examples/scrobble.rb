@@ -35,6 +35,11 @@ scrobble = Scrobbler::Scrobble.new(:session_id => auth.session_id,
 scrobble.submit!
 puts "Scrobbler Submission Status: #{scrobble.status}"
 
+# Love the Song :
+l_status = Scrobbler::Track.new('Coldplay', 'Viva La Vida').love(session.key)
+
+puts "Love track status : #{l_status}"
+
 playing = Scrobbler::Playing.new(:session_id => auth.session_id,
                                  :now_playing_url => auth.now_playing_url,
                                  :artist => 'Anberlin',

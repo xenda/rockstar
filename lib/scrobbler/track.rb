@@ -93,5 +93,11 @@ module Scrobbler
     def tags(force=false)
       get_instance("track.getTopTags", :tags, :tag, {:track => @name, :artist => @artist}, force)
     end
+    
+    # The session_key is returned by auth.session.key
+    def love(session_key)
+      doc = Hpricot::XML(self.class.connection.post("track.love", true, {:track => @name, :artist => @artist, :sk => session_key}))
+      doc.at("lfm")["status"]
+    end
   end
 end

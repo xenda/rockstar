@@ -19,9 +19,7 @@ module Scrobbler
   		end
 
   		def request(resource, method = "get", args = {}, sign_request=false)
-  		  puts @base_url
-  		  puts resource
-  			url = URI.parse(@base_url)
+  		 	url = URI.parse(@base_url)
         
         if (!resource.blank?)
           args[:method] = resource
@@ -33,20 +31,15 @@ module Scrobbler
           query = sorted_keys.collect { |k| "%s=%s" % [escape(k.to_s), escape(args[k].to_s)] }.join("&")
 
           if !args[:sk].nil? ||sign_request # Session Key available => sign the request or sign_request = true?
-            signed = sorted_keys.collect {|k| "%s%s" % [escape(k.to_s), escape(args[k].to_s)]}.join()
+            signed = sorted_keys.collect {|k| "%s%s" % [k.to_s, args[k].to_s]}.join()
+            
             auth = Digest::MD5.hexdigest("#{signed}#{Scrobbler.lastfm_api_secret}")
             query += "&api_sig=#{auth}"
           end
   				url.query = query
   			end
 
-        puts url.request_uri
-
-        puts "\n\n"
-        puts url.to_s
-        puts "\n\n"
-
-  			case method
+       	case method
   			when "get"
   				req = Net::HTTP::Get.new(url.request_uri)
   			when "post"
