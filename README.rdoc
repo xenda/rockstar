@@ -84,6 +84,10 @@ If you want to use the api in an rails app, you could add an initializer in conf
     puts "=" * 4
     track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
     
+    # Love a song, session_key is returned by Scrobbler::Auth. See Scrobbler::TokenAuth or
+    # examples/scrobble.rb for a complete example
+    track.love(session_key)
+
 == Token Authentication (for scrobbling and recommendations)
 
     a = Scrobbler::Auth.new
