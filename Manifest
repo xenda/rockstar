@@ -26,7 +26,6 @@ lib/scrobbler/tokenauth.rb
 lib/scrobbler/track.rb
 lib/scrobbler/user.rb
 lib/scrobbler/version.rb
-scrobbler.gemspec
 setup.rb
 test/fixtures/xml/album/getinfo_album_Some_Hearts_artist_Carrie_Underwood.xml
 test/fixtures/xml/artist/getsimilar_artist_Metallica.xml
