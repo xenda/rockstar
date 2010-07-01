@@ -4,6 +4,9 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'scrobbl
 # You can find them here : http://www.lastfm.de/api/account
 Scrobbler.lastfm = YAML.load_file(File.join(File.dirname(__FILE__), 'lastfm.yml'))
 
+# This is the desktop app aproach to token auth. See Scrobbler::TokenAuth for
+# details on how to get a token for a web app.
+
 a = Scrobbler::Auth.new
 token = a.token
 
