@@ -42,9 +42,6 @@ If you want to use the api in an rails app, you could add an initializer in conf
     puts "URL: #{album.url}"
     puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
 
-    puts
-    puts
-
 ==Artists
     
     artist = Scrobbler::Artist.new('Carrie Underwood')
