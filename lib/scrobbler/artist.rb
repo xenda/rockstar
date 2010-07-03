@@ -4,7 +4,7 @@
 # 
 #   puts 'Top Tracks'
 #   puts "=" * 10
-#   artist.top_tracks.each { |t| puts "(#{t.reach}) #{t.name}" }
+#   artist.top_tracks.each { |t| puts "#{t.name}" }
 # 
 #   puts
 # 

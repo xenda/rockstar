@@ -8,7 +8,6 @@ album = Scrobbler::Album.new('Carrie Underwood', 'Some Hearts', :include_info =>
 
 puts "Album: #{album.name}"
 puts "Artist: #{album.artist}"
-puts "Reach: #{album.reach}"
 puts "URL: #{album.url}"
 puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
 puts "Large cover: #{album.image_large}"

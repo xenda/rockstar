@@ -39,25 +39,19 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
     puts "Album: #{album.name}"
     puts "Artist: #{album.artist}"
-    puts "Reach: #{album.reach}"
     puts "URL: #{album.url}"
     puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
 
     puts
     puts
 
-    puts "Tracks"
-    longest_track_name = album.tracks.collect(&:name).sort { |x, y| y.length <=> x.length }.first.length
-    puts "=" * longest_track_name
-    album.tracks.each { |t| puts t.name }
-    
 ==Artists
     
     artist = Scrobbler::Artist.new('Carrie Underwood')
 
     puts 'Top Tracks'
     puts "=" * 10
-    artist.top_tracks.each { |t| puts "(#{t.reach}) #{t.name}" }
+    artist.top_tracks.each { |t| puts "(#{t.name}" }
 
     puts
 
