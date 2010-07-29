@@ -124,10 +124,6 @@ More details can be found in in Rockstar::TokenAuth
 
     playing.submit!         
     puts "Playing Submission Status: #{playing.status}"
-    
-== Docs
-
-http://rdoc.info/projects/bitboxer/scrobbler
 
 == Note on Patches/Pull Requests
  
