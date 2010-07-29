@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'scrobbler'))
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'rockstar'))
 
 # Please enter your API-Keys into lastfm.yml first. 
 # You can find them here : http://www.lastfm.de/api/account
