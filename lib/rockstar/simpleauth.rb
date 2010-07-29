@@ -4,7 +4,7 @@ require 'digest/md5'
 class BadAuthError < StandardError; end
 class BannedError < StandardError; end
 class BadTimeError < StandardError; end
-module Scrobbler
+module Rockstar
   AUTH_URL = 'http://post.audioscrobbler.com'
   AUTH_VER = '1.2.1'
   
@@ -21,7 +21,7 @@ module Scrobbler
       @user = args[:user] # last.fm username
       @password = args[:password] # last.fm password
       @client_id = 'rbs' # Client ID assigned by last.fm; Don't change this!
-      @client_ver = Scrobbler::Version
+      @client_ver = Rockstar::Version
 
       raise ArgumentError, 'Missing required argument' if @user.blank? || @password.blank?
 

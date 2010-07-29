@@ -3,16 +3,16 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestTokenAuth < Test::Unit::TestCase
 
   def setup
-    Scrobbler.lastfm = {"api_secret" => 'secret', "api_key" => 'api'}
-    @auth = Scrobbler::TokenAuth.new(:username => 'chunky', :token => 'bacon')
+    Rockstar.lastfm = {"api_secret" => 'secret', "api_key" => 'api'}
+    @auth = Rockstar::TokenAuth.new(:username => 'chunky', :token => 'bacon')
   end
   
   test 'should require a user' do
-    assert_raises(ArgumentError) { Scrobbler::SimpleAuth.new(:token => 'bacon') }
+    assert_raises(ArgumentError) { Rockstar::SimpleAuth.new(:token => 'bacon') }
   end
   
   test 'should require a password' do
-    assert_raises(ArgumentError) { Scrobbler::SimpleAuth.new(:user => 'chunky') }
+    assert_raises(ArgumentError) { Rockstar::SimpleAuth.new(:user => 'chunky') }
   end
   
   test 'should have the right client id' do
@@ -20,7 +20,7 @@ class TestTokenAuth < Test::Unit::TestCase
   end
   
   test 'should have the right version' do
-    assert_equal(Scrobbler::Version, @auth.client_ver)
+    assert_equal(Rockstar::Version, @auth.client_ver)
   end
   
   test 'should handshake successfully' do

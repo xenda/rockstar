@@ -3,15 +3,15 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestSimpleAuth < Test::Unit::TestCase
 
   def setup
-    @auth = Scrobbler::SimpleAuth.new(:user => 'chunky', :password => 'bacon')
+    @auth = Rockstar::SimpleAuth.new(:user => 'chunky', :password => 'bacon')
   end
   
   test 'should require a user' do
-    assert_raises(ArgumentError) { Scrobbler::SimpleAuth.new(:password => 'bacon') }
+    assert_raises(ArgumentError) { Rockstar::SimpleAuth.new(:password => 'bacon') }
   end
   
   test 'should require a password' do
-    assert_raises(ArgumentError) { Scrobbler::SimpleAuth.new(:user => 'chunky') }
+    assert_raises(ArgumentError) { Rockstar::SimpleAuth.new(:user => 'chunky') }
   end
   
   test 'should have the right client id' do
@@ -19,7 +19,7 @@ class TestSimpleAuth < Test::Unit::TestCase
   end
   
   test 'should have the right version' do
-    assert_equal(Scrobbler::Version, @auth.client_ver)
+    assert_equal(Rockstar::Version, @auth.client_ver)
   end
   
   test 'should handshake successfully' do

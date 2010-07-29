@@ -1,4 +1,4 @@
-module Scrobbler
+module Rockstar
   class Playing
     # you should read last.fm/api/submissions#np first!
 
@@ -7,8 +7,8 @@ module Scrobbler
     attr_reader :status
 
     def initialize(args = {})
-      @session_id = args[:session_id] # from Scrobbler::SimpleAuth
-      @now_playing_url = args[:now_playing_url] # from Scrobbler::SimpleAuth (can change)
+      @session_id = args[:session_id] # from Rockstar::SimpleAuth
+      @now_playing_url = args[:now_playing_url] # from Rockstar::SimpleAuth (can change)
       @artist = args[:artist] # track artist
       @track = args[:track] # track name
       @album = args[:album] || '' # track album (optional)
@@ -40,7 +40,7 @@ module Scrobbler
       when /OK/
 
       when /BADSESSION/
-        raise BadSessionError # rerun Scrobbler::SimpleAuth#handshake!
+        raise BadSessionError # rerun Rockstar::SimpleAuth#handshake!
       else
         raise RequestFailedError
       end

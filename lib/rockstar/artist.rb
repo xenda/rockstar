@@ -1,6 +1,6 @@
 # Below are examples of how to find an artists top tracks and similar artists.
 # 
-#   artist = Scrobbler::Artist.new('Carrie Underwood')
+#   artist = Rockstar::Artist.new('Carrie Underwood')
 # 
 #   puts 'Top Tracks'
 #   puts "=" * 10
@@ -56,7 +56,7 @@
 #   (62.982%) Clay Aiken
 #   (62.436%) Ashlee Simpson
 #   (62.160%) Christina Aguilera
-module Scrobbler
+module Rockstar
   class Artist < Base
     attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail, :images, :count, :streamable
     attr_accessor :chartposition

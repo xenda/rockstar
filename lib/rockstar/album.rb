@@ -1,6 +1,6 @@
 # Getting information about an album such as release date and the summary or description on it is very easy.
 # 
-#   album = Scrobbler::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
+#   album = Rockstar::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
 # 
 #   puts "Album: #{album.name}"
 #   puts "Artist: #{album.artist}"
@@ -14,7 +14,7 @@
 #   URL: http://www.last.fm/music/Carrie+Underwood/Some+Hearts
 #   Release Date: 11/15/2005
 # 
-module Scrobbler
+module Rockstar
   class Album < Base
     attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :release_date
     attr_accessor :image_large, :image_medium, :image_small, :summary, :content, :images

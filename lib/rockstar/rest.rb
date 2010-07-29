@@ -1,7 +1,7 @@
 require 'net/https'
 require 'digest/md5'
 
-module Scrobbler
+module Rockstar
   module REST
   	class Connection
   		def initialize(base_url, args = {})
@@ -23,7 +23,7 @@ module Scrobbler
         
         if (!resource.blank?)
           args[:method] = resource
-          args[:api_key]= Scrobbler.lastfm_api_key
+          args[:api_key]= Rockstar.lastfm_api_key
         end
         
   			if args
@@ -33,7 +33,7 @@ module Scrobbler
           if !args[:sk].nil? ||sign_request # Session Key available => sign the request or sign_request = true?
             signed = sorted_keys.collect {|k| "%s%s" % [k.to_s, args[k].to_s]}.join()
             
-            auth = Digest::MD5.hexdigest("#{signed}#{Scrobbler.lastfm_api_secret}")
+            auth = Digest::MD5.hexdigest("#{signed}#{Rockstar.lastfm_api_secret}")
             query += "&api_sig=#{auth}"
           end
   				url.query = query

@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../../lib/scrobbler/rest'
+require File.dirname(__FILE__) + '/../../lib/rockstar/rest'
 require 'digest/md5'
 
-module Scrobbler
+module Rockstar
   module REST
   	class Connection
   	  # reads xml fixture file instead of hitting up the internets
@@ -10,7 +10,7 @@ module Scrobbler
   	    @submission_url = 'http://62.216.251.205:80/protocol_1.2'
   	    @session_id = '17E61E13454CDD8B68E8D7DEEEDF6170'
   	    
-  	    if @base_url == Scrobbler::API_URL + Scrobbler::API_VERSION + "/"
+  	    if @base_url == Rockstar::API_URL + Rockstar::API_VERSION + "/"
   	      folder, file = resource.downcase.split(".")
   	      
   	      query = ""
@@ -26,11 +26,11 @@ module Scrobbler
       	    File.read(file)
   	      end
   	        	      
-  	    elsif @base_url == Scrobbler::AUTH_URL
+  	    elsif @base_url == Rockstar::AUTH_URL
     	    
   	      # Test Simple Auth
-          if args[:hs] == "true" && args[:p] == Scrobbler::AUTH_VER.to_s && args[:c] == 'rbs' &&
-             args[:v] == Scrobbler::Version.to_s && args[:u] == 'chunky' && !args[:t].blank? &&
+          if args[:hs] == "true" && args[:p] == Rockstar::AUTH_VER.to_s && args[:c] == 'rbs' &&
+             args[:v] == Rockstar::Version.to_s && args[:u] == 'chunky' && !args[:t].blank? &&
              args[:a] == Digest::MD5.hexdigest('7813258ef8c6b632dde8cc80f6bda62f' + args[:t])
             
             "OK\n#{@session_id}\n#{@now_playing_url}\n#{@submission_url}"

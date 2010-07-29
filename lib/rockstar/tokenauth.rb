@@ -4,7 +4,7 @@ require 'digest/md5'
 class BadAuthError < StandardError; end
 class BannedError < StandardError; end
 class BadTimeError < StandardError; end
-module Scrobbler
+module Rockstar
   
   # = Token Authentification
   #
@@ -12,7 +12,7 @@ module Scrobbler
   # 
   # = Desktop-App
   # 1. Get a new token to request authorisation:
-  #     token = Scrobbler::Auth.new.token
+  #     token = Rockstar::Auth.new.token
   # 2. Open a webbrowser with http://www.last.fm/api/auth/?api_key=xxxxxxxxxxx&token=xxxxxxxx
   # 3. Wait for the User to confirm that he accepted your request. 
   # 4. Continue with "Get the session token"
@@ -25,11 +25,11 @@ module Scrobbler
   #
   # = Get the session token
   # 1. Use the previous token and call 
-  #     new Scrobbler::Auth.new.session(token) 
+  #     new Rockstar::Auth.new.session(token) 
   # 2. Store the session.key and session.username returned. The session.key will not
   #    expire. It is save to store it into your database.
   # 3. Use this session.key as token to authentificate with this class :
-  #     auth = Scrobbler::TokenAuth.new({:username => 'chunky', :token => 'bacon'})
+  #     auth = Rockstar::TokenAuth.new({:username => 'chunky', :token => 'bacon'})
   #     auth.handshake!
   # 
   class TokenAuth
@@ -42,16 +42,16 @@ module Scrobbler
       @user = args[:username] # last.fm user
       @token = args[:token] # last.fm token
       @client_id = 'rbs' # Client ID assigned by last.fm; Don't change this!
-      @client_ver = Scrobbler::Version
+      @client_ver = Rockstar::Version
 
       raise ArgumentError, 'Missing required argument' if @user.blank? || @token.blank?
       
-      @connection = REST::Connection.new(Scrobbler::AUTH_URL)
+      @connection = REST::Connection.new(Rockstar::AUTH_URL)
     end
 
     def handshake!
       timestamp = Time.now.to_i.to_s
-      auth = Digest::MD5.hexdigest("#{Scrobbler.lastfm_api_secret}#{timestamp}")
+      auth = Digest::MD5.hexdigest("#{Rockstar.lastfm_api_secret}#{timestamp}")
 
       query = { :hs => 'true',
                 :p => AUTH_VER,
@@ -60,7 +60,7 @@ module Scrobbler
                 :u => @user,
                 :t => timestamp,
                 :a => auth,
-                :api_key=>Scrobbler.lastfm_api_key,
+                :api_key=>Rockstar.lastfm_api_key,
                 :sk => @token }
       result = @connection.get('/', true, query)
 

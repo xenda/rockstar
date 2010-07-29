@@ -3,11 +3,11 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestArtist < Test::Unit::TestCase
 
   def setup
-    @artist = Scrobbler::Artist.new('Metallica')
+    @artist = Rockstar::Artist.new('Metallica')
   end
   
   test 'should require name' do
-    assert_raises(ArgumentError) { Scrobbler::Artist.new('') }
+    assert_raises(ArgumentError) { Rockstar::Artist.new('') }
   end
   
   test "should know it's name" do

@@ -1,13 +1,13 @@
 # Below is an example of how to get the top fans for a track.
 # 
-#   track = Scrobbler::Track.new('Carrie Underwood', 'Before He Cheats')
+#   track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
 #   puts 'Fans'
 #   puts "=" * 4
 #   track.fans.each { |u| puts u.username }
 #   
 # Which would output something like:
 # 
-#   track = Scrobbler::Track.new('Carrie Underwood', 'Before He Cheats')
+#   track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
 #   puts 'Fans'
 #   puts "=" * 4
 #   track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
@@ -33,7 +33,7 @@
 #   (2449) mlmjcace
 #   (2302) tiNEey
 #   (2169) ajsbabiegirl
-module Scrobbler
+module Rockstar
   class Track < Base
     attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url
     attr_accessor :streamable, :album, :album_mbid, :date, :date_uts

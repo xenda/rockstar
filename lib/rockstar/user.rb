@@ -1,5 +1,5 @@
 # Probably the most common use of this lib would be to get your most recent tracks or your top tracks. Below are some code samples.
-#   user = Scrobbler::User.new('jnunemaker')
+#   user = Rockstar::User.new('jnunemaker')
 # 
 #   puts "#{user.username}'s Recent Tracks"
 #   puts "=" * (user.username.length + 16)
@@ -44,7 +44,7 @@
 #   (35) You're Beautiful
 #   (35) Walk Away
 #   (34) Stickwitu
-module Scrobbler  
+module Rockstar  
   class User < Base
     # attributes needed to initialize
     attr_reader :username

@@ -1,4 +1,4 @@
-module Scrobbler
+module Rockstar
   class Session < Base
     attr_accessor :username, :key, :subscriber
 

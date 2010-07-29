@@ -3,18 +3,18 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestTag < Test::Unit::TestCase
 
   def setup
-    @tag = Scrobbler::Tag.new('rock')
+    @tag = Rockstar::Tag.new('rock')
   end
   
   test 'should be able to find the top tags for the entire system' do
-    assert_equal(250, Scrobbler::Tag.top_tags.size)
-    assert_equal('rock', Scrobbler::Tag.top_tags.first.name)
-    assert_equal('2920270', Scrobbler::Tag.top_tags.first.count)
-    assert_equal('http://www.last.fm/tag/rock', Scrobbler::Tag.top_tags.first.url)
+    assert_equal(250, Rockstar::Tag.top_tags.size)
+    assert_equal('rock', Rockstar::Tag.top_tags.first.name)
+    assert_equal('2920270', Rockstar::Tag.top_tags.first.count)
+    assert_equal('http://www.last.fm/tag/rock', Rockstar::Tag.top_tags.first.url)
   end
   
   test 'should require name' do
-    assert_raise(ArgumentError) { Scrobbler::Tag.new('') }
+    assert_raise(ArgumentError) { Rockstar::Tag.new('') }
   end
   
   test 'should have name' do

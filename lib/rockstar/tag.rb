@@ -1,6 +1,6 @@
 # Below is code samples for how to find the top albums and tracks for a tag.
 # 
-#   tag = Scrobbler::Tag.new('country')
+#   tag = Rockstar::Tag.new('country')
 # 
 #   puts 'Top Albums'
 #   tag.top_albums.each { |a| puts "(#{a.count}) #{a.name} by #{a.artist}" }
@@ -55,7 +55,7 @@
 #   (41) Get Rhythm by Johnny Cash
 #   (41) I Still Miss Someone by Johnny Cash
 #   (40) The Devil Went Down to Georgia by Charlie Daniels Band
-module Scrobbler
+module Rockstar
   class Tag < Base
     attr_accessor :name, :count, :url
     

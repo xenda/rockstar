@@ -2,7 +2,7 @@
 class BadSessionError < StandardError; end
 class RequestFailedError < StandardError; end
 
-module Scrobbler
+module Rockstar
   class Scrobble
     # you need to read last.fm/api/submissions#subs first!
 
@@ -11,8 +11,8 @@ module Scrobbler
     attr_reader :status
 
     def initialize(args = {})
-      @session_id = args[:session_id] # from Scrobbler::TokenAuth
-      @submission_url = args[:submission_url] # from Scrobbler::TokenAuth (can change)
+      @session_id = args[:session_id] # from Rockstar::TokenAuth
+      @submission_url = args[:submission_url] # from Rockstar::TokenAuth (can change)
       @artist = args[:artist] # track artist
       @track = args[:track] # track name
       @time = args[:time] # a Time object set to the time the track started playing
@@ -56,7 +56,7 @@ module Scrobbler
       when /OK/
 
       when /BADSESSION/
-        raise BadSessionError # rerun Scrobbler::SimpleAuth#handshake!
+        raise BadSessionError # rerun Rockstar::SimpleAuth#handshake!
       when /FAILED/
         raise RequestFailedError, @status
       else

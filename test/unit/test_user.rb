@@ -3,36 +3,36 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestUser < Test::Unit::TestCase
 
   def setup
-    @user = Scrobbler::User.new('jnunemaker')
+    @user = Rockstar::User.new('jnunemaker')
   end
   
   test 'should be able to find one user' do
-    assert_equal(@user.username, Scrobbler::User.find('jnunemaker').username)
+    assert_equal(@user.username, Rockstar::User.find('jnunemaker').username)
   end
   
   test 'should be able to find multiple users' do
-    users = Scrobbler::User.find('jnunemaker', 'oaknd1', 'wharle')
+    users = Rockstar::User.find('jnunemaker', 'oaknd1', 'wharle')
     assert_equal(%w{jnunemaker oaknd1 wharle}, users.collect(&:username))
   end
   
   test 'should be able to find multiple users using an array' do
-    users = Scrobbler::User.find(%w{jnunemaker oaknd1 wharle})
+    users = Rockstar::User.find(%w{jnunemaker oaknd1 wharle})
     assert_equal(%w{jnunemaker oaknd1 wharle}, users.collect(&:username))
   end
   
   test 'should be able to load profile while finding' do
-    user = Scrobbler::User.find('jnunemaker', :include_profile => true)
+    user = Rockstar::User.find('jnunemaker', :include_profile => true)
     assert_equal(@user.username, user.username)
     assert_equal('3017870', user.id)
   end
   
   test 'should be able to load profile while finding multiple users' do
-    users = Scrobbler::User.find('jnunemaker', 'oaknd1', 'wharle', :include_profile => true)
+    users = Rockstar::User.find('jnunemaker', 'oaknd1', 'wharle', :include_profile => true)
     assert_equal(3, users.size)
   end
   
   test 'should be able to include profile during initialization' do
-    user = Scrobbler::User.new('jnunemaker', :include_profile => true)
+    user = Rockstar::User.new('jnunemaker', :include_profile => true)
     assert_equal('3017870', user.id)
     assert_equal('http://www.last.fm/user/jnunemaker', user.url)
     assert_equal('John Nunemaker', user.realname)

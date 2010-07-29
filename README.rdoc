@@ -1,12 +1,13 @@
-=Scrobbler
+=Rockstar
 
-Scrobbler is a wrapper for the last.fm audioscrobbler web services (http://www.last.fm/api/). 
+Rockstar is a wrapper for the last.fm audioscrobbler web services (http://www.last.fm/api/). This gem is based on the scrobbler
+gem by John Nunemaker and updated to use the 2.0 version of the last.fm api
 
 Below is just a sampling of how easy this lib is to use.
 
 Please initialize your api key and secret before using the api:
 
-    Scrobbler.lastfm = YAML.load_file('lastfm.yml')
+    Rockstar.lastfm = YAML.load_file('lastfm.yml')
 
 Here is an example lastfm.yml:
 
@@ -16,11 +17,11 @@ Here is an example lastfm.yml:
 If you want to use the api in an rails app, you could add an initializer in config/initializers/lastm.rb and load a config/lastfm.yml file.
 
     rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
-    Scrobbler.lastfm =  YAML.load_file(rails_root + '/config/lastfm.yml')
+    Rockstar.lastfm =  YAML.load_file(rails_root + '/config/lastfm.yml')
 
 == Users
 
-    user = Scrobbler::User.new('jnunemaker')
+    user = Rockstar::User.new('jnunemaker')
 
     puts "#{user.username}'s Recent Tracks"
     puts "=" * (user.username.length + 16)
@@ -35,7 +36,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
     
 == Albums
     
-    album = Scrobbler::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
+    album = Rockstar::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
 
     puts "Album: #{album.name}"
     puts "Artist: #{album.artist}"
@@ -44,7 +45,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
 ==Artists
     
-    artist = Scrobbler::Artist.new('Carrie Underwood')
+    artist = Rockstar::Artist.new('Carrie Underwood')
 
     puts 'Top Tracks'
     puts "=" * 10
@@ -58,7 +59,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
     
 ==Tags    
     
-    tag = Scrobbler::Tag.new('country')
+    tag = Rockstar::Tag.new('country')
 
     puts 'Top Albums'
     tag.top_albums.each { |a| puts "(#{a.count}) #{a.name} by #{a.artist}" }
@@ -70,22 +71,22 @@ If you want to use the api in an rails app, you could add an initializer in conf
     
 ==Tracks
     
-    track = Scrobbler::Track.new('Carrie Underwood', 'Before He Cheats')
+    track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
     puts 'Fans'
     puts "=" * 4
     track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
     
-    # Love a song, session_key is returned by Scrobbler::Auth. See Scrobbler::TokenAuth or
+    # Love a song, session_key is returned by Rockstar::Auth. See Rockstar::TokenAuth or
     # examples/scrobble.rb for a complete example
     track.love(session_key)
 
 == Token Authentication (for scrobbling and recommendations)
 
-    a = Scrobbler::Auth.new
+    a = Rockstar::Auth.new
     token = a.token
     
     puts
-    puts "Please open http://www.last.fm/api/auth/?api_key=#{Scrobbler.lastfm_api_key}&token=#{token}"
+    puts "Please open http://www.last.fm/api/auth/?api_key=#{Rockstar.lastfm_api_key}&token=#{token}"
     puts
     puts "Press enter when done."
     
@@ -93,14 +94,14 @@ If you want to use the api in an rails app, you could add an initializer in conf
     
     session = a.session(token)
     
-    auth = Scrobbler::TokenAuth.new({:username => session.username, :token => session.key})
+    auth = Rockstar::TokenAuth.new({:username => session.username, :token => session.key})
     auth.handshake!
 
-More details can be found in in Scrobbler::TokenAuth
+More details can be found in in Rockstar::TokenAuth
 
 == Scrobbling
 
-    scrobble = Scrobbler::Scrobble.new(:session_id => auth.session_id,
+    scrobble = Rockstar::Scrobble.new(:session_id => auth.session_id,
                                        :submission_url => auth.submission_url,
                                        :artist => 'Coldplay',
                                        :track => 'Viva La Vida',
@@ -109,11 +110,11 @@ More details can be found in in Scrobbler::TokenAuth
                                        :length => 244,
                                        :track_number => 7)
     scrobble.submit!
-    puts "Scrobbler Submission Status: #{scrobble.status}"
+    puts "Rockstar Submission Status: #{scrobble.status}"
 
 == Now Playing Submission
 
-    playing = Scrobbler::Playing.new(:session_id => auth.session_id,
+    playing = Rockstar::Playing.new(:session_id => auth.session_id,
                                      :now_playing_url => auth.now_playing_url,
                                      :artist => 'Anberlin',
                                      :track => 'Readyfuels',

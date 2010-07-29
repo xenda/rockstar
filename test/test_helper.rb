@@ -1,5 +1,5 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/scrobbler'
+require File.dirname(__FILE__) + '/../lib/rockstar'
 require File.dirname(__FILE__) + '/mocks/rest'
 
 class << Test::Unit::TestCase

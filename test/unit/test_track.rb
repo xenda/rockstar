@@ -3,15 +3,15 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class TestTrack < Test::Unit::TestCase
 
   def setup
-    @track = Scrobbler::Track.new('Carrie Underwood', 'Before He Cheats')
+    @track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
   end
   
   test 'should require the artist name' do
-    assert_raises(ArgumentError) { Scrobbler::Track.new('', 'Before He Cheats') }
+    assert_raises(ArgumentError) { Rockstar::Track.new('', 'Before He Cheats') }
   end
   
   test 'should require the track name' do
-    assert_raises(ArgumentError) { Scrobbler::Track.new('Carrie Underwood', '') }
+    assert_raises(ArgumentError) { Rockstar::Track.new('Carrie Underwood', '') }
   end
   
   test "should know the artist" do

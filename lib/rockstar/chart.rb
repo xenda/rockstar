@@ -1,4 +1,4 @@
-module Scrobbler
+module Rockstar
   class Chart < Base
     class << self
       def new_from_xml(xml, doc)

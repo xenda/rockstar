@@ -1,4 +1,4 @@
-module Scrobbler
+module Rockstar 
   
   API_URL     = 'http://ws.audioscrobbler.com/'
   API_VERSION = '2.0'
@@ -17,11 +17,11 @@ module Scrobbler
     private
       # in order for subclass to use, it must have api_path method
       def get_instance(api_method, instance_name, element, params, force=false, sign_request = false)
-        scrobbler_class = "scrobbler/#{element.to_s}".camelize.constantize
+        rockstar_class = "rockstar/#{element.to_s}".camelize.constantize
         
         if instance_variable_get("@#{instance_name}").nil? || force
           doc      = self.class.fetch_and_parse(api_method, params, sign_request)
-          elements = (doc/element).inject([]) { |elements, el| elements << scrobbler_class.new_from_xml(el, doc); elements }
+          elements = (doc/element).inject([]) { |elements, el| elements << rockstar_class.new_from_xml(el, doc); elements }
           instance_variable_set("@#{instance_name}", elements)
         end
         instance_variable_get("@#{instance_name}")

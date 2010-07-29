@@ -1,4 +1,4 @@
-module Scrobbler
+module Rockstar
   
   class Auth < Base
     # Returns the token for a session. You have to use
@@ -6,10 +6,10 @@ module Scrobbler
     # that is given by last.fm to create a session token
     # This session token can be stored in your database, it is
     # not expiring.
-    # See Scrobbler::TokenAuth for a detailed example
+    # See Rockstar::TokenAuth for a detailed example
     def session(token)
       doc = self.class.fetch_and_parse("auth.getSession", {:token => token}, true)
-      Scrobbler::Session.new_from_xml(doc)
+      Rockstar::Session.new_from_xml(doc)
     end
     
     def token
