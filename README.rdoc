@@ -1,7 +1,7 @@
 =Rockstar
 
 Rockstar is a wrapper for the last.fm audioscrobbler web services (http://www.last.fm/api/). This gem is based on the scrobbler
-gem by John Nunemaker and updated to use the 2.0 version of the last.fm api
+gem by John Nunemaker and was updated to use the 2.0 version of the last.fm api
 
 Below is just a sampling of how easy this lib is to use.
 
