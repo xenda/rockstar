@@ -189,6 +189,11 @@ module Rockstar
       doc = self.class.fetch_and_parse("user.getWeeklyTrackChart", {:user => @username, :from => from, :to => to})
       (doc/:track).inject([]) { |elements, el| elements << Track.new_from_xml(el); elements }
     end
-    
+
+    # Get the recommendated events for the user, auth.session.key needed.
+    def events(session_key, force = false)
+      get_instance("user.getEvents", :events, :event, {:user => @username, :sk => session_key}, force)
+    end
+
   end
 end

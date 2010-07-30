@@ -249,4 +249,28 @@ class TestUser < Test::Unit::TestCase
     assert_equal('8', first.playcount)
     assert_equal('http://www.last.fm/music/Natasha+Bedingfield/_/Unwritten', first.url)
   end
+
+  test 'should get recommendated events' do
+    user = Rockstar::User.new('bodot')
+    events = user.events("token")
+
+    first = events.first
+    assert_equal(7, events.size)
+    assert_equal("Cityfestival (gamescom)", first.title)
+    assert_equal(13, first.artists.size)
+    assert_equal("2raumwohnung", first.artists.first)
+    assert_equal(1, first.headliners.size)
+    assert_equal("2raumwohnung", first.headliners.first)
+    assert_equal(Time.local(2010, 8, 20, 17, 50, 1), first.start_date)
+    assert_equal(Time.local(2010, 8, 22, 17, 50, 1), first.end_date)
+    assert_equal(827, first.description.length)
+    assert_equal(200, first.attendance) 
+    assert_equal(0, first.reviews)
+    assert_equal("lastfm:event=1575046", first.tag)
+    assert_equal("http://www.last.fm/festival/1575046+Cityfestival+%28gamescom%29", first.url)
+    assert_equal("http://www.gamescom.de", first.website)
+    assert_equal(false, first.cancelled)
+    assert_equal(0, first.tickets.size)
+  end 
+
 end
