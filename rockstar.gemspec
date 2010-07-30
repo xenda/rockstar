@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rockstar}
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bodo Tasche"]
-  s.date = %q{2010-07-29}
-  s.description = %q{This gem is an updated version of jnunemakers scrobbler gem.}
+  s.date = %q{2010-07-30}
+  s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
   s.email = %q{bodo@bitboxer.de}
   s.extra_rdoc_files = [
     "README.rdoc"
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "examples/.gitignore",
      "examples/album.rb",
      "examples/artist.rb",
+     "examples/geo.rb",
      "examples/lastfm.yml_example",
      "examples/scrobble.rb",
      "examples/tag.rb",
@@ -37,6 +38,9 @@ Gem::Specification.new do |s|
      "lib/rockstar/auth.rb",
      "lib/rockstar/base.rb",
      "lib/rockstar/chart.rb",
+     "lib/rockstar/event.rb",
+     "lib/rockstar/geo.rb",
+     "lib/rockstar/metro.rb",
      "lib/rockstar/playing.rb",
      "lib/rockstar/rest.rb",
      "lib/rockstar/scrobble.rb",
@@ -46,6 +50,7 @@ Gem::Specification.new do |s|
      "lib/rockstar/tokenauth.rb",
      "lib/rockstar/track.rb",
      "lib/rockstar/user.rb",
+     "lib/rockstar/venue.rb",
      "lib/rockstar/version.rb",
      "rockstar.gemspec",
      "test/fixtures/xml/album/getinfo_album_Some_Hearts_artist_Carrie_Underwood.xml",
@@ -54,6 +59,8 @@ Gem::Specification.new do |s|
      "test/fixtures/xml/artist/gettopfans_artist_Metallica.xml",
      "test/fixtures/xml/artist/gettoptags_artist_Metallica.xml",
      "test/fixtures/xml/artist/gettoptracks_artist_Metallica.xml",
+     "test/fixtures/xml/geo/getevents_location_london.xml",
+     "test/fixtures/xml/geo/getmetros_country_germany.xml",
      "test/fixtures/xml/tag/gettopalbums_tag_rock.xml",
      "test/fixtures/xml/tag/gettopartists_tag_rock.xml",
      "test/fixtures/xml/tag/gettoptags.xml",
@@ -61,6 +68,7 @@ Gem::Specification.new do |s|
      "test/fixtures/xml/track/gettopfans_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
      "test/fixtures/xml/track/gettoptags_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
      "test/fixtures/xml/track/love_artist_Carrie_Underwood_sk_tag_track_Before_He_Cheats.xml",
+     "test/fixtures/xml/user/getevents_sk_token_user_bodot.xml",
      "test/fixtures/xml/user/getfriends_user_jnunemaker.xml",
      "test/fixtures/xml/user/getinfo_user_jnunemaker.xml",
      "test/fixtures/xml/user/getinfo_user_oaknd1.xml",
@@ -85,6 +93,7 @@ Gem::Specification.new do |s|
      "test/unit/test_album.rb",
      "test/unit/test_artist.rb",
      "test/unit/test_chart.rb",
+     "test/unit/test_geo.rb",
      "test/unit/test_playing.rb",
      "test/unit/test_scrobble.rb",
      "test/unit/test_simpleauth.rb",
@@ -104,6 +113,7 @@ Gem::Specification.new do |s|
      "test/unit/test_album.rb",
      "test/unit/test_artist.rb",
      "test/unit/test_chart.rb",
+     "test/unit/test_geo.rb",
      "test/unit/test_playing.rb",
      "test/unit/test_scrobble.rb",
      "test/unit/test_simpleauth.rb",
@@ -113,6 +123,7 @@ Gem::Specification.new do |s|
      "test/unit/test_user.rb",
      "examples/album.rb",
      "examples/artist.rb",
+     "examples/geo.rb",
      "examples/scrobble.rb",
      "examples/tag.rb",
      "examples/track.rb",
