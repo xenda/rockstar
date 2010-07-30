@@ -3,7 +3,7 @@ module Rockstar
     
     attr_accessor :eid, :title, :artists, :headliners, :start_date, :end_date,
                   :description, :attendance, :reviews, :tag, :url, :website, :tickets, 
-                  :cancelled
+                  :cancelled, :tags, :images, :venue
     
     class << self
       def new_from_xml(xml, doc)
@@ -37,6 +37,18 @@ module Rockstar
           e.tickets << t.inner_html
         }
 
+        e.tags = []
+        xml.search("/tags/tag").each{|t|
+          e.tags << t.inner_html
+        }
+
+        e.images = {}
+        xml.search('/image').each {|image|
+          e.images[image['size']] = image.inner_html
+        }
+
+        e.venue = Venue.new_from_xml(xml.search('/venue'), doc) if xml.search('/venue')
+
         e
       end
     end
@@ -48,6 +60,14 @@ module Rockstar
       @title = title
     end
     
+    def image(which=:medium)
+      which = which.to_s
+      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge', 'mega'].include?(which)  
+      if (self.images.nil?)
+        load_info
+      end    
+      self.images[which]
+    end
   end
 end
 

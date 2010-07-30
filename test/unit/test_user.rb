@@ -271,6 +271,27 @@ class TestUser < Test::Unit::TestCase
     assert_equal("http://www.gamescom.de", first.website)
     assert_equal(false, first.cancelled)
     assert_equal(0, first.tickets.size)
+    assert_equal(["indie", "german"], first.tags)
+    assert_equal("http://userserve-ak.last.fm/serve/34/3608276.jpg",  first.images["small"])
+    assert_equal("http://userserve-ak.last.fm/serve/64/3608276.jpg",  first.images["medium"])
+    assert_equal("http://userserve-ak.last.fm/serve/126/3608276.jpg", first.images["large"])
+    assert_equal("http://userserve-ak.last.fm/serve/252/3608276.jpg", first.images["extralarge"])
+    
+    assert_equal("Innenstadt", first.venue.name)
+    assert_equal("Köln", first.venue.city)
+    assert_equal("Germany", first.venue.country)
+    assert_equal("Street", first.venue.street)
+    assert_equal("12345", first.venue.postalcode)
+    assert_equal("50.929442", first.venue.lat)
+    assert_equal("6.961012", first.venue.long)
+    assert_equal("http://www.last.fm/venue/8921690+Innenstadt", first.venue.url)
+    assert_equal("http://example.com", first.venue.website)
+    assert_equal("+49 110", first.venue.phonenumber)
+    assert_equal("small",      first.venue.images["small"])
+    assert_equal("medium",     first.venue.images["medium"])
+    assert_equal("large",      first.venue.images["large"])
+    assert_equal("extralarge", first.venue.images["extralarge"])
+
   end 
 
 end

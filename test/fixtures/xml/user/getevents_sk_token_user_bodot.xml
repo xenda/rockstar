@@ -26,21 +26,21 @@
     <location>
       <city>Köln</city>
       <country>Germany</country>
-      <street></street>
-      <postalcode></postalcode>
+      <street>Street</street>
+      <postalcode>12345</postalcode>
       <geo:point>
          <geo:lat>50.929442</geo:lat>
          <geo:long>6.961012</geo:long>
       </geo:point>
     </location>
     <url>http://www.last.fm/venue/8921690+Innenstadt</url>
-    <website></website>
-    <phonenumber></phonenumber>
-    <image size="small"></image>
-	<image size="medium"></image>
-	<image size="large"></image>
-	<image size="extralarge"></image>
-	<image size="mega"></image>
+    <website>http://example.com</website>
+    <phonenumber>+49 110</phonenumber>
+    <image size="small">small</image>
+	<image size="medium">medium</image>
+	<image size="large">large</image>
+	<image size="extralarge">extralarge</image>
+	<image size="mega">mega</image>
   </venue>  <startDate>Fri, 20 Aug 2010 17:50:01</startDate>
   <endDate>Sun, 22 Aug 2010 17:50:01</endDate>
   <description><![CDATA[<div class="bbcode">CITYFESTIVAL<br />

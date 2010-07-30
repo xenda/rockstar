@@ -12,6 +12,7 @@ require 'rockstar/event'
 require 'rockstar/user'
 require 'rockstar/tag'
 require 'rockstar/track'
+require 'rockstar/venue'
 
 require 'rockstar/simpleauth'
 require 'rockstar/auth'
