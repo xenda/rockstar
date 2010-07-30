@@ -80,6 +80,20 @@ If you want to use the api in an rails app, you could add an initializer in conf
     # examples/scrobble.rb for a complete example
     track.love(session_key)
 
+==Geo
+
+    geo = Rockstar::Geo.new
+      
+    # Get events for a lat/long  
+    geo.events(:lat => 50.0, :long => 12.3).each{|e| p "#{e.title} at #{e.venue.name}"}
+    
+    # Get events for a location
+    geo.events(:location => 'london').each{|e| p "#{e.title} at #{e.venue.name}"}
+    
+    # To get a list of possible locations use
+    geo.metros("germany").each{|m| p m.name}
+
+
 == Token Authentication (for scrobbling and recommendations)
 
     a = Rockstar::Auth.new

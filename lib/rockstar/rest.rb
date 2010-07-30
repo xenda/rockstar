@@ -39,8 +39,6 @@ module Rockstar
   				url.query = query
   			end
 
-        puts url.request_uri
-
        	case method
   			when "get"
   				req = Net::HTTP::Get.new(url.request_uri)
