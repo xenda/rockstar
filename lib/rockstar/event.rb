@@ -22,8 +22,8 @@ module Rockstar
           e.headliners <<  h.inner_html
         }
 
-        e.start_date  = Time.parse(xml.search("/startDate").inner_html.strip)
-        e.end_date    = Time.parse(xml.search("/endDate").inner_html.strip)
+        e.start_date  = Base.parse_time(xml.search("/startDate").inner_html.strip)
+        e.end_date    = Base.parse_time(xml.search("/endDate").inner_html.strip)
         e.description = xml.search("/description").inner_html.strip
         e.attendance  = xml.search("/attendance").inner_html.strip.to_i
         e.reviews     = xml.search("/reviews").inner_html.strip.to_i

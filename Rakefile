@@ -1,7 +1,7 @@
 # Rakefile
 require 'rubygems'
 require 'rake'
-require 'lib/rockstar/version'
+require File.expand_path('../lib/rockstar/version', __FILE__)
 
 begin
   require 'jeweler'

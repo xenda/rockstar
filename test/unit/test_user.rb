@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + '/../test_helper.rb'
+# encoding: utf-8
+require File.expand_path('../../test_helper.rb', __FILE__)
 
 class TestUser < Test::Unit::TestCase
 
@@ -278,7 +279,8 @@ class TestUser < Test::Unit::TestCase
     assert_equal("http://userserve-ak.last.fm/serve/252/3608276.jpg", first.images["extralarge"])
     
     assert_equal("Innenstadt", first.venue.name)
-    assert_equal("Köln", first.venue.city)
+
+    assert_equal("Köln", first.venue.city.mb_chars)
     assert_equal("Germany", first.venue.country)
     assert_equal("Street", first.venue.street)
     assert_equal("12345", first.venue.postalcode)

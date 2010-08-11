@@ -2,6 +2,10 @@
 
 $: << File.expand_path(File.dirname(__FILE__))
 
+require 'rubygems'
+require 'active_record'
+require 'time'
+
 require 'rockstar/base'
 require 'rockstar/version'
 

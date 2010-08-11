@@ -12,6 +12,7 @@ module Rockstar
       def fetch_and_parse(resource, params = {}, sign_request = false)
         Hpricot::XML(connection.get(resource, sign_request, params))
       end
+
     end
     
     private
@@ -32,6 +33,11 @@ module Rockstar
           url = "http://#{url}"
         end
         url
+      end
+
+      def self.parse_time(time_str)
+        return nil if time_str.blank?
+        Time.parse(time_str)
       end
   end
 end

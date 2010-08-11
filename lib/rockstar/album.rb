@@ -75,7 +75,7 @@ module Rockstar
     def load_info
       doc           = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
       @url          = Base.fix_url((doc).at(:url).inner_html)
-      @release_date = Time.parse((doc).at(:releasedate).inner_html.strip)
+      @release_date = Base.parse_time((doc).at(:releasedate).inner_html.strip)
 
       @images = {}
       (doc/'image').each {|image|

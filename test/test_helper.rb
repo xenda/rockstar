@@ -1,6 +1,7 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/rockstar'
-require File.dirname(__FILE__) + '/mocks/rest'
+
+require File.expand_path('../../lib/rockstar', __FILE__)
+require File.expand_path('..//mocks/rest', __FILE__)
 
 class << Test::Unit::TestCase
   def test(name, &block)

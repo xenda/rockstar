@@ -65,7 +65,7 @@ module Rockstar
         t.count         = xml['count']                            if xml['count']
         t.album         = (xml).at(:album).inner_html             if (xml).at(:album)
         t.album_mbid    = (xml).at(:album)['mbid']                if (xml).at(:album) && (xml).at(:album)['mbid']
-        t.date          = Time.parse((xml).at(:date).inner_html)  if (xml).at(:date)
+        t.date          = Base.parse_time((xml).at(:date).inner_html)  if (xml).at(:date)
         t.date_uts      = (xml).at(:date)['uts']                  if (xml).at(:date) && (xml).at(:date)['uts']
         
         t.images = {}
