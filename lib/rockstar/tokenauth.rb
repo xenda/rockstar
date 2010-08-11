@@ -25,7 +25,7 @@ module Rockstar
   #
   # = Get the session token
   # 1. Use the previous token and call 
-  #     new Rockstar::Auth.new.session(token) 
+  #     session = Rockstar::Auth.new.session(token) 
   # 2. Store the session.key and session.username returned. The session.key will not
   #    expire. It is save to store it into your database.
   # 3. Use this session.key as token to authentificate with this class :
