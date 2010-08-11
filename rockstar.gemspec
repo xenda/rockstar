@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rockstar}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bodo Tasche"]
-  s.date = %q{2010-07-30}
+  s.date = %q{2010-08-11}
   s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
   s.email = %q{bodo@bitboxer.de}
   s.extra_rdoc_files = [
