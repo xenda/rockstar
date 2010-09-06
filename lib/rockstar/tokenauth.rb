@@ -41,7 +41,7 @@ module Rockstar
     def initialize(args = {})
       @user = args[:username] # last.fm user
       @token = args[:token] # last.fm token
-      @client_id = 'rbs' # Client ID assigned by last.fm; Don't change this!
+      @client_id = 'rck' # Client ID assigned by last.fm; Don't change this!
       @client_ver = Rockstar::Version
 
       raise ArgumentError, 'Missing required argument' if @user.blank? || @token.blank?

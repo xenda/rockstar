@@ -15,7 +15,7 @@ class TestSimpleAuth < Test::Unit::TestCase
   end
   
   test 'should have the right client id' do
-    assert_equal('rbs', @auth.client_id)
+    assert_equal('rck', @auth.client_id)
   end
   
   test 'should have the right version' do

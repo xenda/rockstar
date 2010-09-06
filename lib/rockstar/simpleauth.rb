@@ -20,7 +20,7 @@ module Rockstar
       
       @user = args[:user] # last.fm username
       @password = args[:password] # last.fm password
-      @client_id = 'rbs' # Client ID assigned by last.fm; Don't change this!
+      @client_id = 'rck' # Client ID assigned by last.fm; Don't change this!
       @client_ver = Rockstar::Version
 
       raise ArgumentError, 'Missing required argument' if @user.blank? || @password.blank?
