@@ -39,7 +39,8 @@ module Rockstar
     end
 
     def submit!
-      query = { :s => @session_id,
+       warn "[DEPRECATION] the `scrobble` class is deprecated. Please use track.scrobble"
+       query = { :s => @session_id,
                 'a[0]' => @artist,
                 't[0]' => @track,
                 'i[0]' => @time.utc.to_i,
