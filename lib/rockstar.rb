@@ -1,10 +1,13 @@
-%w{cgi rubygems hpricot active_support}.each { |x| require x }
-
 $: << File.expand_path(File.dirname(__FILE__))
 
 require 'rubygems'
-require 'active_record'
+require 'cgi'
+require 'hpricot'
+require 'active_support'
+require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/string/inflections'
 require 'time'
+require 'yaml'
 
 require 'rockstar/base'
 require 'rockstar/version'

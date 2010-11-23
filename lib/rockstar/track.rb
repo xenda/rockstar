@@ -33,6 +33,12 @@
 #   (2449) mlmjcace
 #   (2302) tiNEey
 #   (2169) ajsbabiegirl
+
+class BadSessionError < StandardError; end
+class UnavailableError < StandardError; end
+class RequestFailedError < StandardError; end
+
+
 module Rockstar
   class Track < Base
     attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url
@@ -77,6 +83,102 @@ module Rockstar
         t.image     = t.images['medium']
         t
       end
+
+      def love(artist, track, session_key)
+        doc = Hpricot::XML(Track.connection.post("track.love", true, {:track => track, :artist => artist, :sk => session_key}))
+        doc.at("lfm")["status"]
+      end
+
+      # Scrobble a song
+      #
+      # Possible parameters:
+      #    session_key (required) : the session key you got during authentification
+      #    track       (required) : name of the track
+      #    artist      (required) : name of the artist of the track
+      #    time        (required) : a time object set to the time the track started playing
+      #    album                  : Name of the album
+      #    albumArtist            : Name of the album artist if artist differs
+      #    trackNumber            : Number of the track
+      #    mbid                   : MusicBrainz ID of the track
+      #    duration               : track length
+      def scrobble(params = {})
+        if params[:session_key].blank? || params[:track].blank? || params[:time].nil? || params[:artist].blank?
+          raise ArgumentError, "Missing required argument"
+        end
+
+        query = {
+          :sk           => params[:session_key],
+          "track[0]"    => params[:track],
+          "timestamp[0]"=> params[:time].utc.to_i,
+          "artist[0]"   => params[:artist]
+        }
+
+        query["album[0]"]       = params[:album] if !params[:album].blank?
+        query["albumArtist[0]"] = params[:albumArtist] if !params[:albumArtist].blank?
+        query["trackNumber[0]"] = params[:trackNumber] if !params[:trackNumber].blank?
+        query["mbid[0]"]        = params[:mbid] if !params[:mbid].blank?
+        query["duration[0]"]    = params[:duration] if !params[:duration].blank?
+        
+        doc = Hpricot::XML(Track.connection.post("track.scrobble", true, query))
+
+        if doc.at("lfm")["status"] == "failed"
+          case doc.at("lfm").at("error")["code"].to_i
+            when 9
+              raise BadSessionError, doc.at("lfm").at("error").inner_html
+            when 11, 16
+              raise UnavailableError, doc.at("lfm").at("error").inner_html
+           else
+              raise RequestFailedError, doc.at("lfm").at("error").inner_html
+           end
+        end
+ 
+        doc.at("lfm")["status"]
+       end
+
+      # Update the current playing song
+      #
+      # Possible parameters:
+      #    session_key (required) : the session key you got during authentification
+      #    track       (required) : name of the track
+      #    artist      (required) : name of the artist of the track
+      #    album                  : Name of the album
+      #    albumArtist            : Name of the album artist if artist differs
+      #    trackNumber            : Number of the track
+      #    mbid                   : MusicBrainz ID of the track
+      #    duration               : track length
+      def updateNowPlaying(params = {})
+        if params[:session_key].blank? || params[:track].blank? || params[:artist].blank?
+          raise ArgumentError, "Missing required argument"
+        end
+
+        query = {
+          :sk        => params[:session_key],
+          "track"    => params[:track],
+          "artist"   => params[:artist]
+        }
+
+        query["album"]       = params[:album] if !params[:album].blank?
+        query["albumArtist"] = params[:albumArtist] if !params[:albumArtist].blank?
+        query["trackNumber"] = params[:trackNumber] if !params[:trackNumber].blank?
+        query["mbid"]        = params[:mbid] if !params[:mbid].blank?
+        query["duration"]    = params[:duration] if !params[:duration].blank?
+        
+        doc = Hpricot::XML(Track.connection.post("track.updateNowPlaying", true, query))
+
+        if doc.at("lfm")["status"] == "failed"
+          case doc.at("lfm").at("error")["code"].to_i
+            when 9
+              raise BadSessionError, doc.at("lfm").at("error").inner_html
+            when 11, 16
+              raise UnavailableError, doc.at("lfm").at("error").inner_html
+           else
+              raise RequestFailedError, doc.at("lfm").at("error").inner_html
+           end
+        end
+        
+        doc.at("lfm")["status"]
+      end
+ 
     end
     
     def initialize(artist, name)
@@ -96,8 +198,36 @@ module Rockstar
     
     # The session_key is returned by auth.session.key
     def love(session_key)
-      doc = Hpricot::XML(self.class.connection.post("track.love", true, {:track => @name, :artist => @artist, :sk => session_key}))
-      doc.at("lfm")["status"]
+      Track.love(@artist, @name, session_key)
     end
+
+    # scrobble this track
+    #   time :       a time object set to the time the track started playing
+    #   session_key: the session key you got during authentification
+    def scrobble(time, session_key)
+      Track.scrobble({
+        :session_key => session_key,
+        :time        => time,
+        :track       => @name,
+        :artist      => @artist,
+        :album       => @album,
+        :mbid        => @mbid
+      })
+    end
+
+    # inform last.fm that this track is currently playing
+    #   time :       a time object set to the time the track started playing
+    #   session_key: the session key you got during authentification
+    def updateNowPlaying(time, session_key)
+      Track.updateNowPlaying({
+        :session_key => session_key,
+        :time        => time,
+        :track       => @name,
+        :artist      => @artist,
+        :album       => @album,
+        :mbid        => @mbid
+      })
+    end
+
   end
 end

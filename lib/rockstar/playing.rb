@@ -26,7 +26,8 @@ module Rockstar
     end
 
     def submit!
-      query = { :s => @session_id,
+       warn "[DEPRECATION] the `playing` class is deprecated. Please use track.updateNowPlaying"
+       query = { :s => @session_id,
                 :a => @artist,
                 :t => @track,
                 :b => @album,

@@ -41,4 +41,20 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('ok', @track.love("tag"))  
   end
 
+  test 'raise missing parameter error' do
+    assert_raises(ArgumentError) { Rockstar::Track.scrobble() }
+  end
+
+  test 'can scrobble tracks' do
+    assert_equal('ok', @track.scrobble(Time.new(2010,10,10,10,10), 'tag'))
+  end
+
+  test 'raise missing parameter error' do
+    assert_raises(ArgumentError) { Rockstar::Track.updateNowPlaying() }
+  end
+
+  test 'can send current playing track' do
+    assert_equal('ok', @track.updateNowPlaying(Time.new(2010,10,10,10,10), 'tag'))
+  end
+
 end

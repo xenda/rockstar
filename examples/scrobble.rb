@@ -19,37 +19,27 @@ gets
 
 session = a.session(token)
 
-auth = Rockstar::TokenAuth.new({:username => session.username, :token => session.key})
-auth.handshake!
-
-puts "Auth Status: #{auth.status}"
-puts "Session ID: #{auth.session_id}"
-puts "Now Playing URL: #{auth.now_playing_url}"
-puts "Submission URL: #{auth.submission_url}"
-
-scrobble = Rockstar::Scrobble.new(:session_id => auth.session_id,
-                                   :submission_url => auth.submission_url,
-                                   :artist => 'Coldplay',
-                                   :track => 'Viva La Vida',
-                                   :album => 'Viva La Vida',
-                                   :time => Time.new,
-                                   :length => 244,
-                                   :track_number => 7)
-scrobble.submit!
-puts "Rockstar Submission Status: #{scrobble.status}"
+Rockstar::Track.scrobble(
+  :session_key  => session.key,
+  :track        => "Viva La Vida",
+  :artist       => "Coldplay",
+  :album        => "Viva La Vida",
+  :time         => Time.new,
+  :length       => 244,
+  :track_number => 7
+)
 
 # Love the Song :
 l_status = Rockstar::Track.new('Coldplay', 'Viva La Vida').love(session.key)
 
 puts "Love track status : #{l_status}"
 
-playing = Rockstar::Playing.new(:session_id => auth.session_id,
-                                 :now_playing_url => auth.now_playing_url,
-                                 :artist => 'Anberlin',
-                                 :track => 'A Day Late',
-                                 :album => 'Never Take Friendship Personal',
-                                 :length => 214,
-                                 :track_number => 5)
-                                 
-playing.submit!         
-puts "Playing Submission Status: #{playing.status}"      
+Rockstar::Track.updateNowPlaying(
+  :session_key  => session.key,
+  :track        => "Viva La Vida",
+  :artist       => "Coldplay",
+  :album        => "Viva La Vida",
+  :time         => Time.new,
+  :length       => 244,
+  :track_number => 7
+)
