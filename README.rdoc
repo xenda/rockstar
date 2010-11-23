@@ -94,8 +94,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
     geo.metros("germany").each{|m| p m.name}
 
 
-== Token Authentication (for scrobbling and recommendations)
-
+== Get rights to access the user data for scrobbing, now playing, events etc...
     a = Rockstar::Auth.new
     token = a.token
     
