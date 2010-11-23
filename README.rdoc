@@ -107,37 +107,16 @@ If you want to use the api in an rails app, you could add an initializer in conf
     gets
     
     session = a.session(token)
-    
-    auth = Rockstar::TokenAuth.new({:username => session.username, :token => session.key})
-    auth.handshake!
-
-More details can be found in in Rockstar::TokenAuth
 
 == Scrobbling
 
-    scrobble = Rockstar::Scrobble.new(:session_id => auth.session_id,
-                                       :submission_url => auth.submission_url,
-                                       :artist => 'Coldplay',
-                                       :track => 'Viva La Vida',
-                                       :album => "Viva La Vida",
-                                       :time => Time.new,
-                                       :length => 244,
-                                       :track_number => 7)
-    scrobble.submit!
-    puts "Rockstar Submission Status: #{scrobble.status}"
+    track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
+    track.scrobble(Time.now, session.key)
 
 == Now Playing Submission
 
-    playing = Rockstar::Playing.new(:session_id => auth.session_id,
-                                     :now_playing_url => auth.now_playing_url,
-                                     :artist => 'Anberlin',
-                                     :track => 'Readyfuels',
-                                     :album => 'Blueprints For the Black Market',
-                                     :length => 218,
-                                     :track_number => 1)
-
-    playing.submit!         
-    puts "Playing Submission Status: #{playing.status}"
+    track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
+    track.updateNowPlaying(Time.now, session.key)
 
 == Note on Patches/Pull Requests
  
