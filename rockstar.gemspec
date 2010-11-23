@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rockstar}
-  s.version = "0.4.2"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bodo Tasche"]
-  s.date = %q{2010-09-07}
+  s.date = %q{2010-11-23}
   s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
   s.email = %q{bodo@bitboxer.de}
   s.extra_rdoc_files = [
@@ -68,6 +68,7 @@ Gem::Specification.new do |s|
      "test/fixtures/xml/track/gettopfans_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
      "test/fixtures/xml/track/gettoptags_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
      "test/fixtures/xml/track/love_artist_Carrie_Underwood_sk_tag_track_Before_He_Cheats.xml",
+     "test/fixtures/xml/track/updatenowplaying_artist_Carrie_Underwood_sk_tag_track_Before_He_Cheats.xml",
      "test/fixtures/xml/user/getevents_sk_token_user_bodot.xml",
      "test/fixtures/xml/user/getfriends_user_jnunemaker.xml",
      "test/fixtures/xml/user/getinfo_user_jnunemaker.xml",
