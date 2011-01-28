@@ -12,12 +12,17 @@ module Rockstar
       def fetch_and_parse(resource, params = {}, sign_request = false)
         Hpricot::XML(connection.get(resource, sign_request, params))
       end
-
+      
+      def get_instance(api_method, instance_name, element, params, sign_request = false)
+        rockstar_class = "rockstar/#{element.to_s}".camelize.constantize
+        doc      = self.fetch_and_parse(api_method, params, sign_request)
+        (doc/element).inject([]) { |elements, el| elements << rockstar_class.new_from_xml(el, doc); elements }
+      end
     end
     
     private
       # in order for subclass to use, it must have api_path method
-      def get_instance(api_method, instance_name, element, params, force=false, sign_request = false)
+      def get_instance(api_method, instance_name, element, params, force = false, sign_request = false)
         rockstar_class = "rockstar/#{element.to_s}".camelize.constantize
         
         if instance_variable_get("@#{instance_name}").nil? || force

@@ -45,6 +45,10 @@ module Rockstar
       end    
       self.images[which]
     end
+    
+    def self.find(name, country = nil, limit = nil, page = nil)
+      get_instance("venue.search", :venues, :venue, {:venue => name, :country => country, :limit => limit, :page => page})
+    end
   end
 end
 
