@@ -2,7 +2,7 @@ module Rockstar
   class Venue < Base
     
     attr_accessor :vid, :name, :city, :country, :street, :postalcode, :lat, :long, :url,
-                  :website, :phonenumber, :images
+                  :website, :phonenumber, :images, :events
 
     class << self
       def new_from_xml(xml, doc)
@@ -48,6 +48,10 @@ module Rockstar
     
     def self.find(name, country = nil, limit = nil, page = nil)
       get_instance("venue.search", :venues, :venue, {:venue => name, :country => country, :limit => limit, :page => page})
+    end
+    
+    def events
+      @events ||= get_instance("venue.getEvents", :events, :event, {:venue => vid})
     end
   end
 end

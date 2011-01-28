@@ -9,5 +9,12 @@ class TestVenue < Test::Unit::TestCase
     assert_equal("Hamburg", venues.first.city)
     assert_equal("Germany", venues.first.country) 
   end
+  
+  test "should get events for venue" do
+    venue = Rockstar::Venue.new(8807850, "INDRA")
+    events = venue.events
+    assert_equal(5, events.size)
+    assert_equal(venue.name, events.first.venue.name)
+  end
 
 end
