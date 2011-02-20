@@ -87,8 +87,8 @@ module Rockstar
       @image_small    = @images['small']
 
       @mbid         = (doc).at(:mbid).inner_html
-      @summary      = (doc).at(:summary).to_plain_text
-      @content      = (doc).at(:content).to_plain_text
+      @summary      = (doc).at(:summary).to_plain_text if (doc).at(:summary)
+      @content      = (doc).at(:content).to_plain_text if (doc).at(:content)
     end
     
     def tracks
