@@ -4,6 +4,14 @@ require 'digest/md5'
 module Rockstar
   module REST
   	class Connection
+
+      def flatten(arg)
+        if arg.class == Hash
+          return arg.keys.sort_by{|a|a.to_s}.collect { |k| "%s_%s" % [k.to_s, flatten(arg[k])] }.join("_").gsub(" ", "_")
+        end
+        arg.to_s
+      end
+
   	  # reads xml fixture file instead of hitting up the internets
   	  def request(resource, method = "get", args = {}, sign_request=false)
   	    @now_playing_url = 'http://62.216.251.203:80/nowplaying'
@@ -15,8 +23,8 @@ module Rockstar
   	      
   	      query = ""
   	      if args.size > 0
-  	        query = "_" + args.keys.sort_by{|a|a.to_s}.collect { |k| "%s_%s" % [k.to_s, args[k].to_s] }.join("_").gsub(" ", "_")
-  	      end
+  	        query = "_" + flatten(args)
+          end
   	      
   	      file = File.dirname(__FILE__) + "/../fixtures/xml/#{folder}/#{file}#{query}.xml"
   	      
