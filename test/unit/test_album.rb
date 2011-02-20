@@ -64,4 +64,10 @@ class TestAlbum < Test::Unit::TestCase
   test 'should load info when trying to access an image if the info has not been loaded' do
     assert_equal('http://userserve-ak.last.fm/serve/34s/34894445.png', @album.image(:small))
   end
+
+  test 'should parse empty album' do
+    album = Rockstar::Album.new('Thievery Corporation', 'Radio Retalation')
+    album.load_info
+    assert_nil album.summary
+  end
 end
