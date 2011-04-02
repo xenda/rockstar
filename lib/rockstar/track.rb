@@ -187,6 +187,10 @@ module Rockstar
       @artist = artist
       @name = name
     end
+
+    def albums(force=false)
+      get_instance("track.getInfo", :album, :album, {:track => @name, :artist => @artist}, force)
+    end
         
     def fans(force=false)
       get_instance("track.getTopFans", :fans, :user, {:track => @name, :artist => @artist}, force)
