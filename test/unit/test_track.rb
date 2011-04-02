@@ -22,6 +22,13 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('Before He Cheats', @track.name)
   end
   
+  test 'should have albums' do
+    assert_equal(1, @track.albums.size)
+    assert_equal('Some Hearts', @track.albums.first.name)
+    assert_equal('http://www.last.fm/music/Carrie+Underwood/Some+Hearts', @track.albums.first.url)
+    assert_equal('a33b9822-9f09-4e19-9d6e-e05af85c727b', @track.albums.first.mbid)
+  end
+
   test 'should have fans' do
     assert_equal(50, @track.fans.size)
     assert_equal('chelseaf89', @track.fans.first.username)
