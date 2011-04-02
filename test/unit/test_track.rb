@@ -53,7 +53,7 @@ class TestTrack < Test::Unit::TestCase
   end
 
   test 'can scrobble tracks' do
-    assert_equal('ok', @track.scrobble(Time.new(2010,10,10,10,10), 'tag'))
+    assert_equal('ok', @track.scrobble(Time.utc(2010,10,10,8,10), 'tag'))
   end
 
   test 'raise missing parameter error in update now playing' do
@@ -61,7 +61,7 @@ class TestTrack < Test::Unit::TestCase
   end
 
   test 'can send current playing track' do
-    assert_equal('ok', @track.updateNowPlaying(Time.new(2010,10,10,10,10), 'tag'))
+    assert_equal('ok', @track.updateNowPlaying(Time.utc(2010,10,10,8,10), 'tag'))
   end
 
 end
