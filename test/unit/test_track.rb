@@ -21,6 +21,19 @@ class TestTrack < Test::Unit::TestCase
   test 'should know the name' do
     assert_equal('Before He Cheats', @track.name)
   end
+
+  test 'should be able to load track info' do
+    @track.load_info
+    assert_equal('http://www.last.fm/music/Carrie+Underwood/_/Before+He+Cheats', @track.url)
+    assert_equal('1040848',  @track.playcount)
+  end
+
+  test 'should be able to request detailed album info on initialize' do
+    track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats', :include_info => true)
+    assert_equal('Carrie Underwood', track.artist)
+    assert_equal('http://www.last.fm/music/Carrie+Underwood/_/Before+He+Cheats', track.url)
+    assert_equal('1040848', track.playcount)
+  end
   
   test 'should have albums' do
     assert_equal(1, @track.albums.size)

@@ -14,6 +14,18 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('Metallica', @artist.name)
   end
 
+  test "should be able to load artist info" do
+    @artist.load_info
+    assert_equal("http://www.last.fm/music/Metallica", @artist.url)
+    assert_equal("65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", @artist.mbid)
+  end
+
+  test "should load artist info when initialized" do
+    artist = Rockstar::Artist.new("Metallica", :include_info => true)
+    assert_equal("http://www.last.fm/music/Metallica", artist.url)
+    assert_equal("65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", artist.mbid)
+  end
+
   test 'should be able to find similar artists' do
     assert_equal(["Megadeth", "Slayer", "Iron Maiden", "Pantera", "Anthrax", "Sepultura"], @artist.similar.collect(&:name)[0..5])
     first = @artist.similar.first
