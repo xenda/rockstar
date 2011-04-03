@@ -37,61 +37,59 @@ module Rockstar
         artist           = (xml).at(:artist).at(:name).inner_html      if (xml).at(:artist) && (xml).at(:artist).at(:name)
         artist           = (xml).at(:artist).inner_html                if artist.nil? && (xml).at(:artist)
         artist           = doc.root['artist']                          if artist.nil? && doc.root['artist']
-        a                = Album.new(artist, name)
-        a.artist_mbid    = (xml).at(:artist)['mbid']                   if (xml).at(:artist) && (xml).at(:artist)['mbid']
-        a.artist_mbid    = (xml).at(:artist).at(:mbid).inner_html      if a.artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
-        a.mbid           = (xml).at(:mbid).inner_html                  if (xml).at(:mbid)
-        a.playcount      = (xml).at(:playcount).inner_html             if (xml).at(:playcount)
-        a.rank           = xml['rank']                                 if xml['rank']
-        a.rank           = (xml).at(:rank).inner_html                  if (xml).at(:rank) if a.rank.nil?
-        a.url            = Base.fix_url((xml).at(:url).inner_html)     if (xml).at(:url)
-        
-        a.chartposition  = a.rank
-        
-        a.images = {}
-        (xml/'image').each {|image|
-          a.images[image['size']] = image.inner_html
-        }
-        
-        a.image_large    = a.images['large']
-        a.image_medium   = a.images['medium']
-        a.image_small    = a.images['small']
-        
-        # needed on top albums for tag
-        a.count          = xml['count'] if xml['count']
-        a.streamable     = xml['streamable'] if xml['streamable']
-        a
+
+        album = Album.new(artist, name)
+        album.load_info(xml)
+        album
       end
     end
-    
+
     def initialize(artist, name, o={})
       raise ArgumentError, "Artist is required" if artist.blank?
       raise ArgumentError, "Name is required" if name.blank?
       @artist = artist
       @name   = name
+
       options = {:include_info => false}.merge(o)
-      load_info() if options[:include_info]
+      load_info if options[:include_info]
     end
     
-    def load_info
-      doc           = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
-      @url          = Base.fix_url((doc).at(:url).inner_html)
-      @release_date = Base.parse_time((doc).at(:releasedate).inner_html.strip)
+    def load_info(xml=nil)
+      unless xml
+        doc = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
+        xml = (doc / :album).first
+      end
+    
+      self.artist_mbid    = (xml).at(:artist)['mbid']                   if (xml).at(:artist) && (xml).at(:artist)['mbid']
+      self.artist_mbid    = (xml).at(:artist).at(:mbid).inner_html      if artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
+      self.mbid           = (xml).at(:mbid).inner_html                  if (xml).at(:mbid)
+      self.playcount      = (xml).at(:playcount).inner_html             if (xml).at(:playcount)
+      self.rank           = xml['rank']                                 if xml['rank']
+      self.rank           = (xml).at(:rank).inner_html                  if (xml).at(:rank) if rank.nil?
+      self.url            = Base.fix_url((xml).at(:url).inner_html)     if (xml).at(:url)
 
-      @images = {}
-      (doc/'image').each {|image|
-        @images[image['size']] = image.inner_html
+      self.summary        = (xml).at(:summary).to_plain_text            if (xml).at(:summary)
+      self.content        = (xml).at(:content).to_plain_text            if (xml).at(:content)
+
+      self.release_date   = Base.parse_time((xml).at(:releasedate).inner_html.strip) if (xml).at(:releasedate)
+      self.chartposition  = rank
+      
+      self.images = {}
+      (xml/'image').each {|image|
+        self.images[image['size']] = image.inner_html
       }
+      
+      self.image_large    = images['large']
+      self.image_medium   = images['medium']
+      self.image_small    = images['small']
+      
+      # needed on top albums for tag
+      self.count          = xml['count'] if xml['count']
+      self.streamable     = xml['streamable'] if xml['streamable']
 
-      @image_large    = @images['large']
-      @image_medium   = @images['medium']
-      @image_small    = @images['small']
-
-      @mbid         = (doc).at(:mbid).inner_html
-      @summary      = (doc).at(:summary).to_plain_text if (doc).at(:summary)
-      @content      = (doc).at(:content).to_plain_text if (doc).at(:content)
+      self
     end
-    
+
     def tracks
       warn "[DEPRECATION] `tracks` is deprecated. The current api doesn't offer this function"
       []

@@ -66,36 +66,51 @@ module Rockstar
     
     class << self
       def new_from_xml(xml, doc=nil)
-        name             = (xml).at(:name).inner_html           if (xml).at(:name)
         # occasionally name can be found in root of artist element (<artist name="">) rather than as an element (<name>)
+        name             = (xml).at(:name).inner_html           if (xml).at(:name)
         name             = xml['name']                          if name.nil? && xml['name']
-        a                = Artist.new(name)
-        a.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
-        a.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
-        a.chartposition  = a.rank = xml['rank']                     if xml['rank']
-        a.chartposition  = a.rank = (xml).at(:rank).inner_html      if (xml).at(:rank) if a.rank.nil?
-        a.url            = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
-        
-        a.images = {}
-        (xml/'image').each {|image|
-          a.images[image['size']] = image.inner_html
-        }
-        
-        a.thumbnail = a.images['small']
-        
-        a.match          = (xml).at(:match).inner_html          if (xml).at(:match)
-       
-        # in top artists for tag
-        a.count          = xml['count']                         if xml['count']
-        a.streamable     = xml['streamable']                    if xml['streamable']
-        a.streamable     = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if a.streamable.nil? && (xml).at(:streamable)
-        a
+
+        artist = Artist.new(name)
+        artist.load_info(xml)
+        artist
       end
     end
     
-    def initialize(name)
+    def initialize(name, o={})
       raise ArgumentError, "Name is required" if name.blank?
       @name = name
+
+      options = {:include_info => false}.merge(o)
+      load_info if options[:include_info]
+    end
+
+    def load_info(xml=nil)
+      unless xml
+        doc = self.class.fetch_and_parse("artist.getInfo", {:artist => @name})
+        xml = (doc / :artist).first
+      end
+
+      self.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
+      self.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
+      self.chartposition  = self.rank = xml['rank']                 if xml['rank']
+      self.chartposition  = self.rank = (xml).at(:rank).inner_html  if (xml).at(:rank) if self.rank.nil?
+      self.url            = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
+      
+      self.images = {}
+      (xml/'image').each {|image|
+        self.images[image['size']] = image.inner_html
+      }
+      
+      self.thumbnail      = self.images['small']
+      self.match          = (xml).at(:match).inner_html          if (xml).at(:match)
+       
+      # in top artists for tag
+      self.count          = xml['count']                         if xml['count']
+      self.streamable     = xml['streamable']                    if xml['streamable']
+
+      self.streamable     = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if self.streamable.nil? && (xml).at(:streamable)
+
+      self
     end
     
     def current_events(format=:ics)
@@ -122,7 +137,7 @@ module Rockstar
     def top_tags(force=false)
       get_instance("artist.getTopTags", :top_tags, :tag, {:artist => @name}, force)
     end
-    
+
     def image(which=:medium)
       which = which.to_s
       raise ArgumentError unless ['small', 'medium', 'large', 'extralarge'].include?(which)  

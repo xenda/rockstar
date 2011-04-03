@@ -58,30 +58,10 @@ module Rockstar
         artist          = doc.root['artist']                      if artist.nil? && doc.root['artist']
         name            = (xml).at(:name).inner_html              if (xml).at(:name)
         name            = xml['name']                             if name.nil? && xml['name']
-        t               = Track.new(artist, name)
-        t.artist_mbid   = (xml).at(:artist)['mbid']               if (xml).at(:artist) && (xml).at(:artist)['mbid']
-        t.artist_mbid   = (xml).at(:artist).at(:mbid).inner_html  if t.artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
-        t.mbid          = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
-        t.playcount     = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
-        t.chartposition = t.rank = xml['rank']                    if xml['rank']
-        t.url           = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
-        t.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
-        t.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if t.streamable.nil? && (xml).at(:streamable)
-        
-        t.count         = xml['count']                            if xml['count']
-        t.album         = (xml).at(:album).inner_html             if (xml).at(:album)
-        t.album_mbid    = (xml).at(:album)['mbid']                if (xml).at(:album) && (xml).at(:album)['mbid']
-        t.date          = Base.parse_time((xml).at(:date).inner_html)  if (xml).at(:date)
-        t.date_uts      = (xml).at(:date)['uts']                  if (xml).at(:date) && (xml).at(:date)['uts']
-        
-        t.images = {}
-        (xml/'image').each {|image|
-          t.images[image['size']] = image.inner_html
-        }
-        
-        t.thumbnail = t.images['small']
-        t.image     = t.images['medium']
-        t
+
+        track = Track.new(artist, name)
+        track.load_info(xml)
+        track
       end
 
       def love(artist, track, session_key)
@@ -181,13 +161,48 @@ module Rockstar
  
     end
     
-    def initialize(artist, name)
+    def initialize(artist, name, o={})
       raise ArgumentError, "Artist is required" if artist.blank?
       raise ArgumentError, "Name is required" if name.blank?
       @artist = artist
       @name = name
+
+      options = {:include_info => false}.merge(o)
+      load_info if options[:include_info]
     end
 
+    def load_info(xml=nil)
+      unless xml
+        doc = self.class.fetch_and_parse("track.getInfo", {:artist => @artist, :track => @name})
+        xml = (doc / :track).first
+      end
+
+      self.artist_mbid   = (xml).at(:artist)['mbid']               if (xml).at(:artist) && (xml).at(:artist)['mbid']
+      self.artist_mbid   = (xml).at(:artist).at(:mbid).inner_html  if artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
+      self.mbid          = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
+      self.playcount     = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
+      self.chartposition = self.rank = xml['rank']                 if xml['rank']
+      self.url           = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
+      self.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
+      self.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if streamable.nil? && (xml).at(:streamable)
+        
+      self.count         = xml['count']                            if xml['count']
+      self.album         = (xml).at(:album).inner_html             if (xml).at(:album)
+      self.album_mbid    = (xml).at(:album)['mbid']                if (xml).at(:album) && (xml).at(:album)['mbid']
+      self.date          = Base.parse_time((xml).at(:date).inner_html)  if (xml).at(:date)
+      self.date_uts      = (xml).at(:date)['uts']                  if (xml).at(:date) && (xml).at(:date)['uts']
+        
+      self.images = {}
+      (xml/'image').each {|image|
+        self.images[image['size']] = image.inner_html
+      }
+        
+      self.thumbnail = images['small']
+      self.image     = images['medium']
+
+      self
+    end
+      
     def albums(force=false)
       get_instance("track.getInfo", :album, :album, {:track => @name, :artist => @artist}, force)
     end

@@ -41,7 +41,7 @@ class TestAlbum < Test::Unit::TestCase
     assert_equal(Time.mktime(2005, 11, 15, 00, 00, 00), album.release_date)
   end
   
-  test "should be able to include the album's info on initialize" do
+  test "should be able to request detailed album info on initialize" do
     album = Rockstar::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
     assert_equal('Carrie Underwood', album.artist)
     assert_equal('Some Hearts', album.name)
