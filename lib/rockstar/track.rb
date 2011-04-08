@@ -177,6 +177,8 @@ module Rockstar
         xml = (doc / :track).first
       end
 
+      return self if xml.nil?
+
       self.artist_mbid   = (xml).at(:artist)['mbid']               if (xml).at(:artist) && (xml).at(:artist)['mbid']
       self.artist_mbid   = (xml).at(:artist).at(:mbid).inner_html  if artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
       self.mbid          = (xml).at(:mbid).inner_html              if (xml).at(:mbid)

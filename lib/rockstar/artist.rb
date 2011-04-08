@@ -90,6 +90,8 @@ module Rockstar
         xml = (doc / :artist).first
       end
 
+      return self if xml.nil?
+
       self.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
       self.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
       self.chartposition  = self.rank = xml['rank']                 if xml['rank']

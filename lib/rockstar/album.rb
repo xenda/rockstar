@@ -59,6 +59,8 @@ module Rockstar
         doc = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
         xml = (doc / :album).first
       end
+
+      return self if xml.nil?
     
       self.artist_mbid    = (xml).at(:artist)['mbid']                   if (xml).at(:artist) && (xml).at(:artist)['mbid']
       self.artist_mbid    = (xml).at(:artist).at(:mbid).inner_html      if artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
