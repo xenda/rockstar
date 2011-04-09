@@ -25,6 +25,7 @@ class TestAlbum < Test::Unit::TestCase
     @album.load_info
     assert_equal('http://www.last.fm/music/Carrie+Underwood/Some+Hearts', @album.url)
     assert_equal(Time.mktime(2005, 11, 15, 00, 00, 00), @album.release_date)
+    assert_match(/debut album from fourth-season American Idol winner/, @album.summary)
   end
 
   test 'should be able to find an ablum' do
@@ -39,6 +40,7 @@ class TestAlbum < Test::Unit::TestCase
     assert_equal('Some Hearts', album.name)
     assert_equal('http://www.last.fm/music/Carrie+Underwood/Some+Hearts', album.url)
     assert_equal(Time.mktime(2005, 11, 15, 00, 00, 00), album.release_date)
+    assert_match(/debut album from fourth-season American Idol winner/, album.summary)
   end
   
   test "should be able to request detailed album info on initialize" do
@@ -47,6 +49,7 @@ class TestAlbum < Test::Unit::TestCase
     assert_equal('Some Hearts', album.name)
     assert_equal('http://www.last.fm/music/Carrie+Underwood/Some+Hearts', album.url)
     assert_equal(Time.mktime(2005, 11, 15, 00, 00, 00), album.release_date)
+    assert_match(/debut album from fourth-season American Idol winner/, album.summary)
   end
   
   test 'should have an image method that accepts a type' do

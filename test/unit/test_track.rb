@@ -26,6 +26,7 @@ class TestTrack < Test::Unit::TestCase
     @track.load_info
     assert_equal('http://www.last.fm/music/Carrie+Underwood/_/Before+He+Cheats', @track.url)
     assert_equal('1040848',  @track.playcount)
+    assert_match(/named the 2007 Single of the Year by the Country Music Association/, @track.summary)
   end
 
   test 'should be able to request detailed album info on initialize' do
@@ -33,6 +34,7 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('Carrie Underwood', track.artist)
     assert_equal('http://www.last.fm/music/Carrie+Underwood/_/Before+He+Cheats', track.url)
     assert_equal('1040848', track.playcount)
+    assert_match(/named the 2007 Single of the Year by the Country Music Association/, track.summary)
   end
   
   test 'should have albums' do
