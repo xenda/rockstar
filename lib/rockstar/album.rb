@@ -36,7 +36,7 @@ module Rockstar
         name             = xml.at(:title).inner_html                   if name.nil? && (xml).at(:title)
         artist           = (xml).at(:artist).at(:name).inner_html      if (xml).at(:artist) && (xml).at(:artist).at(:name)
         artist           = (xml).at(:artist).inner_html                if artist.nil? && (xml).at(:artist)
-        artist           = doc.root['artist']                          if artist.nil? && doc.root['artist']
+        artist           = doc.root['artist']                          if artist.nil? && doc && doc.root['artist']
 
         album = Album.new(artist, name)
         album.load_info(xml)

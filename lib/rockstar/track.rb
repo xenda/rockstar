@@ -206,7 +206,7 @@ module Rockstar
     end
       
     def albums(force=false)
-      get_instance("track.getInfo", :album, :album, {:track => @name, :artist => @artist}, force)
+      get_instance("track.getInfo", :albums, :album, {:track => @name, :artist => @artist}, force)
     end
         
     def fans(force=false)
