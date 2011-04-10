@@ -131,4 +131,4 @@ You can store the session.key somewhere and use it from now on to identify the u
 
 == Copyright
 
-Copyright (c) 2007-2010 John Nunemaker, Bodo "Bitboxer" Tasche, Nick "zapnap" Plante. See LICENSE for details.
+Copyright (c) 2007-2011 John Nunemaker, Bodo "Bitboxer" Tasche, Nick "zapnap" Plante. See LICENSE for details.
