@@ -66,7 +66,7 @@ module Rockstar
         
         u.images = {}
         (xml/'image').each {|image|
-          u.images[image['size']] = image.inner_html
+          u.images[image['size']] = image.inner_html if u.images[image['size']].nil?
         }
         
         u.avatar = u.images['small']

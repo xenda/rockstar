@@ -26,6 +26,7 @@ class TestArtist < Test::Unit::TestCase
     assert_equal("http://www.last.fm/music/Metallica", artist.url)
     assert_equal("65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", artist.mbid)
     assert_match(/an American metal band formed in 1981/, artist.summary)
+    assert_equal("http://userserve-ak.last.fm/serve/64/3679639.jpg", artist.images['medium'])
   end
 
   test 'should be able to find similar artists' do

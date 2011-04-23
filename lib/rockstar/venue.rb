@@ -23,7 +23,7 @@ module Rockstar
 
         v.images = {}
         xml.search('/image').each {|image|
-          v.images[image['size']] = image.inner_html
+          v.images[image['size']] = image.inner_html if v.images[image['size']].nil?
         }
 
         v

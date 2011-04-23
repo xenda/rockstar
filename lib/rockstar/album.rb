@@ -78,7 +78,7 @@ module Rockstar
       
       self.images = {}
       (xml/'image').each {|image|
-        self.images[image['size']] = image.inner_html
+        self.images[image['size']] = image.inner_html if self.images[image['size']].nil?
       }
       
       self.image_large    = images['large']
