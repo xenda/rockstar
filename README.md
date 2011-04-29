@@ -108,6 +108,8 @@ If you want to use the api in an rails app, you could add an initializer in conf
     
     session = a.session(token)
 
+You can store the session.key somewhere and use it from now on to identify the user.
+
 ## Scrobbling
 
     track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
@@ -130,4 +132,4 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
 ## Copyright
 
-Copyright (c) 2007-2010 John Nunemaker, Bodo "Bitboxer" Tasche, Nick "zapnap" Plante. See LICENSE for details.
+Copyright (c) 2007-2011 John Nunemaker, Bodo "Bitboxer" Tasche, Nick "zapnap" Plante. See LICENSE for details.

@@ -44,7 +44,7 @@ module Rockstar
 
         e.images = {}
         xml.search('/image').each {|image|
-          e.images[image['size']] = image.inner_html
+          e.images[image['size']] = image.inner_html if e.images[image['size']].nil?
         }
 
         e.venue = Venue.new_from_xml(xml.search('/venue'), doc) if xml.search('/venue')

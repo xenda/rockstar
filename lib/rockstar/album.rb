@@ -36,7 +36,7 @@ module Rockstar
         name             = xml.at(:title).inner_html                   if name.nil? && (xml).at(:title)
         artist           = (xml).at(:artist).at(:name).inner_html      if (xml).at(:artist) && (xml).at(:artist).at(:name)
         artist           = (xml).at(:artist).inner_html                if artist.nil? && (xml).at(:artist)
-        artist           = doc.root['artist']                          if artist.nil? && doc.root['artist']
+        artist           = doc.root['artist']                          if artist.nil? && doc && doc.root['artist']
 
         album = Album.new(artist, name)
         album.load_info(xml)
@@ -59,6 +59,8 @@ module Rockstar
         doc = self.class.fetch_and_parse("album.getInfo", {:artist => @artist, :album =>@name})
         xml = (doc / :album).first
       end
+
+      return self if xml.nil?
     
       self.artist_mbid    = (xml).at(:artist)['mbid']                   if (xml).at(:artist) && (xml).at(:artist)['mbid']
       self.artist_mbid    = (xml).at(:artist).at(:mbid).inner_html      if artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
@@ -76,7 +78,7 @@ module Rockstar
       
       self.images = {}
       (xml/'image').each {|image|
-        self.images[image['size']] = image.inner_html
+        self.images[image['size']] = image.inner_html if self.images[image['size']].nil?
       }
       
       self.image_large    = images['large']

@@ -58,7 +58,8 @@
 #   (62.160%) Christina Aguilera
 module Rockstar
   class Artist < Base
-    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail, :images, :count, :streamable
+    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail
+    attr_accessor :summary, :content, :images, :count, :streamable
     attr_accessor :chartposition
     
     # used for similar artists
@@ -90,15 +91,22 @@ module Rockstar
         xml = (doc / :artist).first
       end
 
+      return self if xml.nil?
+
       self.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
       self.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
       self.chartposition  = self.rank = xml['rank']                 if xml['rank']
       self.chartposition  = self.rank = (xml).at(:rank).inner_html  if (xml).at(:rank) if self.rank.nil?
       self.url            = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
-      
+
+      if bio_xml = xml.at(:bio)
+        self.summary      = bio_xml.at(:summary).to_plain_text      if bio_xml.at(:summary)
+        self.content      = bio_xml.at(:content).to_plain_text      if bio_xml.at(:content)
+      end
+
       self.images = {}
       (xml/'image').each {|image|
-        self.images[image['size']] = image.inner_html
+        self.images[image['size']] = image.inner_html if self.images[image['size']].nil?
       }
       
       self.thumbnail      = self.images['small']
