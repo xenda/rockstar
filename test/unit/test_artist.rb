@@ -81,4 +81,11 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('100', first.count)
     assert_equal('http://www.last.fm/tag/thrash%20metal', first.url)
   end
+
+  test 'should be able to find upcoming events' do
+    events = @artist.events
+    assert_equal(14, events.length)
+    assert_equal('The Big Four - Metallica, Slayer, Megadeth, Anthrax', events.first.title)
+    assert_equal('07/02/11', events.first.start_date.strftime("%D"))
+  end
 end

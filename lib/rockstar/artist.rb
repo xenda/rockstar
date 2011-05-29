@@ -122,8 +122,12 @@ module Rockstar
     end
     
     def current_events(format=:ics)
-      warn "[DEPRECATION] `current_events` is deprecated. The current api doesn't offer this function"
-      []
+      warn "[DEPRECATION] the `current_events` method is deprecated. Please use artist.events"
+      events
+    end
+
+    def events(force=false)
+      get_instance("artist.getEvents", :events, :event, {:artist => @name}, force)
     end
     
     def similar(force=false)
