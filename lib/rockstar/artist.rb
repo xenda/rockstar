@@ -152,11 +152,30 @@ module Rockstar
 
     def image(which=:medium)
       which = which.to_s
-      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge'].include?(which)  
-      if (self.images.nil?)
-        load_info
-      end    
+      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge'].include?(which)
+      load_info if self.images.nil?
       self.images[which]
+    end
+
+    def user_images(opts={})
+      if mbid.nil?
+        opts[:artist] = name
+      else
+        opts[:mbid] = mbid
+      end
+
+      images = []
+      image_doc = self.class.fetch_and_parse("artist.getImages", opts, false)
+      (image_doc/'image').each do |xml|
+        image_sizes = {}
+        xml.search('/sizes/size').each do |image|
+          image_sizes[image['name']] = image.inner_html
+        end
+
+        images << image_sizes
+      end
+
+      images
     end
   end
 end
