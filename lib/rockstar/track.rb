@@ -42,7 +42,7 @@ class RequestFailedError < StandardError; end
 module Rockstar
   class Track < Base
     attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url
-    attr_accessor :summary, :content, :streamable, :album, :album_mbid, :date, :date_uts
+    attr_accessor :summary, :content, :streamable, :album, :album_mbid, :date, :date_uts, :duration
     
     # only seems to be used on top tracks for tag
     attr_accessor :count, :thumbnail, :image, :images
@@ -187,6 +187,7 @@ module Rockstar
       self.url           = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
       self.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
       self.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if streamable.nil? && (xml).at(:streamable)
+      self.duration      = (xml).at(:duration).inner_html.to_i 
         
       self.count         = xml['count']                            if xml['count']
       self.album         = (xml).at(:album).inner_html             if (xml).at(:album)
