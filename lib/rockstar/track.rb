@@ -187,7 +187,7 @@ module Rockstar
       self.url           = Base.fix_url((xml).at(:url).inner_html) if (xml).at(:url)
       self.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
       self.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if streamable.nil? && (xml).at(:streamable)
-      self.duration      = (xml).at(:duration).inner_html.to_i 
+      self.duration      = (xml).at(:duration).inner_html.to_i     if (xml).at(:duration)
         
       self.count         = xml['count']                            if xml['count']
       self.album         = (xml).at(:album).inner_html             if (xml).at(:album)
