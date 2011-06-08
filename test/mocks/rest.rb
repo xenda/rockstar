@@ -31,7 +31,7 @@ module Rockstar
   	      if (!File.exists? file)
             puts "Mock file not found : #{file}"
   	      else
-      	    File.open(file,"r:UTF-8").read
+      	    File.read(file)
   	      end
   	        	      
   	    elsif @base_url == Rockstar::AUTH_URL

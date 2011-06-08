@@ -3,6 +3,11 @@ require 'test/unit'
 require File.expand_path('../../lib/rockstar', __FILE__)
 require File.expand_path('..//mocks/rest', __FILE__)
 
+
+if RUBY_VERSION > "1.9"
+  Encoding.default_internal = "UTF-8"
+end
+
 class << Test::Unit::TestCase
   def test(name, &block)
     test_name = :"test_#{name.gsub(' ','_')}"
