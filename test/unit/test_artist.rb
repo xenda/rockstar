@@ -29,6 +29,17 @@ class TestArtist < Test::Unit::TestCase
     assert_equal("http://userserve-ak.last.fm/serve/64/3679639.jpg", artist.images['medium'])
   end
 
+  test 'should return the default artist profile image' do
+    assert_equal("http://userserve-ak.last.fm/serve/64/3679639.jpg", @artist.image)
+    assert_equal("http://userserve-ak.last.fm/serve/126/3679639.jpg", @artist.image(:large))
+  end
+
+  test 'should load additional user images' do
+    images = @artist.user_images(:page => 2)
+    assert_equal("http://userserve-ak.last.fm/serve/126/3679639.jpg", images[0]['large'])
+    assert_equal("http://userserve-ak.last.fm/serve/252/13440.jpg", images[1]['extralarge'])
+  end
+
   test 'should be able to find similar artists' do
     assert_equal(["Megadeth", "Slayer", "Iron Maiden", "Pantera", "Anthrax", "Sepultura"], @artist.similar.collect(&:name)[0..5])
     first = @artist.similar.first
