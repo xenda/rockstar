@@ -5,17 +5,20 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rockstar}
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bodo Tasche"]
-  s.date = %q{2011-05-29}
+  s.date = %q{2011-06-09}
   s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
   s.email = %q{bodo@bitboxer.de}
   s.extra_rdoc_files = [
     "README.md"
   ]
   s.files = [
+    ".travis.yml",
+    "Gemfile",
+    "Gemfile.lock",
     "History.txt",
     "MIT-LICENSE",
     "Manifest",
@@ -55,6 +58,7 @@ Gem::Specification.new do |s|
     "test/fixtures/xml/album/getinfo_album_Radio_Retalation_artist_Thievery_Corporation.xml",
     "test/fixtures/xml/album/getinfo_album_Some_Hearts_artist_Carrie_Underwood.xml",
     "test/fixtures/xml/artist/getevents_artist_Metallica.xml",
+    "test/fixtures/xml/artist/getimages_artist_Metallica_page_2.xml",
     "test/fixtures/xml/artist/getinfo_artist_Metallica.xml",
     "test/fixtures/xml/artist/getsimilar_artist_Metallica.xml",
     "test/fixtures/xml/artist/gettopalbums_artist_Metallica.xml",
@@ -82,7 +86,7 @@ Gem::Specification.new do |s|
     "test/fixtures/xml/user/getrecenttracks_user_jnunemaker.xml",
     "test/fixtures/xml/user/getrecommendedartists_sk_token_user_jnunemaker.xml",
     "test/fixtures/xml/user/gettopalbums_user_jnunemaker.xml",
-    "test/fixtures/xml/user/gettopartists_user_jnunemaker.xml",
+    "test/fixtures/xml/user/gettopartists_period_overall_user_jnunemaker.xml",
     "test/fixtures/xml/user/gettoptags_user_jnunemaker.xml",
     "test/fixtures/xml/user/gettoptracks_user_jnunemaker.xml",
     "test/fixtures/xml/user/getweeklyalbumchart_from_1138536002_to_1139140802_user_jnunemaker.xml",
@@ -141,13 +145,28 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rake>, [">= 0"])
+      s.add_runtime_dependency(%q<hpricot>, [">= 0.4.86"])
+      s.add_runtime_dependency(%q<i18n>, [">= 0"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 1.4.2"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_runtime_dependency(%q<hpricot>, [">= 0.4.86"])
       s.add_runtime_dependency(%q<activesupport>, [">= 1.4.2"])
     else
+      s.add_dependency(%q<rake>, [">= 0"])
+      s.add_dependency(%q<hpricot>, [">= 0.4.86"])
+      s.add_dependency(%q<i18n>, [">= 0"])
+      s.add_dependency(%q<activesupport>, [">= 1.4.2"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<hpricot>, [">= 0.4.86"])
       s.add_dependency(%q<activesupport>, [">= 1.4.2"])
     end
   else
+    s.add_dependency(%q<rake>, [">= 0"])
+    s.add_dependency(%q<hpricot>, [">= 0.4.86"])
+    s.add_dependency(%q<i18n>, [">= 0"])
+    s.add_dependency(%q<activesupport>, [">= 1.4.2"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<hpricot>, [">= 0.4.86"])
     s.add_dependency(%q<activesupport>, [">= 1.4.2"])
   end
