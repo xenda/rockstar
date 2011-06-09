@@ -1,5 +1,4 @@
-# Rockstar [![Build Status](http://travis-ci.org/bitboxer/rockstar.png)](http://travis-ci.org/bitboxer/rockstar)
-
+# Rockstar
 
 Rockstar is a wrapper for the last.fm audioscrobbler web services (http://www.last.fm/api/). This gem is based on the scrobbler
 gem by John Nunemaker and was updated to use the 2.0 version of the last.fm api
