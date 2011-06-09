@@ -3,3 +3,4 @@ pkg/*
 *.swp
 .swp
 .rvmrc
+.bundle
