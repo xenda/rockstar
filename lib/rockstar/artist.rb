@@ -58,7 +58,7 @@
 #   (62.160%) Christina Aguilera
 module Rockstar
   class Artist < Base
-    attr_accessor :name, :mbid, :playcount, :rank, :url, :thumbnail
+    attr_accessor :name, :mbid, :listenercount, :playcount, :rank, :url, :thumbnail
     attr_accessor :summary, :content, :images, :count, :streamable
     attr_accessor :chartposition
     
@@ -94,6 +94,7 @@ module Rockstar
       return self if xml.nil?
 
       self.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
+      self.listenercount  = (xml).at(:listeners).inner_html         if (xml).at(:listeners)
       self.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
       self.chartposition  = self.rank = xml['rank']                 if xml['rank']
       self.chartposition  = self.rank = (xml).at(:rank).inner_html  if (xml).at(:rank) if self.rank.nil?
