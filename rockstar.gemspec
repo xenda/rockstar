@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rockstar}
-  s.version = "0.6.1"
+  s.version = "0.6.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bodo Tasche"]
-  s.date = %q{2011-06-09}
+  s.date = %q{2011-08-15}
   s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
   s.email = %q{bodo@bitboxer.de}
   s.extra_rdoc_files = [
@@ -60,6 +60,7 @@ Gem::Specification.new do |s|
     "test/fixtures/xml/artist/getevents_artist_Metallica.xml",
     "test/fixtures/xml/artist/getimages_artist_Metallica_page_2.xml",
     "test/fixtures/xml/artist/getinfo_artist_Metallica.xml",
+    "test/fixtures/xml/artist/getinfo_mbid_65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab.xml",
     "test/fixtures/xml/artist/getsimilar_artist_Metallica.xml",
     "test/fixtures/xml/artist/gettopalbums_artist_Metallica.xml",
     "test/fixtures/xml/artist/gettopfans_artist_Metallica.xml",
@@ -72,8 +73,10 @@ Gem::Specification.new do |s|
     "test/fixtures/xml/tag/gettoptags.xml",
     "test/fixtures/xml/tag/gettoptracks_tag_rock.xml",
     "test/fixtures/xml/track/getinfo_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
+    "test/fixtures/xml/track/getsimilar_artist_Carrie_Underwood_limit_10_track_Before_He_Cheats.xml",
     "test/fixtures/xml/track/gettopfans_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
     "test/fixtures/xml/track/gettoptags_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
+    "test/fixtures/xml/track/gettoptags_artist_Carrie_Underwood_track_Wasted.xml",
     "test/fixtures/xml/track/love_artist_Carrie_Underwood_sk_tag_track_Before_He_Cheats.xml",
     "test/fixtures/xml/track/updatenowplaying_artist_Carrie_Underwood_sk_tag_track_Before_He_Cheats.xml",
     "test/fixtures/xml/user/getevents_sk_token_user_bodot.xml",
@@ -115,7 +118,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{http://github.com/bitboxer/rockstar}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.7.2}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{wrapper for audioscrobbler (last.fm) web services}
   s.test_files = [
     "examples/album.rb",
