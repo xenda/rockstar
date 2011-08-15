@@ -77,10 +77,9 @@ module Rockstar
       end
     end
     
-    def initialize(o={})
-      raise ArgumentError, "Name or mbid is required" if o[:name].nil? && o[:mbid].nil?
-      
-      @name = o[:name] unless o[:name].nil?
+    def initialize(name, o={})
+      raise ArgumentError, "Name or mbid is required" if name.blank? && o[:mbid].blank?
+      @name = name
       @mbid = o[:mbid] unless o[:mbid].nil?
 
       options = {:include_info => false}.merge(o)
