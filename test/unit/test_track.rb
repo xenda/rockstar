@@ -58,6 +58,13 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('100', @track.tags.first.count)
     assert_equal('http://www.last.fm/tag/country', @track.tags.first.url)
   end
+
+  test 'should have similar tracks' do
+    tracks = @track.similar
+    assert tracks.size > 0, "There should be similar tracks"
+    tracks.each{|t| assert_instance_of(Rockstar::Track, t, "Returned objects should all be Track objects")}
+    assert tracks.first.tags.map{|t|t.name.downcase}.include?("country"), "The first similar track should be tagged with 'country'"
+  end
   
   test 'can love tracks' do
     assert_equal('ok', @track.love("tag"))  
