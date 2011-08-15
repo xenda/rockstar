@@ -88,7 +88,7 @@ module Rockstar
 
     def load_info(xml=nil)
       unless xml
-        params = @mbid.nil? ? {:artist => @name} : {:mbid => @mbid}
+        params = @mbid.blank? ? {:artist => @name} : {:mbid => @mbid}
         
         doc = self.class.fetch_and_parse("artist.getInfo", params)
         xml = (doc / :artist).first

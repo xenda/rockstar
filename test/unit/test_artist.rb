@@ -99,4 +99,13 @@ class TestArtist < Test::Unit::TestCase
     assert_equal('The Big Four - Metallica, Slayer, Megadeth, Anthrax', events.first.title)
     assert_equal('07/02/11', events.first.start_date.strftime("%D"))
   end
+
+  test 'should load artist by mbid' do
+    artist = Rockstar::Artist.new("Metallica", 
+                                  :mbid => "65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", 
+                                  :include_info => true)
+    assert_equal("http://www.last.fm/music/Metallica", artist.url)
+    assert_equal("65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", artist.mbid)
+    assert_match(/an American metal band formed in 1981/, artist.summary)
+  end
 end
