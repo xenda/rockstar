@@ -222,6 +222,10 @@ module Rockstar
     def tags(force=false)
       get_instance("track.getTopTags", :tags, :tag, {:track => @name, :artist => @artist}, force)
     end
+
+    def similar(limit = 10, force = false)
+      get_instance('track.getSimilar', :similar, :track, {:track => @name, :artist => @artist, :limit => limit}, force)
+    end
     
     # The session_key is returned by auth.session.key
     def love(session_key)
@@ -255,6 +259,5 @@ module Rockstar
         :mbid        => @mbid
       })
     end
-
   end
 end
