@@ -47,7 +47,7 @@
 module Rockstar  
   class User < Base
     # attributes needed to initialize
-    attr_reader :username
+    attr_reader :username, :period
     
     # profile attributes
     attr_accessor :id, :cluster, :url, :realname, :mbox_sha1sum, :registered
@@ -86,9 +86,10 @@ module Rockstar
     end
     
     def initialize(username, o={})
-      options = {:include_profile => false}.merge(o)
+      options = {:include_profile => false, :period => 'overall'}.merge(o)
       raise ArgumentError if username.blank?
       @username = username
+      @period = options[:period]
       load_profile() if options[:include_profile]
     end
     
@@ -126,7 +127,7 @@ module Rockstar
     
     def top_artists(force=false, options = {} )
       default_options = {
-        :period => "overall"
+        :period => self.period
       }
       options = default_options.merge(options)
       options[:user] = @username
