@@ -125,8 +125,14 @@ module Rockstar
       @avatar              = @images["small"]
     end
     
-    def top_artists(force=false)
-      get_instance("user.getTopArtists", :top_artists, :artist, {:user => @username, :period => @period}, force)
+    def top_artists(force=false, options = {} )
+      default_options = {
+        :period => self.period
+      }
+      options = default_options.merge(options)
+      options[:user] = @username
+      
+      get_instance("user.getTopArtists", :top_artists, :artist, options, force)
     end
     
     def top_albums(force=false)

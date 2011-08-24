@@ -72,6 +72,20 @@ class TestUser < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/64/30883349.png', first.image)
   end
   
+  test "should be able to get a user's top artists for a period of time" do
+    last_3_month_artists = @user.top_artists( true, :period => "3month" )
+    assert_equal(50, last_3_month_artists.size)
+    
+    first = @user.top_artists.first
+    assert_equal('Florence + The Machine', first.name)
+    assert_equal('', first.mbid)
+    assert_equal('341', first.playcount)
+    assert_equal('1', first.rank)
+    assert_equal('http://www.last.fm/music/Florence%2B%252B%2BThe%2BMachine', first.url)
+    assert_equal('http://userserve-ak.last.fm/serve/34/50373889.png', first.thumbnail)
+    assert_equal('http://userserve-ak.last.fm/serve/64/50373889.png', first.image)
+  end
+  
   test 'should be able to get top albums' do
     assert_equal(50, @user.top_albums.size)
     first = @user.top_albums.first
