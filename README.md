@@ -14,7 +14,7 @@ Please initialize your api key and secret before using the api:
 Here is an example lastfm.yml:
 
     api_key: "API"
-    api_secret: "SECRET"    
+    api_secret: "SECRET"
 
 If you want to use the api in an rails app, you could add an initializer in config/initializers/lastm.rb and load a config/lastfm.yml file.
 
@@ -35,9 +35,9 @@ If you want to use the api in an rails app, you could add an initializer in conf
     puts "#{user.username}'s Top Tracks"
     puts "=" * (user.username.length + 13)
     user.top_tracks.each { |t| puts "(#{t.playcount}) #{t.name}" }
-    
+
 ## Albums
-    
+
     album = Rockstar::Album.new('Carrie Underwood', 'Some Hearts', :include_info => true)
 
     puts "Album: #{album.name}"
@@ -46,7 +46,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
     puts "Release Date: #{album.release_date.strftime('%m/%d/%Y')}"
 
 ## Artists
-    
+
     artist = Rockstar::Artist.new('Carrie Underwood')
 
     puts 'Top Tracks'
@@ -58,9 +58,9 @@ If you want to use the api in an rails app, you could add an initializer in conf
     puts 'Similar Artists'
     puts "=" * 15
     artist.similar.each { |a| puts "(#{a.match}%) #{a.name}" }
-    
-## Tags    
-    
+
+## Tags
+
     tag = Rockstar::Tag.new('country')
 
     puts 'Top Albums'
@@ -70,28 +70,28 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
     puts 'Top Tracks'
     tag.top_tracks.each { |t| puts "(#{t.count}) #{t.name} by #{t.artist}" }
-    
+
 ## Tracks
-    
+
     track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
     puts 'Fans'
     puts "=" * 4
     track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
-    
-    # Love a song, session_key is returned by Rockstar::Auth. See Rockstar::TokenAuth or
+
+    # Love a song, session_key is returned by Rockstar::Auth. See Rockstar::Auth or
     # examples/scrobble.rb for a complete example
     track.love(session_key)
 
 ## Geo
 
     geo = Rockstar::Geo.new
-      
-    # Get events for a lat/long  
+
+    # Get events for a lat/long
     geo.events(:lat => 50.0, :long => 12.3).each{|e| p "#{e.title} at #{e.venue.name}"}
-    
+
     # Get events for a location
     geo.events(:location => 'london').each{|e| p "#{e.title} at #{e.venue.name}"}
-    
+
     # To get a list of possible locations use
     geo.metros("germany").each{|m| p m.name}
 
@@ -100,14 +100,14 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
     a = Rockstar::Auth.new
     token = a.token
-    
+
     puts
     puts "Please open http://www.last.fm/api/auth/?api_key=#{Rockstar.lastfm_api_key}&token=#{token}"
     puts
     puts "Press enter when done."
-    
+
     gets
-    
+
     session = a.session(token)
 
 You can store the session.key somewhere and use it from now on to identify the user.
@@ -123,7 +123,7 @@ You can store the session.key somewhere and use it from now on to identify the u
     track.updateNowPlaying(Time.now, session.key)
 
 ## Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
