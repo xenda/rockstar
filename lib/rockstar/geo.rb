@@ -1,7 +1,5 @@
 module Rockstar
   class Geo < Base
-    
-      
     # Get events in a specific location. Opts can be
     #
     # * :location => 'madrid'  # A city name from geo.metros
@@ -9,9 +7,9 @@ module Rockstar
     #
     # Additionally you can set the distance from that point with
     #   :distance => 50 # 50 km from the given location
-    # 
+    #
     def events(opts = {}, force = false)
-      get_instance("geo.getEvents", :events, :event, opts, force) 
+      get_instance("geo.getEvents", :events, :event, opts, force)
     end
 
     def metros(country, force = false)

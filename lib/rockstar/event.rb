@@ -1,14 +1,14 @@
 module Rockstar
   class Event < Base
-    
+
     attr_accessor :eid, :title, :artists, :headliners, :start_date, :end_date,
-                  :description, :attendance, :reviews, :tag, :url, :website, :tickets, 
+                  :description, :attendance, :reviews, :tag, :url, :website, :tickets,
                   :cancelled, :tags, :images, :venue
-    
+
     class << self
       def new_from_xml(xml, doc)
         e = Event.new(
-          (xml).at(:id).inner_html, 
+          (xml).at(:id).inner_html,
           (xml).at(:title).inner_html
         )
 
@@ -52,20 +52,20 @@ module Rockstar
         e
       end
     end
-    
+
     def initialize(id, title)
       raise ArgumentError, "ID is required" if id.blank?
       raise ArgumentError, "Title is required" if title.blank?
       @eid   = id
       @title = title
     end
-    
+
     def image(which=:medium)
       which = which.to_s
-      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge', 'mega'].include?(which)  
+      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge', 'mega'].include?(which)
       if (self.images.nil?)
         load_info
-      end    
+      end
       self.images[which]
     end
   end

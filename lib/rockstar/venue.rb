@@ -1,13 +1,13 @@
 module Rockstar
   class Venue < Base
-    
+
     attr_accessor :vid, :name, :city, :country, :street, :postalcode, :lat, :long, :url,
                   :website, :phonenumber, :images, :events
 
     class << self
       def new_from_xml(xml, doc)
         v = Venue.new(
-          (xml).at(:id).inner_html, 
+          (xml).at(:id).inner_html,
           (xml).at(:name).inner_html
         )
 
@@ -29,27 +29,27 @@ module Rockstar
         v
       end
     end
-    
+
     def initialize(id, name)
       raise ArgumentError, "ID is required" if id.blank?
       raise ArgumentError, "Name is required" if name.blank?
       @vid  = id
       @name = name
     end
-    
+
     def image(which=:medium)
       which = which.to_s
-      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge', 'mega'].include?(which)  
+      raise ArgumentError unless ['small', 'medium', 'large', 'extralarge', 'mega'].include?(which)
       if (self.images.nil?)
         load_info
-      end    
+      end
       self.images[which]
     end
-    
+
     def self.find(name, country = nil, limit = nil, page = nil)
       get_instance("venue.search", :venues, :venue, {:venue => name, :country => country, :limit => limit, :page => page})
     end
-    
+
     def events
       @events ||= get_instance("venue.getEvents", :events, :event, {:venue => vid})
     end

@@ -5,19 +5,19 @@ class TestTrack < Test::Unit::TestCase
   def setup
     @track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
   end
-  
+
   test 'should require the artist name' do
     assert_raises(ArgumentError) { Rockstar::Track.new('', 'Before He Cheats') }
   end
-  
+
   test 'should require the track name' do
     assert_raises(ArgumentError) { Rockstar::Track.new('Carrie Underwood', '') }
   end
-  
+
   test "should know the artist" do
     assert_equal('Carrie Underwood', @track.artist)
   end
-  
+
   test 'should know the name' do
     assert_equal('Before He Cheats', @track.name)
   end
@@ -36,7 +36,7 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('1040848', track.playcount)
     assert_match(/named the 2007 Single of the Year by the Country Music Association/, track.summary)
   end
-  
+
   test 'should have albums' do
     assert_equal(1, @track.albums.size)
     assert_equal('Some Hearts', @track.albums.first.name)
@@ -51,7 +51,7 @@ class TestTrack < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/34/41303325.jpg', @track.fans.first.avatar)
     assert_equal('5000000', @track.fans.first.weight)
   end
-  
+
   test 'should have top tags' do
     assert_equal(100, @track.tags.size)
     assert_equal('country', @track.tags.first.name)
@@ -65,9 +65,9 @@ class TestTrack < Test::Unit::TestCase
     tracks.each{|t| assert_instance_of(Rockstar::Track, t, "Returned objects should all be Track objects")}
     assert tracks.first.tags.map{|t|t.name.downcase}.include?("country"), "The first similar track should be tagged with 'country'"
   end
-  
+
   test 'can love tracks' do
-    assert_equal('ok', @track.love("tag"))  
+    assert_equal('ok', @track.love("tag"))
   end
 
   test 'raise missing parameter error in scrobble' do

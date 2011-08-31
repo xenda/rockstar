@@ -23,27 +23,22 @@ require 'rockstar/tag'
 require 'rockstar/track'
 require 'rockstar/venue'
 
-require 'rockstar/simpleauth'
 require 'rockstar/auth'
 require 'rockstar/session'
-require 'rockstar/tokenauth'
-require 'rockstar/scrobble'
-require 'rockstar/playing'
-
 require 'rockstar/rest'
 
 module Rockstar
   extend self
-  
+
   def lastfm=(args)
     @api_key    = args["api_key"]
     @api_secret = args["api_secret"]
   end
-  
+
   def lastfm_api_key
     @api_key
   end
-  
+
   def lastfm_api_secret
     @api_secret
   end

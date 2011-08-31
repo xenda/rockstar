@@ -1,19 +1,19 @@
 # Below are examples of how to find an artists top tracks and similar artists.
-# 
+#
 #   artist = Rockstar::Artist.new('Carrie Underwood')
-# 
+#
 #   puts 'Top Tracks'
 #   puts "=" * 10
 #   artist.top_tracks.each { |t| puts "#{t.name}" }
-# 
+#
 #   puts
-# 
+#
 #   puts 'Similar Artists'
 #   puts "=" * 15
 #   artist.similar.each { |a| puts "(#{a.match}%) #{a.name}" }
-# 
+#
 # Would output something similar to:
-# 
+#
 #   Top Tracks
 #   ==========
 #   (8797) Before He Cheats
@@ -31,7 +31,7 @@
 #   (1854) That's Where It Is
 #   (1786) I Ain't in Checotah Anymore
 #   (1596) The Night Before (Life Goes On)
-#   
+#
 #   Similar Artists
 #   ===============
 #   (100%) Rascal Flatts
@@ -61,10 +61,10 @@ module Rockstar
     attr_accessor :name, :mbid, :listenercount, :playcount, :rank, :url, :thumbnail
     attr_accessor :summary, :content, :images, :count, :streamable
     attr_accessor :chartposition
-    
+
     # used for similar artists
     attr_accessor :match
-    
+
     class << self
       def new_from_xml(xml, doc=nil)
         # occasionally name can be found in root of artist element (<artist name="">) rather than as an element (<name>)
@@ -76,7 +76,7 @@ module Rockstar
         artist
       end
     end
-    
+
     def initialize(name, o={})
       raise ArgumentError, "Name or mbid is required" if name.blank? && o[:mbid].blank?
       @name = name
@@ -89,7 +89,7 @@ module Rockstar
     def load_info(xml=nil)
       unless xml
         params = @mbid.blank? ? {:artist => @name} : {:mbid => @mbid}
-        
+
         doc = self.class.fetch_and_parse("artist.getInfo", params)
         xml = (doc / :artist).first
       end
@@ -112,10 +112,10 @@ module Rockstar
       (xml/'image').each {|image|
         self.images[image['size']] = image.inner_html if self.images[image['size']].nil?
       }
-      
+
       self.thumbnail      = self.images['small']
       self.match          = (xml).at(:match).inner_html          if (xml).at(:match)
-       
+
       # in top artists for tag
       self.count          = xml['count']                         if xml['count']
       self.streamable     = xml['streamable']                    if xml['streamable']
@@ -124,32 +124,27 @@ module Rockstar
 
       self
     end
-    
-    def current_events(format=:ics)
-      warn "[DEPRECATION] the `current_events` method is deprecated. Please use artist.events"
-      events
-    end
 
     def events(force=false)
       get_instance("artist.getEvents", :events, :event, {:artist => @name}, force)
     end
-    
+
     def similar(force=false)
       get_instance("artist.getSimilar", :similar, :artist, {:artist => @name}, force)
     end
-    
+
     def top_fans(force=false)
       get_instance("artist.getTopFans", :top_fans, :user, {:artist => @name}, force)
     end
-    
+
     def top_tracks(force=false)
       get_instance("artist.getTopTracks", :top_tracks, :track, {:artist => @name}, force)
     end
-    
+
     def top_albums(force=false)
       get_instance("artist.getTopAlbums", :top_albums, :album, {:artist => @name}, force)
     end
-    
+
     def top_tags(force=false)
       get_instance("artist.getTopTags", :top_tags, :tag, {:artist => @name}, force)
     end

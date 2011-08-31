@@ -6,32 +6,32 @@ class TestUser < Test::Unit::TestCase
   def setup
     @user = Rockstar::User.new('jnunemaker')
   end
-  
+
   test 'should be able to find one user' do
     assert_equal(@user.username, Rockstar::User.find('jnunemaker').username)
   end
-  
+
   test 'should be able to find multiple users' do
     users = Rockstar::User.find('jnunemaker', 'oaknd1', 'wharle')
     assert_equal(%w{jnunemaker oaknd1 wharle}, users.collect(&:username))
   end
-  
+
   test 'should be able to find multiple users using an array' do
     users = Rockstar::User.find(%w{jnunemaker oaknd1 wharle})
     assert_equal(%w{jnunemaker oaknd1 wharle}, users.collect(&:username))
   end
-  
+
   test 'should be able to load profile while finding' do
     user = Rockstar::User.find('jnunemaker', :include_profile => true)
     assert_equal(@user.username, user.username)
     assert_equal('3017870', user.id)
   end
-  
+
   test 'should be able to load profile while finding multiple users' do
     users = Rockstar::User.find('jnunemaker', 'oaknd1', 'wharle', :include_profile => true)
     assert_equal(3, users.size)
   end
-  
+
   test 'should be able to include profile during initialization' do
     user = Rockstar::User.new('jnunemaker', :include_profile => true)
     assert_equal('3017870', user.id)
@@ -71,11 +71,11 @@ class TestUser < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/34/30883349.png', first.thumbnail)
     assert_equal('http://userserve-ak.last.fm/serve/64/30883349.png', first.image)
   end
-  
+
   test "should be able to get a user's top artists for a period of time" do
     last_3_month_artists = @user.top_artists( true, :period => "3month" )
     assert_equal(50, last_3_month_artists.size)
-    
+
     first = @user.top_artists.first
     assert_equal('Florence + The Machine', first.name)
     assert_equal('', first.mbid)
@@ -85,7 +85,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('http://userserve-ak.last.fm/serve/34/50373889.png', first.thumbnail)
     assert_equal('http://userserve-ak.last.fm/serve/64/50373889.png', first.image)
   end
-  
+
   test 'should be able to get top albums' do
     assert_equal(50, @user.top_albums.size)
     first = @user.top_albums.first
@@ -94,7 +94,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('The Very Best of Dwight Yoakam', first.name)
     assert_equal('b6a051b4-1a1e-4c33-a1e5-0ea6e920a13f', first.mbid)
     assert_equal('560', first.playcount)
-    assert_equal('1', first.rank)    
+    assert_equal('1', first.rank)
     assert_equal('http://www.last.fm/music/Dwight+Yoakam/The+Very+Best+of+Dwight+Yoakam', first.url)
     assert_equal('http://userserve-ak.last.fm/serve/34s/8725405.jpg', first.image(:small))
     assert_equal('http://userserve-ak.last.fm/serve/64s/8725405.jpg', first.image(:medium))
@@ -120,7 +120,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal("7", first.count)
     assert_equal("http://www.last.fm/tag/country", first.url)
   end
-  
+
   # not implemented
   test 'should be able to get top tags for artist' do
   end
@@ -130,7 +130,7 @@ class TestUser < Test::Unit::TestCase
   # not implemented
   test 'should be able to get top tags for track' do
   end
-  
+
   test 'should have friends' do
     assert_equal(17, @user.friends.size)
     first = @user.friends.first
@@ -138,7 +138,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('http://www.last.fm/user/mayorcj', first.url)
     assert_equal('http://userserve-ak.last.fm/serve/34/37841973.jpg', first.avatar)
   end
-  
+
   test 'should have neighbours' do
     assert_equal(50, @user.neighbours.size)
     first = @user.neighbours.first
@@ -173,24 +173,20 @@ class TestUser < Test::Unit::TestCase
     assert_equal('1243434966', first.date_uts)
   end
 
-  test 'should have recommendations is deprecated' do
-    assert_equal(0, @user.recommendations.size)
-  end
-  
   test 'should have artist recommendations' do
     first = @user.recommended_artists("token").first
     assert_equal('Virginia Jetzt!', first.name)
     assert_equal('433d544f-d6c6-4c79-aefd-6f4c7918e5fe', first.mbid)
     assert_equal('http://www.last.fm/music/Virginia+Jetzt%21', first.url)
   end
-  
+
   test 'should have charts' do
     assert_equal(229, @user.charts.size)
     first = @user.charts.first
     assert_equal(1134302403, first.from)
     assert_equal(1134907203, first.to)
   end
-  
+
   test 'should have weekly artist chart' do
     chart = @user.weekly_artist_chart
     assert_equal(3, chart.size)
@@ -201,7 +197,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('45', first.playcount)
     assert_equal('http://www.last.fm/music/Glee+Cast', first.url)
   end
-  
+
   test 'should have weekly artist chart for past weeks' do
     chart = @user.weekly_artist_chart(1138536002, 1139140802)
     assert_equal(33, chart.size)
@@ -212,7 +208,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('48', first.playcount)
     assert_equal('http://www.last.fm/music/Jenny+Lewis+with+The+Watson+Twins', first.url)
   end
-  
+
   test 'should have weekly album chart' do
     chart = @user.weekly_album_chart
     assert_equal(4, chart.size)
@@ -225,7 +221,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal('15', first.playcount)
     assert_equal('http://www.last.fm/music/Brad+Mehldau/Highway+Rider', first.url)
   end
-  
+
   test 'should have weekly album chart for past weeks' do
     chart = @user.weekly_album_chart(1138536002, 1139140802)
     assert_equal(20, chart.size)
@@ -237,8 +233,8 @@ class TestUser < Test::Unit::TestCase
     assert_equal('1', first.chartposition)
     assert_equal('13', first.playcount)
     assert_equal('http://www.last.fm/music/Jewel/0304', first.url)
-  end 
-  
+  end
+
   test 'should have track album chart' do
     chart = @user.weekly_track_chart
     assert_equal(42, chart.size)
@@ -279,7 +275,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal(Time.local(2010, 8, 20, 17, 50, 1), first.start_date)
     assert_equal(Time.local(2010, 8, 22, 17, 50, 1), first.end_date)
     assert(first.description.length >= 814)
-    assert_equal(200, first.attendance) 
+    assert_equal(200, first.attendance)
     assert_equal(0, first.reviews)
     assert_equal("lastfm:event=1575046", first.tag)
     assert_equal("http://www.last.fm/festival/1575046+Cityfestival+%28gamescom%29", first.url)
@@ -291,7 +287,7 @@ class TestUser < Test::Unit::TestCase
     assert_equal("http://userserve-ak.last.fm/serve/64/3608276.jpg",  first.images["medium"])
     assert_equal("http://userserve-ak.last.fm/serve/126/3608276.jpg", first.images["large"])
     assert_equal("http://userserve-ak.last.fm/serve/252/3608276.jpg", first.images["extralarge"])
-    
+
     assert_equal("Innenstadt", first.venue.name)
 
     assert_equal("Köln", first.venue.city.mb_chars)
@@ -308,6 +304,6 @@ class TestUser < Test::Unit::TestCase
     assert_equal("large",      first.venue.images["large"])
     assert_equal("extralarge", first.venue.images["extralarge"])
 
-  end 
+  end
 
 end

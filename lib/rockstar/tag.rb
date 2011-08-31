@@ -1,17 +1,17 @@
 # Below is code samples for how to find the top albums and tracks for a tag.
-# 
+#
 #   tag = Rockstar::Tag.new('country')
-# 
+#
 #   puts 'Top Albums'
 #   tag.top_albums.each { |a| puts "(#{a.count}) #{a.name} by #{a.artist}" }
-# 
+#
 #   puts
-# 
+#
 #   puts 'Top Tracks'
 #   tag.top_tracks.each { |t| puts "(#{t.count}) #{t.name} by #{t.artist}" }
-#   
+#
 # Which would output something similar to:
-# 
+#
 #   Top Albums
 #   (29) American IV: The Man Comes Around by Johnny Cash
 #   (14) Folks Pop In at the Waterhouse by Various Artists
@@ -33,7 +33,7 @@
 #   (5) Breathe by Faith Hill
 #   (5) Unearthed (disc 4: My Mother's Hymn Book) by Johnny Cash
 #   (4) Home by Dixie Chicks
-# 
+#
 #   Top Tracks
 #   (221) Hurt by Johnny Cash
 #   (152) I Walk the Line by Johnny Cash
@@ -58,7 +58,7 @@
 module Rockstar
   class Tag < Base
     attr_accessor :name, :count, :url
-    
+
     class << self
       def new_from_xml(xml, doc=nil)
         name    = (xml).at(:name).inner_html
@@ -67,7 +67,7 @@ module Rockstar
         t.url   = Base.fix_url((xml).at(:url).inner_html)
         t
       end
-      
+
       def top_tags
         doc = fetch_and_parse("tag.getTopTags")
         @top_tags = (doc/"toptags/tag").collect do |tag|
@@ -78,17 +78,17 @@ module Rockstar
         end
       end
     end
-    
+
     def initialize(name)
       raise ArgumentError, "Name is required" if name.blank?
       @name = name
     end
-    
-    
+
+
     def top_artists(force=false)
       get_instance("tag.getTopArtists", :top_artists, :artist, {:tag => @name}, force)
     end
-    
+
     def top_albums(force=false)
       get_instance("tag.getTopAlbums", :top_albums, :album, {:tag => @name}, force)
     end

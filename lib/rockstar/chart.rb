@@ -11,19 +11,19 @@ module Rockstar
       @from = from
       @to = to
     end
-    
+
     def from=(value)
       @from = value.to_i
     end
-    
+
     def to=(value)
       @to = value.to_i
     end
-    
+
     def from
       @from.to_i
     end
-    
+
     def to
       @to.to_i
     end

@@ -1,17 +1,17 @@
 # Below is an example of how to get the top fans for a track.
-# 
+#
 #   track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
 #   puts 'Fans'
 #   puts "=" * 4
 #   track.fans.each { |u| puts u.username }
-#   
+#
 # Which would output something like:
-# 
+#
 #   track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
 #   puts 'Fans'
 #   puts "=" * 4
 #   track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
-# 
+#
 #   Fans
 #   ====
 #   (69163) PimpinRose
@@ -43,13 +43,13 @@ module Rockstar
   class Track < Base
     attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url
     attr_accessor :summary, :content, :streamable, :album, :album_mbid, :date, :date_uts, :duration
-    
+
     # only seems to be used on top tracks for tag
     attr_accessor :count, :thumbnail, :image, :images
-    
+
     # for weekly top tracks
     attr_accessor :chartposition
-    
+
     class << self
       def new_from_xml(xml, doc=nil)
         artist          = (xml).at(:artist)['name']               if (xml).at(:artist) && !(xml).at(:artist)['name'].nil?
@@ -98,7 +98,7 @@ module Rockstar
         query["trackNumber[0]"] = params[:trackNumber] if !params[:trackNumber].blank?
         query["mbid[0]"]        = params[:mbid] if !params[:mbid].blank?
         query["duration[0]"]    = params[:duration] if !params[:duration].blank?
-        
+
         doc = Hpricot::XML(Track.connection.post("track.scrobble", true, query))
 
         if doc.at("lfm")["status"] == "failed"
@@ -111,7 +111,7 @@ module Rockstar
               raise RequestFailedError, doc.at("lfm").at("error").inner_html
            end
         end
- 
+
         doc.at("lfm")["status"]
        end
 
@@ -142,7 +142,7 @@ module Rockstar
         query["trackNumber"] = params[:trackNumber] if !params[:trackNumber].blank?
         query["mbid"]        = params[:mbid] if !params[:mbid].blank?
         query["duration"]    = params[:duration] if !params[:duration].blank?
-        
+
         doc = Hpricot::XML(Track.connection.post("track.updateNowPlaying", true, query))
 
         if doc.at("lfm")["status"] == "failed"
@@ -155,12 +155,12 @@ module Rockstar
               raise RequestFailedError, doc.at("lfm").at("error").inner_html
            end
         end
-        
+
         doc.at("lfm")["status"]
       end
- 
+
     end
-    
+
     def initialize(artist, name, o={})
       raise ArgumentError, "Artist is required" if artist.blank?
       raise ArgumentError, "Name is required" if name.blank?
@@ -188,7 +188,7 @@ module Rockstar
       self.streamable    = (xml).at(:track)['streamable']          if (xml).at(:track) && (xml).at(:track)['streamable']
       self.streamable    = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if streamable.nil? && (xml).at(:streamable)
       self.duration      = (xml).at(:duration).inner_html.to_i     if (xml).at(:duration)
-        
+
       self.count         = xml['count']                            if xml['count']
       self.album         = (xml).at(:album).inner_html             if (xml).at(:album)
       self.album_mbid    = (xml).at(:album)['mbid']                if (xml).at(:album) && (xml).at(:album)['mbid']
@@ -204,21 +204,21 @@ module Rockstar
       (xml/'image').each {|image|
         self.images[image['size']] = image.inner_html if self.images[image['size']].nil?
       }
-        
+
       self.thumbnail = images['small']
       self.image     = images['medium']
 
       self
     end
-      
+
     def albums(force=false)
       get_instance("track.getInfo", :albums, :album, {:track => @name, :artist => @artist}, force)
     end
-        
+
     def fans(force=false)
       get_instance("track.getTopFans", :fans, :user, {:track => @name, :artist => @artist}, force)
     end
-    
+
     def tags(force=false)
       get_instance("track.getTopTags", :tags, :tag, {:track => @name, :artist => @artist}, force)
     end
@@ -226,7 +226,7 @@ module Rockstar
     def similar(limit = 10, force = false)
       get_instance('track.getSimilar', :similar, :track, {:track => @name, :artist => @artist, :limit => limit}, force)
     end
-    
+
     # The session_key is returned by auth.session.key
     def love(session_key)
       Track.love(@artist, @name, session_key)
