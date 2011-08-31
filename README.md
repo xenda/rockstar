@@ -71,17 +71,6 @@ If you want to use the api in an rails app, you could add an initializer in conf
     puts 'Top Tracks'
     tag.top_tracks.each { |t| puts "(#{t.count}) #{t.name} by #{t.artist}" }
 
-## Tracks
-
-    track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
-    puts 'Fans'
-    puts "=" * 4
-    track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
-
-    # Love a song, session_key is returned by Rockstar::Auth. See Rockstar::Auth or
-    # examples/scrobble.rb for a complete example
-    track.love(session_key)
-
 ## Geo
 
     geo = Rockstar::Geo.new
@@ -110,7 +99,17 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
     session = a.session(token)
 
-You can store the session.key somewhere and use it from now on to identify the user.
+You can store the session.key somewhere and use it from now on to identify the user. More
+details can be found in Rockstar::Auth or examples/scrobble.rb
+
+## Tracks
+
+    track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
+    puts 'Fans'
+    puts "=" * 4
+    track.fans.each { |u| puts "(#{u.weight}) #{u.username}" }
+
+    track.love(session.key)
 
 ## Scrobbling
 
