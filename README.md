@@ -134,3 +134,7 @@ details can be found in Rockstar::Auth or examples/scrobble.rb
 ## Copyright
 
 Copyright (c) 2007-2011 John Nunemaker, Bodo "Bitboxer" Tasche, Nick "zapnap" Plante. See LICENSE for details.
+
+## Acknowledgements
+
+Thanks to [putpat.tv](http://www.putpat.tv) for sponsering the work on the rockstar gem.
