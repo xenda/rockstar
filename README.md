@@ -48,7 +48,7 @@ If you want to use the api in an rails app, you could add an initializer in conf
 ## Artists
 
 If you want to load all informations about an artist or any other
-object, you have to add ':include_info => true' .
+object, you have to add `:include_info => true` .
 
     artist = Rockstar::Artist.new('Carrie Underwood', :include_info => true)
 
