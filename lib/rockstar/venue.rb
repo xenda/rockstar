@@ -28,6 +28,10 @@ module Rockstar
 
         v
       end
+
+      def find(name, country = nil, limit = nil, page = nil)
+        get_instance("venue.search", :venues, :venue, {:venue => name, :country => country, :limit => limit, :page => page})
+      end
     end
 
     def initialize(id, name)
@@ -44,10 +48,6 @@ module Rockstar
         load_info
       end
       self.images[which]
-    end
-
-    def self.find(name, country = nil, limit = nil, page = nil)
-      get_instance("venue.search", :venues, :venue, {:venue => name, :country => country, :limit => limit, :page => page})
     end
 
     def events
