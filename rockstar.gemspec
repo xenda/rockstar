@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version = "0.6.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Bodo Tasche"]
-  s.date = %q{2011-08-24}
+  s.authors = [%q{Bodo Tasche}]
+  s.date = %q{2011-11-08}
   s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
   s.email = %q{bodo@bitboxer.de}
   s.extra_rdoc_files = [
@@ -43,13 +43,9 @@ Gem::Specification.new do |s|
     "lib/rockstar/event.rb",
     "lib/rockstar/geo.rb",
     "lib/rockstar/metro.rb",
-    "lib/rockstar/playing.rb",
     "lib/rockstar/rest.rb",
-    "lib/rockstar/scrobble.rb",
     "lib/rockstar/session.rb",
-    "lib/rockstar/simpleauth.rb",
     "lib/rockstar/tag.rb",
-    "lib/rockstar/tokenauth.rb",
     "lib/rockstar/track.rb",
     "lib/rockstar/user.rb",
     "lib/rockstar/venue.rb",
@@ -108,18 +104,15 @@ Gem::Specification.new do |s|
     "test/unit/test_artist.rb",
     "test/unit/test_chart.rb",
     "test/unit/test_geo.rb",
-    "test/unit/test_playing.rb",
-    "test/unit/test_scrobble.rb",
-    "test/unit/test_simpleauth.rb",
+    "test/unit/test_rockstar.rb",
     "test/unit/test_tag.rb",
-    "test/unit/test_tokenauth.rb",
     "test/unit/test_track.rb",
     "test/unit/test_user.rb",
     "test/unit/test_venue.rb"
   ]
   s.homepage = %q{http://github.com/bitboxer/rockstar}
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.8}
   s.summary = %q{wrapper for audioscrobbler (last.fm) web services}
   s.test_files = [
     "examples/album.rb",
@@ -135,11 +128,8 @@ Gem::Specification.new do |s|
     "test/unit/test_artist.rb",
     "test/unit/test_chart.rb",
     "test/unit/test_geo.rb",
-    "test/unit/test_playing.rb",
-    "test/unit/test_scrobble.rb",
-    "test/unit/test_simpleauth.rb",
+    "test/unit/test_rockstar.rb",
     "test/unit/test_tag.rb",
-    "test/unit/test_tokenauth.rb",
     "test/unit/test_track.rb",
     "test/unit/test_user.rb",
     "test/unit/test_venue.rb"
