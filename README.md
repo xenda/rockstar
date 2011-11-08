@@ -20,6 +20,10 @@ If you want to use the api in an rails app, you could add an initializer in conf
 
     rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
     Rockstar.lastfm =  YAML.load_file(rails_root + '/config/lastfm.yml')
+    
+Alternatively you can provide a hash with the api key and secret:
+
+    Rockstar.lastfm = {:api_key => "API", :api_secret => "SECRET"}
 
 ## Users
 
