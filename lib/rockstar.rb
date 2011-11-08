@@ -31,8 +31,8 @@ module Rockstar
   extend self
 
   def lastfm=(args)
-    @api_key    = args["api_key"]
-    @api_secret = args["api_secret"]
+    @api_key    = args["api_key"] || args[:api_key]
+    @api_secret = args["api_secret"] || args[:api_secret]
   end
 
   def lastfm_api_key
