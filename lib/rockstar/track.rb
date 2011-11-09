@@ -41,9 +41,9 @@ class RequestFailedError < StandardError; end
 
 module Rockstar
   class Track < Base
-    attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :nowplaying
+    attr_accessor :artist, :artist_mbid, :name, :mbid, :playcount, :rank, :url, :now_playing
     attr_accessor :summary, :content, :streamable, :album, :album_mbid, :date, :date_uts, :duration
-    alias_method :nowplaying?, :nowplaying
+    alias_method :now_playing?, :now_playing
 
     # only seems to be used on top tracks for tag
     attr_accessor :count, :thumbnail, :image, :images
@@ -180,7 +180,7 @@ module Rockstar
 
       return self if xml.nil?
 
-      self.nowplaying    = xml['nowplaying'] == 'true' ? true : false
+      self.now_playing	 = xml['nowplaying'] == 'true' ? true : false
       self.artist_mbid   = (xml).at(:artist)['mbid']               if (xml).at(:artist) && (xml).at(:artist)['mbid']
       self.artist_mbid   = (xml).at(:artist).at(:mbid).inner_html  if artist_mbid.nil? && (xml).at(:artist) && (xml).at(:artist).at(:mbid)
       self.mbid          = (xml).at(:mbid).inner_html              if (xml).at(:mbid)

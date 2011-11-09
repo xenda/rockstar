@@ -4,6 +4,7 @@ class TestTrack < Test::Unit::TestCase
 
   def setup
     @track = Rockstar::Track.new('Carrie Underwood', 'Before He Cheats')
+	@track1 = Rockstar::Track.new('Karrie Underwood', 'Before He Cheats')
   end
 
   test 'should require the artist name' do
@@ -24,8 +25,11 @@ class TestTrack < Test::Unit::TestCase
 
   test 'should be able to load track info' do
     @track.load_info
+	@track1.load_info
     assert_equal('http://www.last.fm/music/Carrie+Underwood/_/Before+He+Cheats', @track.url)
     assert_equal('1040848',  @track.playcount)
+	assert_equal(false, @track.now_playing?)
+	assert_equal(true, @track1.now_playing?)
     assert_match(/named the 2007 Single of the Year by the Country Music Association/, @track.summary)
   end
 
