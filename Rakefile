@@ -9,8 +9,8 @@ begin
     gem.name = "rockstar"
     gem.summary = %Q{wrapper for audioscrobbler (last.fm) web services}
     gem.description = %Q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
-    gem.email = "bodo@bitboxer.de"
-    gem.homepage = "http://github.com/bitboxer/rockstar"
+    gem.email = "bodo@putpat.tv"
+    gem.homepage = "http://github.com/putpat/rockstar"
     gem.authors = ["Bodo Tasche"]
     gem.add_dependency("hpricot", ">=0.4.86")
     gem.add_dependency("activesupport", ">=1.4.2")
