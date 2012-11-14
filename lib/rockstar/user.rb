@@ -113,7 +113,7 @@ module Rockstar
       @avatar              = @images["small"]
     end
 
-    def top_artists(force=false, options = {} )
+    def top_artists(force=false, options = {})
       default_options = {
         :period => self.period
       }
@@ -173,6 +173,27 @@ module Rockstar
     def weekly_track_chart(from=nil, to=nil)
       doc = self.class.fetch_and_parse("user.getWeeklyTrackChart", {:user => @username, :from => from, :to => to})
       (doc/:track).inject([]) { |elements, el| elements << Track.new_from_xml(el); elements }
+    end
+
+    # Wrappers for Rockstar::Library
+    def artists(force=false, options = {})
+      default_options = {
+        :user => @username
+      }
+      options = default_options.merge(options)
+
+      library = Rockstar::Library.new
+      library.artists(false, options)
+    end
+
+    def albums(force=false, options = {})
+      default_options = {
+        :user => @username
+      }
+      options = default_options.merge(options)
+
+      library = Rockstar::Library.new
+      library.albums(false, options)
     end
 
     # Get the recommendated events for the user, auth.session.key needed.
