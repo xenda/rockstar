@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{rockstar}
-  s.version = "0.6.4"
+  s.name = "rockstar"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Bodo Tasche}]
-  s.date = %q{2011-11-08}
-  s.description = %q{This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api.}
-  s.email = %q{bodo@bitboxer.de}
+  s.authors = ["Bodo Tasche"]
+  s.date = "2012-11-15"
+  s.description = "This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api."
+  s.email = "bodo@putpat.tv"
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/rockstar/chart.rb",
     "lib/rockstar/event.rb",
     "lib/rockstar/geo.rb",
+    "lib/rockstar/library.rb",
     "lib/rockstar/metro.rb",
     "lib/rockstar/rest.rb",
     "lib/rockstar/session.rb",
@@ -64,11 +65,14 @@ Gem::Specification.new do |s|
     "test/fixtures/xml/artist/gettoptracks_artist_Metallica.xml",
     "test/fixtures/xml/geo/getevents_location_london.xml",
     "test/fixtures/xml/geo/getmetros_country_germany.xml",
+    "test/fixtures/xml/library/getalbums_user_jnunemaker.xml",
+    "test/fixtures/xml/library/getartists_user_jnunemaker.xml",
     "test/fixtures/xml/tag/gettopalbums_tag_rock.xml",
     "test/fixtures/xml/tag/gettopartists_tag_rock.xml",
     "test/fixtures/xml/tag/gettoptags.xml",
     "test/fixtures/xml/tag/gettoptracks_tag_rock.xml",
     "test/fixtures/xml/track/getinfo_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
+    "test/fixtures/xml/track/getinfo_artist_Karrie_Underwood_track_Before_He_Cheats.xml",
     "test/fixtures/xml/track/getsimilar_artist_Carrie_Underwood_limit_10_track_Before_He_Cheats.xml",
     "test/fixtures/xml/track/gettopfans_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
     "test/fixtures/xml/track/gettoptags_artist_Carrie_Underwood_track_Before_He_Cheats.xml",
@@ -104,16 +108,17 @@ Gem::Specification.new do |s|
     "test/unit/test_artist.rb",
     "test/unit/test_chart.rb",
     "test/unit/test_geo.rb",
+    "test/unit/test_library.rb",
     "test/unit/test_rockstar.rb",
     "test/unit/test_tag.rb",
     "test/unit/test_track.rb",
     "test/unit/test_user.rb",
     "test/unit/test_venue.rb"
   ]
-  s.homepage = %q{http://github.com/bitboxer/rockstar}
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.8}
-  s.summary = %q{wrapper for audioscrobbler (last.fm) web services}
+  s.homepage = "http://github.com/putpat/rockstar"
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.23"
+  s.summary = "wrapper for audioscrobbler (last.fm) web services"
   s.test_files = [
     "examples/album.rb",
     "examples/artist.rb",
@@ -128,6 +133,7 @@ Gem::Specification.new do |s|
     "test/unit/test_artist.rb",
     "test/unit/test_chart.rb",
     "test/unit/test_geo.rb",
+    "test/unit/test_library.rb",
     "test/unit/test_rockstar.rb",
     "test/unit/test_tag.rb",
     "test/unit/test_track.rb",
