@@ -91,6 +91,25 @@ object, you have to add `:include_info => true` .
     # To get a list of possible locations use
     geo.metros("germany").each{|m| p m.name}
 
+## Library
+
+	# Get artists and albums for user
+    library = Rockstar::Library.new
+
+    puts 'Artists'
+    library.artists(false, :user => 'jnunemaker').each { |a| puts a.name }
+    
+    puts 'Albums'
+    library.albums(false, :user => 'jnunemaker').each { |a| puts a.name }
+
+	# Get it with Rockstar::User
+    user = Rockstar::User.new('jnunemaker')
+    
+    puts 'Artists'
+    user.artists.each { |a| puts a.name }
+    
+    puts 'Albums'
+    user.albums.each { |a| puts a.name }
 
 ##  Get rights to access the user data for scrobbing, now playing, events etc...
 
