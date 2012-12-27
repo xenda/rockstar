@@ -28,7 +28,7 @@ geo.events(:location => 'london').each{|e| p "#{e.title} at #{e.venue.name}"}
 #  </track>
 #  ...
 #</toptracks>
-geo.toptracks(:country => 'spain').each{|t| p "#{t.name} by #{t.artist}"}
+geo.toptracks('united kingdom', 10).each{|t| p "#{t.name} by #{t.artist}"}
 
 
 #Get the most popular artists on Last.fm by country
@@ -57,4 +57,4 @@ geo.toptracks(:country => 'spain').each{|t| p "#{t.name} by #{t.artist}"}
 #        <image size="extralarge">http://userserve-ak.last.fm/serve/252/210303.jpg</image>
 #        <image size="mega">http://userserve-ak.last.fm/serve/500/210303/Coldplay.jpg</image>
 #    </artist>                    <a
-geo.topartists('spain', 10).each{|a| p "artist #{a.name} with #{a.listeners}"}
+geo.topartists('united kingdom', 10).each{|a| p "artist #{a.name} with #{a.listenercount} listeners"}
