@@ -91,6 +91,13 @@ object, you have to add `:include_info => true` .
     # To get a list of possible locations use
     geo.metros("germany").each{|m| p m.name}
 
+    # Retrieve list of top tracks by country
+    geo.toptracks('united kingdom', 10).each{|t| p "#{t.name} by #{t.artist}"}
+
+    # Retrieve list of top artists by country
+    geo.topartists('united kingdom', 10).each{|a| p "artist #{a.name} with #{a.listenercount} listeners"}
+
+
 ## Library
 
 	# Get artists and albums for user
