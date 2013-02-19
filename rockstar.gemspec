@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rockstar"
-  s.version = "0.7.0"
+  s.version = "0.7.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bodo Tasche"]
-  s.date = "2012-11-15"
+  s.date = "2013-02-19"
   s.description = "This gem is an updated version of jnunemakers scrobbler gem. Rockstar uses v2.0 of the last.fm api."
   s.email = "bodo@putpat.tv"
   s.extra_rdoc_files = [
@@ -65,6 +65,8 @@ Gem::Specification.new do |s|
     "test/fixtures/xml/artist/gettoptracks_artist_Metallica.xml",
     "test/fixtures/xml/geo/getevents_location_london.xml",
     "test/fixtures/xml/geo/getmetros_country_germany.xml",
+    "test/fixtures/xml/geo/gettopartists_country_spain_limit_50_page_.xml",
+    "test/fixtures/xml/geo/gettoptracks_country_spain_limit_50_page_.xml",
     "test/fixtures/xml/library/getalbums_user_jnunemaker.xml",
     "test/fixtures/xml/library/getartists_user_jnunemaker.xml",
     "test/fixtures/xml/tag/gettopalbums_tag_rock.xml",
