@@ -27,11 +27,12 @@ class TestArtist < Test::Unit::TestCase
     assert_equal("65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab", artist.mbid)
     assert_match(/an American metal band formed in 1981/, artist.summary)
     assert_equal("http://userserve-ak.last.fm/serve/64/3679639.jpg", artist.images['medium'])
+    assert_equal("http://userserve-ak.last.fm/serve/64/3679639.jpg", artist.images['medium'])
   end
 
   test 'should return the default artist profile image' do
     assert_equal("http://userserve-ak.last.fm/serve/64/3679639.jpg", @artist.image)
-    assert_equal("http://userserve-ak.last.fm/serve/126/3679639.jpg", @artist.image(:large))
+    assert_equal("thrash metal", @artist.tags.first)
   end
 
   test 'should load additional user images' do
