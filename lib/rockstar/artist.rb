@@ -59,7 +59,7 @@
 module Rockstar
   class Artist < Base
     attr_accessor :name, :mbid, :listenercount, :playcount, :rank, :url, :thumbnail
-    attr_accessor :summary, :content, :images, :count, :streamable
+    attr_accessor :summary, :content, :images, :count, :streamable, :tags
     attr_accessor :chartposition
 
     # used for similar artists
@@ -121,6 +121,8 @@ module Rockstar
       self.streamable     = xml['streamable']                    if xml['streamable']
 
       self.streamable     = (xml).at(:streamable).inner_html == '1' ? 'yes' : 'no' if self.streamable.nil? && (xml).at(:streamable)
+
+      self.tags = (xml/'tag/name').collect(&:inner_html)
 
       self
     end
