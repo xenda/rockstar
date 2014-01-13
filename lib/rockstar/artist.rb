@@ -79,8 +79,8 @@ module Rockstar
 
     def initialize(name, o={})
       raise ArgumentError, "Name or mbid is required" if name.blank? && o[:mbid].blank?
-      @name = name
-      @mbid = o[:mbid] unless o[:mbid].nil?
+      @name = name unless name.blank?
+      @mbid = o[:mbid] unless o[:mbid].blank?
 
       options = {:include_info => false}.merge(o)
       load_info if options[:include_info]
@@ -96,6 +96,7 @@ module Rockstar
 
       return self if xml.nil?
 
+      self.name           = (xml).at(:name).inner_html              if (xml).at(:name)
       self.mbid           = (xml).at(:mbid).inner_html              if (xml).at(:mbid)
       self.listenercount  = (xml).at(:listeners).inner_html         if (xml).at(:listeners)
       self.playcount      = (xml).at(:playcount).inner_html         if (xml).at(:playcount)
