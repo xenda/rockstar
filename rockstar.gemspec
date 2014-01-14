@@ -123,27 +123,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/putpat/rockstar"
   s.rubygems_version = "2.2.0"
   s.summary = "wrapper for audioscrobbler (last.fm) web services"
-  s.test_files = [
-    "examples/album.rb",
-    "examples/artist.rb",
-    "examples/geo.rb",
-    "examples/scrobble.rb",
-    "examples/tag.rb",
-    "examples/track.rb",
-    "examples/user.rb",
-    "test/mocks/rest.rb",
-    "test/test_helper.rb",
-    "test/unit/test_album.rb",
-    "test/unit/test_artist.rb",
-    "test/unit/test_chart.rb",
-    "test/unit/test_geo.rb",
-    "test/unit/test_library.rb",
-    "test/unit/test_rockstar.rb",
-    "test/unit/test_tag.rb",
-    "test/unit/test_track.rb",
-    "test/unit/test_user.rb",
-    "test/unit/test_venue.rb"
-  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
