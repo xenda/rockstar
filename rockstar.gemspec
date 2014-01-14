@@ -128,28 +128,22 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rake>, [">= 0"])
-      s.add_runtime_dependency(%q<hpricot>, [">= 0.4.86"])
-      s.add_runtime_dependency(%q<i18n>, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 1.4.2"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_runtime_dependency(%q<rake>, [">= 0.10.0"])
+      s.add_runtime_dependency(%q<i18n>, [">= 0.5.0"])
+      s.add_development_dependency(%q<jeweler>, [">= 2.0.0"])
       s.add_runtime_dependency(%q<hpricot>, [">= 0.4.86"])
       s.add_runtime_dependency(%q<activesupport>, [">= 1.4.2"])
     else
-      s.add_dependency(%q<rake>, [">= 0"])
-      s.add_dependency(%q<hpricot>, [">= 0.4.86"])
-      s.add_dependency(%q<i18n>, [">= 0"])
-      s.add_dependency(%q<activesupport>, [">= 1.4.2"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0.10.0"])
+      s.add_dependency(%q<i18n>, [">= 0.5.0"])
+      s.add_dependency(%q<jeweler>, [">= 2.0.0"])
       s.add_dependency(%q<hpricot>, [">= 0.4.86"])
       s.add_dependency(%q<activesupport>, [">= 1.4.2"])
     end
   else
-    s.add_dependency(%q<rake>, [">= 0"])
-    s.add_dependency(%q<hpricot>, [">= 0.4.86"])
-    s.add_dependency(%q<i18n>, [">= 0"])
-    s.add_dependency(%q<activesupport>, [">= 1.4.2"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0.10.0"])
+    s.add_dependency(%q<i18n>, [">= 0.5.0"])
+    s.add_dependency(%q<jeweler>, [">= 2.0.0"])
     s.add_dependency(%q<hpricot>, [">= 0.4.86"])
     s.add_dependency(%q<activesupport>, [">= 1.4.2"])
   end
