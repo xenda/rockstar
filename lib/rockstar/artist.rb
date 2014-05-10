@@ -148,6 +148,11 @@ module Rockstar
       get_instance("artist.getTopAlbums", :top_albums, :album, {:artist => @name}, force)
     end
 
+    def top_albums(force=false)
+      get_instance("artist.getAlbums", :albums, :album, {:artist => @name}, force)
+    end
+
+
     def top_tags(force=false)
       get_instance("artist.getTopTags", :top_tags, :tag, {:artist => @name}, force)
     end
